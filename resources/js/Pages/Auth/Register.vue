@@ -62,16 +62,16 @@ const submit = () => {
             </div>
 
             <div class="input-wrap mt-8">
-                <InputLabel for="password" value="Password" class="sr-only" />
+                <InputLabel for="phone_number" value="Password" class="sr-only" />
 
                 <i class="input-icon fas fa-phone"></i>
                 <TextInput
-                    id="phone"
+                    id="phone_number"
                     type="text"
                     class="mt-1 block w-full"
                     v-model="form.phone_number"
                     required
-                    autocomplete="phone"
+                    autocomplete="phone_number"
                     placeholder="Phone Number"
                 />
 
