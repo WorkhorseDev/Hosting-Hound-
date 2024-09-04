@@ -3,7 +3,7 @@ import GuestLayout from '@/Layouts/GuestLayout.vue';
 import InputError from '@/Components/InputError.vue';
 import InputLabel from '@/Components/InputLabel.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
-import TextInput from '@/Components/TextInput.vue';
+import TextInput from '@/Components/Auth/TextInput.vue';
 import { Head, useForm } from '@inertiajs/vue3';
 
 defineProps({
@@ -22,22 +22,27 @@ const submit = () => {
 </script>
 
 <template>
-    <GuestLayout>
+    <GuestLayout
+        heading="Reset Password"
+        subheading="To reset your password, please enter the email associated with your account."
+        :showLogo="false"
+    >
         <Head title="Forgot Password" />
 
-        <div class="mb-4 text-sm text-gray-600">
+<!--        <div class="mb-4 text-sm text-gray-600">
             Forgot your password? No problem. Just let us know your email address and we will email you a password reset
             link that will allow you to choose a new one.
-        </div>
+        </div>-->
 
         <div v-if="status" class="mb-4 font-medium text-sm text-green-600">
             {{ status }}
         </div>
 
         <form @submit.prevent="submit">
-            <div>
-                <InputLabel for="email" value="Email" />
+            <div class="input-wrap">
+                <InputLabel for="email" value="Email" class="sr-only" />
 
+                <i class="input-icon far fa-envelope"></i>
                 <TextInput
                     id="email"
                     type="email"
@@ -46,15 +51,16 @@ const submit = () => {
                     required
                     autofocus
                     autocomplete="username"
+                    placeholder="Email"
                 />
 
                 <InputError class="mt-2" :message="form.errors.email" />
             </div>
 
-            <div class="flex items-center justify-end mt-4">
-                <PrimaryButton :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
-                    Email Password Reset Link
-                </PrimaryButton>
+            <div class="flex items-center justify-center mt-10">
+                <button class="btn-primary" :disabled="form.processing">
+                    Send
+                </button>
             </div>
         </form>
     </GuestLayout>

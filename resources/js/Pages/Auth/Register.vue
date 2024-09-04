@@ -3,12 +3,13 @@ import GuestLayout from '@/Layouts/GuestLayout.vue';
 import InputError from '@/Components/InputError.vue';
 import InputLabel from '@/Components/InputLabel.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
-import TextInput from '@/Components/TextInput.vue';
+import TextInput from '@/Components/Auth/TextInput.vue';
 import { Head, Link, useForm } from '@inertiajs/vue3';
 
 const form = useForm({
     name: '',
     email: '',
+    phone_number: '',
     password: '',
     password_confirmation: '',
 });
@@ -21,13 +22,14 @@ const submit = () => {
 </script>
 
 <template>
-    <GuestLayout>
+    <GuestLayout heading="Welcome" subheading="Create your free account" >
         <Head title="Register" />
 
         <form @submit.prevent="submit">
-            <div>
-                <InputLabel for="name" value="Name" />
+            <div class="input-wrap">
+                <InputLabel for="name" value="Name" class="sr-only" />
 
+                <i class="input-icon far fa-user"></i>
                 <TextInput
                     id="name"
                     type="text"
@@ -36,14 +38,16 @@ const submit = () => {
                     required
                     autofocus
                     autocomplete="name"
+                    placeholder="Full Name"
                 />
 
                 <InputError class="mt-2" :message="form.errors.name" />
             </div>
 
-            <div class="mt-4">
-                <InputLabel for="email" value="Email" />
+            <div class="input-wrap mt-8">
+                <InputLabel for="email" value="Email" class="sr-only" />
 
+                <i class="input-icon far fa-envelope"></i>
                 <TextInput
                     id="email"
                     type="email"
@@ -51,14 +55,33 @@ const submit = () => {
                     v-model="form.email"
                     required
                     autocomplete="username"
+                    placeholder="Email Address"
                 />
 
                 <InputError class="mt-2" :message="form.errors.email" />
             </div>
 
-            <div class="mt-4">
-                <InputLabel for="password" value="Password" />
+            <div class="input-wrap mt-8">
+                <InputLabel for="password" value="Password" class="sr-only" />
 
+                <i class="input-icon fas fa-phone"></i>
+                <TextInput
+                    id="phone"
+                    type="text"
+                    class="mt-1 block w-full"
+                    v-model="form.phone_number"
+                    required
+                    autocomplete="phone"
+                    placeholder="Phone Number"
+                />
+
+                <InputError class="mt-2" :message="form.errors.password" />
+            </div>
+
+            <div class="input-wrap mt-8">
+                <InputLabel for="password" value="Password" class="sr-only" />
+
+                <i class="input-icon fas fa-lock"></i>
                 <TextInput
                     id="password"
                     type="password"
@@ -66,14 +89,16 @@ const submit = () => {
                     v-model="form.password"
                     required
                     autocomplete="new-password"
+                    placeholder="Create Password"
                 />
 
                 <InputError class="mt-2" :message="form.errors.password" />
             </div>
 
-            <div class="mt-4">
-                <InputLabel for="password_confirmation" value="Confirm Password" />
+            <div class="input-wrap mt-8 mb-16">
+                <InputLabel for="password_confirmation" value="Confirm Password" class="sr-only" />
 
+                <i class="input-icon fas fa-key"></i>
                 <TextInput
                     id="password_confirmation"
                     type="password"
@@ -81,22 +106,24 @@ const submit = () => {
                     v-model="form.password_confirmation"
                     required
                     autocomplete="new-password"
+                    placeholder="Confirm Password"
                 />
 
                 <InputError class="mt-2" :message="form.errors.password_confirmation" />
             </div>
 
-            <div class="flex items-center justify-end mt-4">
+            <div class="flex flex-col items-center justify-end mt-4">
+
+                <button class="btn-primary mb-6" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
+                    Sign Up
+                </button>
+
                 <Link
                     :href="route('login')"
-                    class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                    class="btn-primary"
                 >
-                    Already registered?
+                    Return to Login
                 </Link>
-
-                <PrimaryButton class="ms-4" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
-                    Register
-                </PrimaryButton>
             </div>
         </form>
     </GuestLayout>

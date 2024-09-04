@@ -1,19 +1,36 @@
 <script setup>
 import ApplicationLogo from '@/Components/ApplicationLogo.vue';
 import { Link } from '@inertiajs/vue3';
+import Heading from "@/Components/Auth/Heading.vue";
+import Subheading from "@/Components/Auth/Subheading.vue";
+
+
+defineProps({
+    heading: {
+        type: String,
+    },
+    subheading: {
+        type: String,
+    },
+    showLogo: {
+        type: Boolean,
+        default: true
+    }
+});
+
 </script>
 
 <template>
-    <div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-gray-100">
-        <div>
-            <Link href="/">
-                <ApplicationLogo class="w-20 h-20 fill-current text-gray-500" />
-            </Link>
+    <div class="auth-layout min-h-screen flex flex-row justify-center items-center">
+        <div class="welcome-block flex flex-col items-center ">
+            <div v-if="showLogo" class="logo">
+                <ApplicationLogo />
+            </div>
+            <Heading :text="heading" />
+            <Subheading :text="subheading" />
         </div>
 
-        <div
-            class="w-full sm:max-w-md mt-6 px-6 py-4 bg-white shadow-md overflow-hidden sm:rounded-lg"
-        >
+        <div class="second-block">
             <slot />
         </div>
     </div>

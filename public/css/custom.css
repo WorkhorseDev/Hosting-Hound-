@@ -1,0 +1,46 @@
+.auth-layout {
+    background: #3d5f58;
+}
+
+.auth-layout .logo {
+    position: relative;
+    left: -20px;
+}
+.welcome-block {
+    max-width: 400px;
+    margin-right: 5rem;
+}
+.second-block {
+    margin-left: 5rem;
+}
+.btn-primary {
+    font-family: Quicksand;
+    font-size: 30px;
+    background: #A7B57C;
+    text-align: center;
+    width: 345px;
+    display: block;
+    padding: 22px 10px 23px;
+    border-radius: 45px;
+    border: 1px solid #979797;
+    -webkit-box-shadow: 8px 0px 12px -6px rgba(0, 0, 0, 0.5);
+    -moz-box-shadow: 8px 0px 12px -6px rgba(0, 0, 0, 0.5);
+    box-shadow: 0px 8px 12px -6px rgba(0, 0, 0, 0.5);
+}
+.divider {
+    font-size: 36px;
+    color: #ffffff;
+    margin: 1rem 0;
+}
+
+.input-wrap {
+    position: relative;
+}
+
+.input-icon {
+    position: absolute;
+    top: 20px;
+    left: 25px;
+    font-size: 32px;
+    color: #858585;
+}
