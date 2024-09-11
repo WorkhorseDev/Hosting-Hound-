@@ -11,9 +11,6 @@ Route::get('/', function () {
         'canRegister' => Route::has('register')
     ]);
 });
-/*Route::get('/', function () {
-    return Inertia::render('Auth/Login', []);
-});*/
 
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
