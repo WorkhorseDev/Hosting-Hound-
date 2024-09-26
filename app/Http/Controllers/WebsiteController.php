@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Websites;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-
+use Inertia\Inertia;
 class WebsiteController extends Controller
 {
     /**
@@ -20,15 +20,18 @@ class WebsiteController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth')->except(['setLocale', 'showPrivacyPolicy']);
+     //   $this->middleware('auth')->except(['setLocale', 'showPrivacyPolicy']);
     }
 
     /**
      * Show the application dashboard
      */
-    public function index()
+    public function dashboard()
     {
-        $sites = Websites::where('user_id', '=', Auth::user()->_id)->all();
+        $sites = Websites::all()->where('user_id', '=', Auth::user()->_id);
+        return Inertia::render('Dashboard', [
+            'sites' => $sites,
+        ]);
     }
 
     /**
@@ -53,5 +56,10 @@ class WebsiteController extends Controller
     public function addSite(Request $request)
     {
         $result = Websites::addSite($request);
+    }
+
+    public function showAddSitePage()
+    {
+        return Inertia::render('AddSite');
     }
 }

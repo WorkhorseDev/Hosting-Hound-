@@ -12,9 +12,9 @@ Route::get('/', function () {
     ]);
 });
 
-Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::post('/dashboard', [App\Http\Controllers\WebsiteController::class, 'dashboard'])->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/dashboard', [App\Http\Controllers\WebsiteController::class, 'dashboard'])->middleware(['auth', 'verified']);
+Route::get('/addSite', [App\Http\Controllers\WebsiteController::class, 'showAddSitePage'])->middleware(['auth', 'verified'])->name('addSite');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

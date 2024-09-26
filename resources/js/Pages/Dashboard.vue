@@ -1,24 +1,14 @@
 <script setup>
-import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
-import { Head } from '@inertiajs/vue3';
+import {Head} from '@inertiajs/vue3';
+import { Link } from '@inertiajs/vue3';
+
+import { inject } from "vue";
+
+const route = inject("route");
 </script>
 
 <template>
     <Head title="Dashboard" />
-
-<!--    <AuthenticatedLayout>
-        <template #header>
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">Dashboard</h2>
-        </template>
-
-        <div class="py-12">
-            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                    <div class="p-6 text-gray-900">You're logged in!</div>
-                </div>
-            </div>
-        </div>
-    </AuthenticatedLayout>-->
 
     <div class="wrapper">
         <div class="container dashboard">
@@ -34,7 +24,7 @@ import { Head } from '@inertiajs/vue3';
 
                 <div class="links">
                     <span class="link-item link-item_add">
-                        <i class="fas fa-add"></i>
+                       <Link :href="route('addSite')"><i class="fas fa-add"></i></Link>
                     </span>
                     <span class="link-item link-item_user">
                         <i class="fas fa-user"></i>
@@ -83,12 +73,22 @@ import { Head } from '@inertiajs/vue3';
                             No websites found here
                         </p>
                         <p>
-                            You can <a class="new-site" href="#">add a new website</a> by pressing the + icon at the top right-hand corner of this screen
+                            You can <Link :href="route('addSite')" class="new-site">add a new website</Link> by pressing the + icon at the top right-hand corner of this screen
                         </p>
+                    </div>
+                    <div class="data" v-if="sites && sites.length !== 0">
+
                     </div>
                 </div>
             </main>
         </div>
     </div> <!-- end .wrapper -->
 </template>
+<script>
+export default {
+    props: {
+        sites: String,
+    }
+}
 
+</script>
