@@ -21,7 +21,7 @@ import { Head } from '@inertiajs/vue3';
     </AuthenticatedLayout>-->
 
     <div class="wrapper">
-        <div class="container">
+        <div class="container dashboard">
             <header class="header">
                 <div class="tabs">
                     <a href="#" class="tab-item is-active">
@@ -62,11 +62,11 @@ import { Head } from '@inertiajs/vue3';
                 <div class="options">
                     <label for="select_all" class="option-item">
                         <input type="radio" name="select_all" id="select_all">
-                        <span>Select all</span>
+                        <span class="select-text">select all</span>
                     </label>
                     <label for="sort_by_company" class="option-item">
                         <input type="radio" name="sort_by_company" id="sort_by_company">
-                        <span>Sort by company</span>
+                        <span class="select-text">sort by company</span>
                     </label>
                 </div>
             </div>
@@ -83,7 +83,7 @@ import { Head } from '@inertiajs/vue3';
                             No websites found here
                         </p>
                         <p>
-                            You can <a href="#">add a new website</a> by pressing the + icon at the top right-hand corner of this screen
+                            You can <a class="new-site" href="#">add a new website</a> by pressing the + icon at the top right-hand corner of this screen
                         </p>
                     </div>
                 </div>
@@ -92,145 +92,3 @@ import { Head } from '@inertiajs/vue3';
     </div> <!-- end .wrapper -->
 </template>
 
-<style scoped>
-.wrapper {
-    background: #f7f7f7;
-    min-height: 100vh;
-}
-.container {
-    max-width: 1380px;
-    margin: 0 auto;
-    padding-left: 20px;
-    padding-right: 20px;
-}
-.header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding-top: 50px;
-    margin-bottom: 30px;
-}
-
-.header .tabs {
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
-    color: #15202e;
-    background: #e7e7d8;
-    -webkit-box-shadow: 0px 3px 3px 0px rgba(112,112,112,0.5);
-    -moz-box-shadow: 0px 3px 3px 0px rgba(112,112,112,0.5);
-    box-shadow: 0px 3px 3px 0px rgba(112,112,112,0.5);
-    -webkit-border-radius: 34px;
-    -moz-border-radius: 34px;
-    border-radius: 34px;
-    overflow: hidden;
-}
-.header .tab-item {
-    position: relative;
-    color: #15202e;
-    font-size: 30px;
-    padding: 17px 45px;
-    text-align: center;
-    font-family: sans-serif;
-    text-decoration: none;
-}
-.header .tab-item:not(:first-child) {
-    margin-left: -15px;
-}
-.header .tab-item.is-active {
-    background: #a7b57c;
-    -webkit-border-radius: 34px;
-    -moz-border-radius: 34px;
-    border-radius: 34px;
-}
-.header .links {
-
-}
-.header .link-item {
-    font-size: 46px;
-    color: #3d5f58;
-    cursor: pointer;
-    margin-left: 20px;
-    margin-right: 20px;
-}
-
-.main-panel {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-    width: 100%;
-    background: #a7b57c;
-    -webkit-box-shadow: 0px 3px 5px 0px rgba(112,112,112,0.5);
-    -moz-box-shadow: 0px 3px 5px 0px rgba(112,112,112,0.5);
-    box-shadow: 0px 3px 5px 0px rgba(112,112,112,0.5);
-    padding: 22px 35px;
-    -webkit-border-radius: 34px;
-    -moz-border-radius: 34px;
-    border-radius: 34px;
-    margin-bottom: 30px;
-}
-
-.search-section {
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
-}
-.search-bar {
-    position: relative;
-    background: #ebebeb;
-    -webkit-box-shadow: 0px 3px 3px 0px rgba(112,112,112,0.5);
-    -moz-box-shadow: 0px 3px 3px 0px rgba(112,112,112,0.5);
-    box-shadow: 0px 3px 3px 0px rgba(112,112,112,0.5);
-    -webkit-border-radius: 34px;
-    -moz-border-radius: 34px;
-    border-radius: 34px;
-    overflow: hidden;
-}
-.search-bar .search-input {
-    width: 370px;
-    height: 70px;
-    font-size: 24px;
-    background: #ffffff;
-    border: none;
-    -webkit-border-radius: 34px;
-    -moz-border-radius: 34px;
-    border-radius: 34px;
-    padding-left: 75px;
-}
-.search-bar .search-btn {
-    position: absolute;
-    left: 10px;
-    top: 50%;
-    transform: translate(0, -50%);
-    height: 60px;
-    width: 60px;
-    border: none;
-    background: none;
-    font-size: 32px;
-    padding: 0;
-}
-
-.main-content {
-    position: relative;
-    padding: 20px;
-}
-
-.main-content .empty-state {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding-top: 100px;
-    font-size: 27px;
-    text-align: center;
-    color: #15202e;
-    font-family: sans-serif;
-    opacity: 0.72;
-    max-width: 410px;
-    margin: 0 auto;
-}
-.main-content .empty-state .icon {
-    font-size: 72px;
-}
-</style>
