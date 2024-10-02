@@ -10,6 +10,8 @@ use Illuminate\Validation\Rules\Password;
 
 class PasswordController extends Controller
 {
+
+    protected $redirectTo = '/login';
     /**
      * Update the user's password.
      */

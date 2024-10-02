@@ -147,6 +147,7 @@ return [
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
         MongoDB\Laravel\MongoDBServiceProvider::class,
+        App\Providers\PasswordResetServiceProvider::class,
     ],
 
     'aliases' => [
