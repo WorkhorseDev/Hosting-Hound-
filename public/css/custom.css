@@ -226,3 +226,33 @@
 .fa-solid {
     color: rgba(21, 32, 46, 1);
 }
+
+[type='checkbox']:checked, #terms {
+    background-color: transparent;
+    border: 2px solid #fff;
+    margin-right: 20px;
+    margin-left: 35px;
+    vertical-align: baseline;
+    --tw-ring-shadow: none;
+}
+
+.check-label, h3.terms, p.terms-text {
+    color: #fff;
+    font-size: 27px;
+}
+
+.check-label button {
+    text-decoration: underline;
+}
+
+h3.terms {
+    text-transform: uppercase;
+    text-align: center;
+}
+
+p.terms-text {
+    font-size: 12px;
+    width: 535px;
+    margin-bottom: 15px;
+}
+
