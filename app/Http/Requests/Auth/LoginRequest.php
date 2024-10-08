@@ -50,6 +50,8 @@ class LoginRequest extends FormRequest
             ]);
         }
 
+      //  RateLimiter::clear($this->throttleKey());
+
         $user = Auth::getUser();
         $user->generateTwoFactorCode();
         $user->notify(new TwoFactorCode());
