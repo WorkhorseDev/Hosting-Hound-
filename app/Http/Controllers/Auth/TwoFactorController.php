@@ -5,8 +5,8 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Notifications\TwoFactorCode;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
-use Inertia\Middleware;
 
 class TwoFactorController extends Controller
 {
@@ -17,7 +17,7 @@ class TwoFactorController extends Controller
 
     public function index()
     {
-        return Inertia::render('TwoFactor');
+        return Inertia::render('TwoFactor', Auth::user()->email);
     }
 
     public function store(Request $request)
