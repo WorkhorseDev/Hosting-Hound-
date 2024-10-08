@@ -5,12 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Notifications\Notifiable;
 use App\Models\AuthUser as Authenticatable;
-use Laravel\Fortify\TwoFactorAuthenticatable;
-
 
 class User extends Authenticatable
 {
-    use HasFactory, Notifiable, TwoFactorAuthenticatable;
+    use HasFactory, Notifiable;
 
     protected $connection = 'mongodb';
     protected $collection = 'users';
