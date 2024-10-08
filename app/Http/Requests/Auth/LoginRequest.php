@@ -44,21 +44,16 @@ class LoginRequest extends FormRequest
     {
         $this->ensureIsNotRateLimited();
 
-        if (!Auth::attempt($this->only('email', 'password'), $this->boolean('remember'))) {
+
+        if (! Auth::attempt($this->only('email', 'password'), $this->boolean('remember'))) {
+            RateLimiter::hit($this->throttleKey());
+
             throw ValidationException::withMessages([
                 'email' => trans('auth.failed'),
             ]);
         }
 
-      //  RateLimiter::clear($this->throttleKey());
-
-        $user = Auth::getUser();
-        $user->generateTwoFactorCode();
-        $user->notify(new TwoFactorCode());
-
-        return Inertia::render('TwoFactor', [
-            'email' => $user->email,
-        ]);
+        RateLimiter::clear($this->throttleKey());
     }
 
     /**
