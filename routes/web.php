@@ -11,7 +11,7 @@ Route::get('/', function () {
         'canRegister' => Route::has('register')
     ]);
 });
-Route::get('/verify',[App\Http\Controllers\Auth\TwoFactorController::class. 'index'])->name('verify');
+Route::get('/verify',[App\Http\Controllers\Auth\TwoFactorController::class, 'index'])->name('verify');
 Route::resource('verify',  'App\Http\Controllers\Auth\TwoFactorController')->only(['index', 'store']);
 Route::post('/dashboard', [App\Http\Controllers\WebsiteController::class, 'dashboard'])->middleware(['auth', 'verified'])->name('dashboard');
 Route::get('/dashboard', [App\Http\Controllers\WebsiteController::class, 'dashboard'])->middleware(['auth', 'verified']);
