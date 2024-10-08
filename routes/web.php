@@ -16,7 +16,7 @@ Route::middleware(['auth', 'twofactor'])->group(function () {
     Route::resource('verify', App\Http\Controllers\Auth\TwoFactorController::class)->only(['index', 'store']);
 });
 Route::post('/dashboard', [App\Http\Controllers\WebsiteController::class, 'dashboard'])->middleware(['auth', 'twofactor'])->name('dashboard');
-Route::get('/dashboard', [App\Http\Controllers\WebsiteController::class, 'dashboard'])->middleware(['auth', 'twofactor'])->name('dashboard');
+//Route::get('/dashboard', [App\Http\Controllers\WebsiteController::class, 'dashboard'])->middleware(['auth', 'twofactor'])->name('dashboard');
 Route::get('/addSite', [App\Http\Controllers\WebsiteController::class, 'showAddSitePage'])->middleware(['auth', 'twofactor'])->name('addSite');
 
 Route::middleware('auth')->group(function () {
