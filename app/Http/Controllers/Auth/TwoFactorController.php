@@ -5,12 +5,13 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Notifications\TwoFactorCode;
 use Illuminate\Http\Request;
+use Inertia\Middleware;
 
 class TwoFactorController extends Controller
 {
     public function __construct()
     {
-        $this->middleware(['auth', 'twofactor']);
+
     }
 
     public function index()
