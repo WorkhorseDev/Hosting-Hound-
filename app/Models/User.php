@@ -58,4 +58,12 @@ class User extends Authenticatable
         $this->two_factor_expires_at = now()->addMinutes(10);
         $this->save();
     }
+
+    public function resetTwoFactorCode(): void
+    {
+        $this->timestamps = false;
+        $this->two_factor_code = null;
+        $this->two_factor_expires_at = null;
+        $this->save();
+    }
 }

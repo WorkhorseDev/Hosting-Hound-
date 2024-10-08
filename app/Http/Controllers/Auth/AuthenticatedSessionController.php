@@ -10,6 +10,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use Inertia\Response;
+use App\Notifications\TwoFactorCode;
+use App\Providers\RouteServiceProvider;
 
 class AuthenticatedSessionController extends Controller
 {
@@ -30,8 +32,10 @@ class AuthenticatedSessionController extends Controller
     public function store(LoginRequest $request): RedirectResponse
     {
         $request->authenticate();
-
-        return redirect()->intended(route('verify', absolute: false));
+        $request->session()->regenerate();
+        $request->user()->generateTwoFactorCode();
+        $request->user()->notify(new TwoFactorCode());
+        return redirect()->intended(RouteServiceProvider::HOME);
     }
 
     /**

@@ -117,4 +117,8 @@ return [
         'expire' => 2880, // One year in minutes - enter as many minutes as you would like here
     ],
 
+    'two_factor' => [
+        'via' => ['mail'],
+    ],
+
 ];

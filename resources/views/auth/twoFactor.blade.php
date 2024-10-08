@@ -1,79 +1,26 @@
-
-
-@section('content')
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-md-8">
-                <div class="card">
-                    <div class="card-body">
-                        <div class="for-header">
-                            @if (env('APP_ENV') != 'Production')
-                                <img src="{{url('images/bostik_test.png')}}">
-                            @else
-                                <img src="{{url('images/Bostik_Logo.png')}}">
-                            @endif
-                        </div>
-                        @if(session()->has('message'))
-                            <p class="alert alert-info">
-                                {{ session()->get('message') }}
-                            </p>
-                        @endif
-                        <form method="POST" action="{{ route('verify.store') }}" class="login verify">
-                            {{ csrf_field() }}
-                            <h4 class="verify">{{ __('2 Factor Authentication') }}</h4>
-                            <p>
-                                {{ __('Please check your email inbox for a 2 factor authentication code in order to continue.') }}
-                            </p>
-
-                            <div class="form-group row">
-
-                                <label for="code"
-                                       class="col-md-4 col-form-label text-md-right">{{ __('Authentication Code') }}</label>
-
-                                <div class="col-md-6">
-                                    <input name="two_factor_code" type="text"
-                                           class="form-control{{ $errors->has('two_factor_code') ? ' is-invalid' : '' }}"
-                                           required autofocus>
-                                    @if($errors->has('two_factor_code'))
-                                        <div class="invalid-feedback">
-                                            {{ $errors->first('two_factor_code') }}
-                                        </div>
-                                    @endif
-                                </div>
-                            </div>
-
-                            <div class="form-group row mb-0">
-                                <div class="col-md-8 offset-md-4">
-                                    <button type="submit" class="btn btn-primary">
-                                        {{ __('Login') }}
-                                    </button>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
+<x-guest-layout>
+    <x-auth-card>
+        <x-slot name="logo">
+            <a href="/">
+                <x-application-logo class="h-20 w-20 fill-current text-gray-500" />
+            </a>
+        </x-slot>
+        <div class="mb-4 text-sm text-gray-600">
+            {{ new Illuminate\Support\HtmlString(__("Received an email with a login code? If not, click <a class=\"hover:underline\" href=\":url\">here</a>.", ['url' => route('verify.resend')])) }}
         </div>
-    </div>
-    <script>
-        $(document).ready(function () {
-            var locale = "{{ session('locale') }}";
-            $('#dropdownMenu').html($('#' + locale).val());
-        });
-
-
-        $('.dropdown-item').on('click', function () {
-            $('#dropdownMenu').html($(this).val());
-            $.ajax({
-                url: '/changeLocale',
-                method: 'POST',
-                data: {
-                    'loc': $(this).attr('id')
-                },
-                success: function () {
-                    window.location.href = "{{URL::to('/verify')}}"
-                }
-            });
-        });
-    </script>
-@endsection
+        <x-auth-session-status class="mb-4" :status="session('status')" />
+        <form method="POST" action="{{ route('verify.store') }}">
+            @csrf
+            <div>
+                <x-input-label for="two_factor_code" :value="__('Code')" />
+                <x-text-input id="two_factor_code" class="mt-1 block w-full" type="text" name="two_factor_code" required autofocus />
+                <x-input-error :messages="$errors->get('two_factor_code')" class="mt-2" />
+            </div>
+            <div class="mt-4 flex justify-end">
+                <x-primary-button>
+                    {{ __('Submit') }}
+                </x-primary-button>
+            </div>
+        </form>
+    </x-auth-card>
+</x-guest-layout>
