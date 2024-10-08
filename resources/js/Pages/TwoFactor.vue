@@ -1,34 +1,31 @@
 <script setup>
 import GuestLayout from '@/Layouts/GuestLayout.vue';
-import InputError from '@/Components/InputError.vue';
-import InputLabel from '@/Components/InputLabel.vue';
-import PrimaryButton from '@/Components/PrimaryButton.vue';
+import InputLabel from '@/Components/InputLabel.vue';;
 import TextInput from '@/Components/Auth/TextInput.vue';
-import { Head, useForm } from '@inertiajs/vue3';
+import {useForm } from '@inertiajs/vue3';
 
-const props = defineProps({
-  token: {
+defineProps({
+  status: {
     type: String,
-    required: true,
+    email: String,
   },
 });
 
 const form = useForm({
-  token: props.token,
   code: '',
 });
 
-const submit = () => {
-  form.post(route('verify.store'), {
 
-  });
+const submit = () => {
+  form.post(route('verify.store'));
 };
+
 </script>
 
 <template>
   <GuestLayout
       heading="Enter Your Code"
-      subheading="Please enter the six digit verification code sent to " + {{email}}
+      subheading="Please enter the six digit verification code sent to {{email}}"
       :showLogo="false"
   >
 
