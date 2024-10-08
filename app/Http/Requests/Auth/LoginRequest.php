@@ -10,7 +10,6 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
-use Laravel\Fortify\Fortify;
 use Illuminate\Http\Request;
 
 class LoginRequest extends FormRequest
@@ -56,9 +55,6 @@ class LoginRequest extends FormRequest
 
         RateLimiter::clear($this->throttleKey());
 
-        RateLimiter::for('two-factor', function (Request $request) {
-            return Limit::perMinute(5)->by($request->session()->get('login.id'));
-        });
         $user = Auth::getUser();
         $user->generateTwoFactorCode();
         $user->notify(new TwoFactorCode());
