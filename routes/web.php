@@ -11,11 +11,13 @@ Route::get('/', function () {
         'canRegister' => Route::has('register')
     ]);
 });
-Route::get('/verify',[App\Http\Controllers\Auth\TwoFactorController::class, 'index'])->name('verify');
-Route::resource('verify',  'App\Http\Controllers\Auth\TwoFactorController')->only(['index', 'store']);
-Route::post('/dashboard', [App\Http\Controllers\WebsiteController::class, 'dashboard'])->middleware(['auth', 'verified'])->name('dashboard');
-Route::get('/dashboard', [App\Http\Controllers\WebsiteController::class, 'dashboard'])->middleware(['auth', 'verified']);
-Route::get('/addSite', [App\Http\Controllers\WebsiteController::class, 'showAddSitePage'])->middleware(['auth', 'verified'])->name('addSite');
+Route::middleware(['auth', 'twofactor'])->group(function () {
+    Route::get('verify/resend', [App\Http\Controllers\Auth\TwoFactorController::class, 'resend'])->name('verify.resend');
+    Route::resource('verify', App\Http\Controllers\Auth\TwoFactorController::class)->only(['index', 'store']);
+});
+Route::post('/dashboard', [App\Http\Controllers\WebsiteController::class, 'dashboard'])->middleware(['auth', 'twofactor'])->name('dashboard');
+Route::get('/dashboard', [App\Http\Controllers\WebsiteController::class, 'dashboard'])->middleware(['auth', 'twofactor'])->name('dashboard');
+Route::get('/addSite', [App\Http\Controllers\WebsiteController::class, 'showAddSitePage'])->middleware(['auth', 'twofactor'])->name('addSite');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

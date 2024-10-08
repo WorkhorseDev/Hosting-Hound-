@@ -5,47 +5,35 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Notifications\TwoFactorCode;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Inertia\Inertia;
+use Illuminate\Validation\ValidationException;
+use Illuminate\Http\RedirectResponse;
+use App\Providers\RouteServiceProvider;
 
 class TwoFactorController extends Controller
 {
-    public function __construct()
+    public function index(): View
     {
-
+        return view('auth.twoFactor');
     }
-
-    public function index()
-    {
-        return Inertia::render('TwoFactor',['email'=> Auth::user()->email]);
-    }
-
-    public function store(Request $request)
+    public function store(Request $request): ValidationException|RedirectResponse
     {
         $request->validate([
-            'two_factor_code' => 'integer|required',
+            'two_factor_code' => ['integer', 'required'],
         ]);
-
         $user = auth()->user();
-
-        if($request->input('two_factor_code') == $user->two_factor_code)
-        {
-            $user->resetTwoFactorCode();
-
-            $request->session()->regenerate();
-
-            return redirect()->intended(route('dashboard', absolute: false));
+        if ($request->input('two_factor_code') !== $user->two_factor_code) {
+            throw ValidationException::withMessages([
+                'two_factor_code' => __("The code you entered doesn't match our records"),
+            ]);
         }
-
-        return redirect()->back()->withErrors(['two_factor_code' => 'The two factor code you have entered does not match']);
+        $user->resetTwoFactorCode();
+        return redirect()->to(RouteServiceProvider::HOME);
     }
-
-    public function resend()
+    public function resend(): RedirectResponse
     {
         $user = auth()->user();
         $user->generateTwoFactorCode();
         $user->notify(new TwoFactorCode());
-
-        return redirect()->back()->withMessage('The two factor code has been sent again');
+        return redirect()->back()->withStatus(__('Code has been sent again'));
     }
 }
