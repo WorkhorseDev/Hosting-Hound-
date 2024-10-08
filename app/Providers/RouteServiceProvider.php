@@ -21,7 +21,7 @@ class RouteServiceProvider extends ServiceProvider
      *
      * @var string
      */
-    public const HOME = '/successReset';
+    public const HOME = 'verify';
 
     /**
      * Define your route model bindings, pattern filters, etc.
