@@ -32,7 +32,9 @@ class TwoFactorController extends Controller
         {
             $user->resetTwoFactorCode();
 
-            return redirect('/');
+            $request->session()->regenerate();
+
+            return redirect()->intended(route('dashboard', absolute: false));
         }
 
         return redirect()->back()->withErrors(['two_factor_code' => 'The two factor code you have entered does not match']);
