@@ -40,7 +40,7 @@ class LoginRequest extends FormRequest
      *
      * @throws \Illuminate\Validation\ValidationException
      */
-    public function authenticate(): void
+    public function authenticate()
     {
         $this->ensureIsNotRateLimited();
 
@@ -53,6 +53,8 @@ class LoginRequest extends FormRequest
         $user = Auth::getUser();
         $user->generateTwoFactorCode();
         $user->notify(new TwoFactorCode());
+
+        return view('auth.twoFactor');
 
     }
 
