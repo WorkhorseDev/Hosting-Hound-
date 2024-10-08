@@ -20,7 +20,7 @@ class WebsiteController extends Controller
      */
     public function __construct()
     {
-     //   $this->middleware('auth')->except(['setLocale', 'showPrivacyPolicy']);
+
     }
 
     /**
