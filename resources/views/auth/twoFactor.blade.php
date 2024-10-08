@@ -1,29 +1,7 @@
-@extends('layouts.app')
+
 
 @section('content')
     <div class="container">
-        <div class="dropdown" id="language">
-            <button class="btn btn-secondary dropdown-toggle type" type="button"
-                    id="dropdownMenu"
-                    data-toggle="dropdown" aria-haspopup="true"
-                    aria-expanded="false">
-                ﻿🇺🇸 ENGLISH
-            </button>
-            <div class="dropdown-menu" aria-labelledby="dropdownMenu">
-                <button class="dropdown-item" id="en" value="﻿🇺🇸 ENGLISH">﻿🇺🇸 ENGLISH</button>
-                <button class="dropdown-item" id="pt-BR" value="﻿🇧🇷 PORTUGUES">﻿🇧🇷 PORTUGUES</button>
-                <button class="dropdown-item header-list" id="es" value="﻿🇲🇽 SPANISH">﻿🇲🇽 SPANISH</button>
-                <button class="dropdown-item header-list" id="tr" value="﻿🇹🇷 TURKISH">﻿🇹🇷 TURKISH</button>
-                <button class="dropdown-item header-list" id="de" value="﻿🇩🇪 GERMAN">﻿🇩🇪 GERMAN</button>
-                <button class="dropdown-item header-list" id="pl" value="﻿🇵🇱 POLSKI">﻿🇵🇱 POLSKI</button>
-                @if (env('APP_ENV')!='Production')
-                    <button class="dropdown-item header-list" id="fr" value="﻿🇫🇷 FRENCH">﻿🇫🇷 FRENCH</button>
-                    <button class="dropdown-item header-list" id="nl" value="﻿﻿🇳🇱 DUTCH">﻿﻿🇳🇱 DUTCH</button>
-                    <button class="dropdown-item header-list" id="pl" value="﻿🇵🇱 POLSKI">﻿🇵🇱 POLSKI</button>
-                    <button class="dropdown-item header-list" id="sv" value="﻿🇸🇪 SWEDISH">﻿🇸🇪 SWEDISH</button>
-                @endif
-            </div>
-        </div>
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <div class="card">
