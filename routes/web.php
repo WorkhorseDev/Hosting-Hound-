@@ -11,7 +11,7 @@ Route::get('/', function () {
         'canRegister' => Route::has('register')
     ]);
 });
-
+Route::resource('verify',  'App\Http\Controllers\Auth\TwoFactorController')->only(['index', 'store']);
 Route::post('/dashboard', [App\Http\Controllers\WebsiteController::class, 'dashboard'])->middleware(['auth', 'verified'])->name('dashboard');
 Route::get('/dashboard', [App\Http\Controllers\WebsiteController::class, 'dashboard'])->middleware(['auth', 'verified']);
 Route::get('/addSite', [App\Http\Controllers\WebsiteController::class, 'showAddSitePage'])->middleware(['auth', 'verified'])->name('addSite');

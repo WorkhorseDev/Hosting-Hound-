@@ -2,12 +2,16 @@
 
 namespace App\Http\Requests\Auth;
 
+use App\Notifications\TwoFactorCode;
 use Illuminate\Auth\Events\Lockout;
+use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
+use Laravel\Fortify\Fortify;
+use Illuminate\Http\Request;
 
 class LoginRequest extends FormRequest
 {
@@ -41,6 +45,7 @@ class LoginRequest extends FormRequest
     {
         $this->ensureIsNotRateLimited();
 
+
         if (! Auth::attempt($this->only('email', 'password'), $this->boolean('remember'))) {
             RateLimiter::hit($this->throttleKey());
 
@@ -50,6 +55,13 @@ class LoginRequest extends FormRequest
         }
 
         RateLimiter::clear($this->throttleKey());
+
+        RateLimiter::for('two-factor', function (Request $request) {
+            return Limit::perMinute(5)->by($request->session()->get('login.id'));
+        });
+        $user = Auth::getUser();
+        $user->generateTwoFactorCode();
+        $user->notify(new TwoFactorCode());
     }
 
     /**
