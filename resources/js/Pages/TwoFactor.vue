@@ -58,6 +58,8 @@ const submit = () => {
         >
          Didn't get the code?
         </Link>
+      </div>
+      <div class="flex mt-10 email">
         <p class="show-email">{{email}}</p>
       </div>
     </form>
