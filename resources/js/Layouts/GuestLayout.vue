@@ -15,7 +15,10 @@ defineProps({
     showLogo: {
         type: Boolean,
         default: true
-    }
+    },
+   headingEmail: {
+      type: String
+   }
 });
 
 </script>
@@ -28,6 +31,7 @@ defineProps({
             </div>
             <Heading :text="heading" />
             <Subheading :text="subheading" />
+            <p>{{headingEmail}}</p>
         </div>
 
         <div class="second-block">
