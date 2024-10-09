@@ -15,7 +15,7 @@ class TwoFactorController extends Controller
 {
     public function index()
     {
-        return Inertia::render('TwoFactor', ['email' =>  auth()->user()->email]);
+        return Inertia::render('TwoFactor', ['email' =>  Auth::user()->email]);
     }
     public function store(Request $request): ValidationException|RedirectResponse
     {

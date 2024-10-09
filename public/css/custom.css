@@ -241,7 +241,7 @@
     font-size: 27px;
 }
 
-.check-label button, .check-label a {
+.check-label button, a.check-label {
     text-decoration: underline;
 }
 
