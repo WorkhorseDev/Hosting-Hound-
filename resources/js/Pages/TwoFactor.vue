@@ -2,9 +2,10 @@
 import GuestLayout from '@/Layouts/GuestLayout.vue';
 import InputLabel from '@/Components/InputLabel.vue';;
 import TextInput from '@/Components/Auth/TextInput.vue';
-import {useForm } from '@inertiajs/vue3';
+import {Link, useForm} from '@inertiajs/vue3';
 
 defineProps({
+  email: String,
   status: {
     type: String,
     email: String,
@@ -25,7 +26,7 @@ const submit = () => {
 <template>
   <GuestLayout
       heading="Enter Your Code"
-      subheading="Please enter the six digit verification code sent to {{email}}"
+      subheading="Please enter the six digit verification code sent to" :resource="email"
       :showLogo="false"
   >
 
@@ -49,6 +50,14 @@ const submit = () => {
         <button class="btn-primary" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
          Continue
         </button>
+      </div>
+      <div  class="flex items-center justify-center mt-10">
+        <Link
+            :href="route('verifyIndex')"
+            class="link-item"
+        >
+         Didn't get the code?
+        </Link>
       </div>
     </form>
   </GuestLayout>
