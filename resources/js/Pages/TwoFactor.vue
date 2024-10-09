@@ -29,10 +29,8 @@ const submit = () => {
       heading="Enter Your Code"
       subheading="Please enter the six digit verification code sent to"
       :showLogo="false"
+      :title="email"
   >
-    <div class="flex mt-10 email">
-      <p class="show-email">{{email}}</p>
-    </div>
     <form @submit.prevent="submit">
       <div class="input-wrap">
         <InputLabel for="code" value="Code" class="sr-only" />
