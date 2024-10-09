@@ -42,7 +42,7 @@ class TwoFactorCode extends Notification
     {
         return (new MailMessage)
             ->line(__('Your two factor code is ').$notifiable->two_factor_code)
-            ->action(__('Verify Here'), route('verify.index'))
+            ->action(__('Verify Here'), route('verifyIndex'))
             ->line(__('The code will expire in 10 minutes.'))
             ->line(__('If you have not tried to login, ignore this message.'));
     }
