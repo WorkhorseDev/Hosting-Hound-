@@ -29,7 +29,6 @@ const submit = () => {
       heading="Enter Your Code"
       subheading="Please enter the six digit verification code sent to"
       :showLogo="false"
-      :showEmail="true"
   >
 
     <form @submit.prevent="submit">
@@ -59,6 +58,7 @@ const submit = () => {
         >
          Didn't get the code?
         </Link>
+        <p class="show-email">{{email}}</p>
       </div>
     </form>
   </GuestLayout>

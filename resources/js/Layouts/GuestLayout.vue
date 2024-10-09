@@ -15,11 +15,7 @@ defineProps({
     showLogo: {
         type: Boolean,
         default: true
-    },
-    showEmail: {
-      type: Boolean,
-      default: false
-  }
+    }
 });
 
 </script>
@@ -32,7 +28,6 @@ defineProps({
             </div>
             <Heading :text="heading" />
             <Subheading :text="subheading" />
-            <p v-if="showEmail">{{email}}</p>
         </div>
 
         <div class="second-block">
@@ -40,10 +35,4 @@ defineProps({
         </div>
     </div>
 </template>
-<script>
-export default {
-  props: {
-    email: String,
-  }
-}
-</script>
+
