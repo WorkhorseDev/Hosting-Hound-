@@ -69,5 +69,5 @@ export default {
     email: String,
   }
 }
-cosole.log('here'.email);
+console.log('here'.email);
 </script>
