@@ -17,7 +17,7 @@ const form = useForm({
 
 
 const submit = () => {
-  form.post(route('verify.store'));
+  form.post(route('verifyStore'));
 };
 
 </script>
@@ -41,12 +41,9 @@ const submit = () => {
             class="mt-1 block w-full"
             v-model="form.code"
             required
-            autocomplete="new-password"
             placeholder="New Code"
         />
-
       </div>
-
 
       <div class="flex items-center justify-center mt-10">
         <button class="btn-primary" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
