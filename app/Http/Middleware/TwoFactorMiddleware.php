@@ -19,7 +19,7 @@ class TwoFactorMiddleware
 //                    ->withStatus('Your verification code expired. Please re-login.');
 //            }
             if (!$request->is('verify*')) {
-                return redirect()->route('two-factor.index');
+                return redirect()->route('verifyIndex');
             }
         }
         return $next($request);
