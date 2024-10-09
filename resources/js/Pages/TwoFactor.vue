@@ -29,7 +29,7 @@ const submit = () => {
       heading="Enter Your Code"
       subheading="Please enter the six digit verification code sent to"
       :showLogo="false"
-      :title="email"
+      :itemscope="[email]"
   >
     <form @submit.prevent="submit">
       <div class="input-wrap">
