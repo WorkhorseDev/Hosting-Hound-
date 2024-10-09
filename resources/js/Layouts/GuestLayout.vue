@@ -31,7 +31,7 @@ defineProps({
             </div>
             <Heading :text="heading" />
             <Subheading :text="subheading" />
-            <p>{{headingEmail}}</p>
+            <Subheading :text="headingEmail" />
         </div>
 
         <div class="second-block">
