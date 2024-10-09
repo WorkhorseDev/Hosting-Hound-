@@ -5,15 +5,17 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Notifications\TwoFactorCode;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Http\RedirectResponse;
 use App\Providers\RouteServiceProvider;
+use Inertia\Inertia;
 
 class TwoFactorController extends Controller
 {
-    public function index(): View
+    public function index()
     {
-        return view('auth.twoFactor');
+        return Inertia::render('TwoFactor', ['email' =>  auth()->user()->email]);
     }
     public function store(Request $request): ValidationException|RedirectResponse
     {
