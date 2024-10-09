@@ -28,6 +28,7 @@ defineProps({
             </div>
             <Heading :text="heading" />
             <Subheading :text="subheading" />
+          <p v-if="email">{{email}}</p>
         </div>
 
         <div class="second-block">
@@ -35,3 +36,10 @@ defineProps({
         </div>
     </div>
 </template>
+<script>
+export default {
+  props: {
+    email: String,
+  }
+}
+</script>

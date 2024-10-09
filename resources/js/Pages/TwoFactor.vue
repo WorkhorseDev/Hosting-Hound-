@@ -28,12 +28,10 @@ const submit = () => {
   <GuestLayout
       heading="Enter Your Code"
       subheading="Please enter the six digit verification code sent to"
-      :resource="email"
       :showLogo="false"
   >
 
     <form @submit.prevent="submit">
-
       <div class="input-wrap">
         <InputLabel for="code" value="Code" class="sr-only" />
 
@@ -70,5 +68,4 @@ export default {
     email: String,
   }
 }
-console.log('here'.email);
 </script>
