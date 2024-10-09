@@ -14,7 +14,7 @@ Route::get('/', function () {
 
 
  Route::get('/verifyIndex', [App\Http\Controllers\Auth\TwoFactorController::class, 'index'])->name('verifyIndex');
- Route::get('/verifyStore', [App\Http\Controllers\Auth\TwoFactorController::class, 'store'])->name('verifyStore');
+ Route::post('/verifyStore', [App\Http\Controllers\Auth\TwoFactorController::class, 'store'])->name('verifyStore');
 
 
 Route::middleware('auth', 'twofactor')->group(function () {
