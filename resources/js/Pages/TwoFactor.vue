@@ -27,7 +27,8 @@ const submit = () => {
 <template>
   <GuestLayout
       heading="Enter Your Code"
-      subheading="Please enter the six digit verification code sent to" :resource="email"
+      subheading="Please enter the six digit verification code sent to"
+      title="{{email}}"
       :showLogo="false"
   >
 
