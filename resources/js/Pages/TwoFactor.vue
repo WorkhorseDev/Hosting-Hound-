@@ -54,7 +54,7 @@ const submit = () => {
       <div  class="flex items-center justify-center mt-10">
         <Link
             :href="route('verifyIndex')"
-            class="link-item"
+            class="link-item check-label"
         >
          Didn't get the code?
         </Link>

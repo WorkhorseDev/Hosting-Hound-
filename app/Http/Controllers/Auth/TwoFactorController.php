@@ -25,7 +25,7 @@ class TwoFactorController extends Controller
 
         $user = auth()->user();
 
-        if($request->input('two_factor_code') == $user->two_factor_code)
+        if($request->input('code') == $user->two_factor_code)
         {
             $user->resetTwoFactorCode();
 
