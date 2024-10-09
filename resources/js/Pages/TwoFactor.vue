@@ -3,6 +3,7 @@ import GuestLayout from '@/Layouts/GuestLayout.vue';
 import InputLabel from '@/Components/InputLabel.vue';;
 import TextInput from '@/Components/Auth/TextInput.vue';
 import {Link, useForm} from '@inertiajs/vue3';
+import InputError from "@/Components/InputError.vue";
 
 defineProps({
   email: String,
@@ -45,7 +46,7 @@ const submit = () => {
             placeholder="New Code"
         />
       </div>
-
+      <InputError class="mt-2" :message="form.errors.two_factor_code" />
       <div class="flex items-center justify-center mt-10">
         <button class="btn-primary" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
          Continue
