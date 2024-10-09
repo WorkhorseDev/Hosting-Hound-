@@ -30,6 +30,9 @@ const submit = () => {
       subheading="Please enter the six digit verification code sent to"
       :showLogo="false"
   >
+    <div class="welcome-block flex flex-col items-center ">
+      <p class="show-email">{{email}}</p>
+    </div>
     <form @submit.prevent="submit">
       <div class="input-wrap">
         <InputLabel for="code" value="Code" class="sr-only" />
@@ -60,13 +63,6 @@ const submit = () => {
       </div>
     </form>
   </GuestLayout>
-  <div class="auth-layout min-h-screen flex flex-row justify-center items-center">
-    <div class="welcome-block flex flex-col items-center ">
-    <p class="show-email">{{email}}</p>
-    </div>
-    <div class="second-block">
-    </div>
-  </div>
 </template>
 <script>
 export default {
