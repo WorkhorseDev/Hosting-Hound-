@@ -12,12 +12,12 @@ class TwoFactorMiddleware
     {
         $user = auth()->user();
         if (auth()->check() && $user->two_factor_code) {
-            if ($user->two_factor_expires_at < now()) {
-                $user->resetTwoFactorCode();
-                auth()->logout();
-                return redirect()->route('login')
-                    ->withStatus('Your verification code expired. Please re-login.');
-            }
+//            if ($user->two_factor_expires_at < now()) {
+//                $user->resetTwoFactorCode();
+//                auth()->logout();
+//                return redirect()->route('login')
+//                    ->withStatus('Your verification code expired. Please re-login.');
+//            }
             if (!$request->is('verify*')) {
                 return redirect()->route('two-factor.index');
             }
