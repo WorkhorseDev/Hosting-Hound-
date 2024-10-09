@@ -9,7 +9,7 @@
             {{ new Illuminate\Support\HtmlString(__("Received an email with a login code? If not, click <a class=\"hover:underline\" href=\":url\">here</a>.", ['url' => route('verify.resend')])) }}
         </div>
         <x-auth-session-status class="mb-4" :status="session('status')" />
-        <form method="POST" action="{{ route('verify.store') }}">
+        <form method="POST" action="{{ route('two-factor.store') }}">
             @csrf
             <div>
                 <x-input-label for="two_factor_code" :value="__('Code')" />
