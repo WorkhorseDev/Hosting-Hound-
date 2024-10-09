@@ -58,11 +58,15 @@ const submit = () => {
          Didn't get the code?
         </Link>
       </div>
-      <div class="welcome-block flex flex-col items-center">
-        <p class="show-email">{{email}}</p>
-      </div>
     </form>
   </GuestLayout>
+  <div class="auth-layout min-h-screen flex flex-row justify-center items-center">
+    <div class="welcome-block flex flex-col items-center ">
+    <p class="show-email">{{email}}</p>
+    </div>
+    <div class="second-block">
+    </div>
+  </div>
 </template>
 <script>
 export default {
