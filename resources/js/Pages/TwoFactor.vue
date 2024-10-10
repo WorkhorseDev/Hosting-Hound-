@@ -32,7 +32,7 @@ const submit = () => {
       :heading-email=email
   >
     <form @submit.prevent="submit">
-      <InputError class="mt-2 accent-green-800" :message="form.errors.code_send" />
+      <b-alert show variant="success" v-if="form.errors.code_send">Success Alert</b-alert>
       <div class="input-wrap">
         <InputLabel for="code" value="Code" class="sr-only" />
 
