@@ -256,23 +256,4 @@ p.terms-text {
     margin-bottom: 15px;
 }
 
-.c-modal {
-    position: fixed;
-    top: 0;
-    bottom: 0;
-    right: 0;
-    left: 0;
-    margin: auto;
-    width: 300px;
-    height: 150px;
-    padding: 12px;
-    border: 1px solid #A7B57C;
-    border-radius: 5px;
-    background-color: #fff;
-    z-index: 10001;
-    opacity: 1;
-    transition: .6s;
-    text-align: center;
-    color: #3d5f58;
-}
 

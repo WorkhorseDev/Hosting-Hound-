@@ -7,7 +7,7 @@ import InputError from "@/Components/InputError.vue";
 
 defineProps({
   email: String,
-  modal: false,
+  reSend: false,
   status: {
     type: String,
     email: String,
@@ -32,6 +32,7 @@ const submit = () => {
       :showLogo="false"
       :heading-email=email
   >
+    <p v-if="reSend">Code email resent, please check again.</p>
     <form @submit.prevent="submit">
       <div class="input-wrap">
         <InputLabel for="code" value="Code" class="sr-only" />
@@ -63,17 +64,12 @@ const submit = () => {
       </div>
     </form>
   </GuestLayout>
-  <div>
-    <div class="modal" v-show="modal">
-      <span>Code email resent, please check again</span>
-    </div>
-  </div>
 </template>
 <script>
 export default {
   props: {
     email: String,
-    modal: false,
+    reSend: false,
   }
 }
 </script>

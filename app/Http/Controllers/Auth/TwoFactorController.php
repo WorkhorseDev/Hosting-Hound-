@@ -35,12 +35,12 @@ class TwoFactorController extends Controller
         return redirect()->back()->withErrors(['two_factor_code' => 'The two factor code you have entered does not match']);
 
     }
-    public function resend(): RedirectResponse
+    public function resend()
     {
         $user = auth()->user();
         $user->generateTwoFactorCode();
         $user->notify(new TwoFactorCode());
 
-        return redirect()->back()->withErrors(['code_send' => 'Code email resent, please check again']);
+        return Inertia::render('TwoFactor', ['reSend' => true]);
     }
 }
