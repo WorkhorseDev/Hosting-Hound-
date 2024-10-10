@@ -15,6 +15,7 @@ Route::get('/', function () {
 
  Route::get('/verifyIndex', [App\Http\Controllers\Auth\TwoFactorController::class, 'index'])->name('verifyIndex');
  Route::post('/verifyStore', [App\Http\Controllers\Auth\TwoFactorController::class, 'store'])->name('verifyStore');
+ Route::post('/verifyResend', [App\Http\Controllers\Auth\TwoFactorController::class, 'resend'])->name('verifyResend');
  Route::get('/re-send', [App\Http\Controllers\Auth\PasswordController::class, 'reSend'])->name('re-send');
 
 

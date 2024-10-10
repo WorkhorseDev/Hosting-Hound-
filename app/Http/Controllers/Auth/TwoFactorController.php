@@ -40,6 +40,6 @@ class TwoFactorController extends Controller
         $user = auth()->user();
         $user->generateTwoFactorCode();
         $user->notify(new TwoFactorCode());
-        return redirect()->back()->withStatus(__('Code has been sent again'));
+        return redirect()->back()->withStatus(__('Code email resent, please check again'));
     }
 }
