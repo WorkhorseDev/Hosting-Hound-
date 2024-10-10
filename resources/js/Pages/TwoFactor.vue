@@ -32,7 +32,7 @@ const submit = () => {
       :showLogo="false"
       :heading-email=email
   >
-    <p v-if="reSend">Code email resent, please check again.</p>
+    <p v-if="reSend" class="re-send">Code email resent, please check again.</p>
     <form @submit.prevent="submit">
       <div class="input-wrap">
         <InputLabel for="code" value="Code" class="sr-only" />

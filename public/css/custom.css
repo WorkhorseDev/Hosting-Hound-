@@ -255,5 +255,8 @@ p.terms-text {
     width: 535px;
     margin-bottom: 15px;
 }
-
-
+ p.re-send {
+     font-size: 24px;
+     padding: 20px;
+     color: #fff;
+ }
