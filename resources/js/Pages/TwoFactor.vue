@@ -7,6 +7,7 @@ import InputError from "@/Components/InputError.vue";
 
 defineProps({
   email: String,
+  modal: false,
   status: {
     type: String,
     email: String,
@@ -32,7 +33,6 @@ const submit = () => {
       :heading-email=email
   >
     <form @submit.prevent="submit">
-      <b-alert show variant="success" v-if="form.errors.code_send">Success Alert</b-alert>
       <div class="input-wrap">
         <InputLabel for="code" value="Code" class="sr-only" />
 
@@ -56,17 +56,24 @@ const submit = () => {
         <Link
             :href="route('verifyResend')"
             class="link-item check-label"
+            on:click="modal=!modal"
         >
          Didn't get the code?
         </Link>
       </div>
     </form>
   </GuestLayout>
+  <div>
+    <div class="modal" v-show="modal">
+      <span>Code email resent, please check again</span>
+    </div>
+  </div>
 </template>
 <script>
 export default {
   props: {
     email: String,
+    modal: false,
   }
 }
 </script>
