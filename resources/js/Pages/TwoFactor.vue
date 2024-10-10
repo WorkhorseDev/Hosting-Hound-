@@ -53,7 +53,7 @@ const submit = () => {
       </div>
       <div  class="flex items-center justify-center mt-10">
         <Link
-            :href="route('verifyIndex')"
+            :href="route('verifyResend')"
             class="link-item check-label"
         >
          Didn't get the code?
