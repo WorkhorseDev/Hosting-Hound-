@@ -4,7 +4,7 @@ import InputError from '@/Components/InputError.vue';
 import InputLabel from '@/Components/InputLabel.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import TextInput from '@/Components/Auth/TextInput.vue';
-import { Head, useForm } from '@inertiajs/vue3';
+import {Head, Link, useForm} from '@inertiajs/vue3';
 
 defineProps({
     status: {
@@ -62,6 +62,14 @@ const submit = () => {
                     Send
                 </button>
             </div>
+          <div class="flex items-center justify-center mt-10">
+          <Link
+              :href="route('re-send')"
+              class="link-item check-label"
+          >
+            Resend email?
+          </Link>
+          </div>
         </form>
     </GuestLayout>
 </template>

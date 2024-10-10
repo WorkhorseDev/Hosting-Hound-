@@ -83,7 +83,7 @@ const submit = () => {
 
             <div class="flex flex-col items-center justify-center mt-16">
                 <button class="mb-8 btn-primary" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
-                    Log in
+                    Sign in
                 </button>
 
                 <Link
@@ -93,6 +93,14 @@ const submit = () => {
                 >
                     Forgot your password?
                 </Link>
+            </div>
+          <div class="flex flex-col items-center justify-center mt-16">
+              <Link
+                  :href="route('register')"
+                  class="mb-8 btn-primary" :class="{ 'opacity-25': form.processing }" :disabled="form.processing"
+              >
+                Sign up
+              </Link>
             </div>
         </form>
     </GuestLayout>
