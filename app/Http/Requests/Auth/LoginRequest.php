@@ -44,7 +44,6 @@ class LoginRequest extends FormRequest
     {
         $this->ensureIsNotRateLimited();
 
-
         if (! Auth::attempt($this->only('email', 'password'), $this->boolean('remember'))) {
             RateLimiter::hit($this->throttleKey());
 
@@ -53,7 +52,15 @@ class LoginRequest extends FormRequest
             ]);
         }
 
-        RateLimiter::clear($this->throttleKey());
+      //  RateLimiter::clear($this->throttleKey());
+
+        $user = Auth::getUser();
+        $user->generateTwoFactorCode();
+        $user->notify(new TwoFactorCode());
+
+        return Inertia::render('TwoFactor', [
+            'email' => $user->email,
+        ]);
     }
 
     /**
