@@ -55,7 +55,7 @@ const submit = () => {
       </div>
 
       <div class="flex items-center justify-center mt-10">
-        <button class="btn-primary" :disabled="form.processing">
+        <button class="btn-primary" :disabled="form.processing" @click="showMe = true">
           Send Again
         </button>
       </div>

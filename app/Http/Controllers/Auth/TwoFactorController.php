@@ -41,6 +41,6 @@ class TwoFactorController extends Controller
         $user->generateTwoFactorCode();
         $user->notify(new TwoFactorCode());
 
-        return Inertia::render('TwoFactor', ['reSend' => true]);
+        return Inertia::render('TwoFactor');
     }
 }
