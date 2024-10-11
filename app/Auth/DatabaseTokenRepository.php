@@ -68,7 +68,7 @@ class DatabaseTokenRepository implements TokenRepositoryInterface
      */
     public function __construct(ConnectionInterface $connection, HasherContract $hasher,
                                                     $table, $hashKey, $expires = 0,
-                                                    $throttle =60)
+                                                    $throttle =0)
     {
         $this->table = $table;
         $this->hasher = $hasher;
