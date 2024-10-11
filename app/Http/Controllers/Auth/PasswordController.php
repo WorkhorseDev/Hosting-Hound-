@@ -37,6 +37,6 @@ class PasswordController extends Controller
 
     public function reSend ()
     {
-        return Inertia::render('Auth/ReSend');
+        return Inertia::render('Auth/ReSend',  ['reSend' => true]);
     }
 }

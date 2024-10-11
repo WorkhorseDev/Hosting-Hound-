@@ -7,6 +7,7 @@ import TextInput from '@/Components/Auth/TextInput.vue';
 import {Head, Link, useForm} from '@inertiajs/vue3';
 
 defineProps({
+  reSend: false,
   status: {
     type: String,
   },
@@ -34,6 +35,7 @@ const submit = () => {
     </div>
 
     <form @submit.prevent="submit">
+      <p v-if="reSend" class="re-send">Another reset email has been sent.</p>
       <div class="input-wrap">
         <InputLabel for="email" value="Email" class="sr-only" />
 
@@ -60,3 +62,10 @@ const submit = () => {
     </form>
   </GuestLayout>
 </template>
+<script>
+export default {
+  props: {
+    reSend: false,
+  }
+}
+</script>
