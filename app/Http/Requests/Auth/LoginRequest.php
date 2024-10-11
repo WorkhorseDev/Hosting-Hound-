@@ -50,17 +50,16 @@ class LoginRequest extends FormRequest
             throw ValidationException::withMessages([
                 'email' => trans('auth.failed'),
             ]);
+        } else {
+
+            //  RateLimiter::clear($this->throttleKey());
+
+            $user = Auth::getUser();
+            $user->generateTwoFactorCode();
+            $user->notify(new TwoFactorCode());
+
+            return Inertia::render('TwoFactor', ['email' => $user->email,]);
         }
-
-      //  RateLimiter::clear($this->throttleKey());
-
-        $user = Auth::getUser();
-        $user->generateTwoFactorCode();
-        $user->notify(new TwoFactorCode());
-
-        return Inertia::render('TwoFactor', [
-            'email' => $user->email,
-        ]);
     }
 
     /**
