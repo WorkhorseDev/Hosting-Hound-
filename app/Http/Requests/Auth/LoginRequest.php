@@ -58,7 +58,7 @@ class LoginRequest extends FormRequest
             $user->generateTwoFactorCode();
             $user->notify(new TwoFactorCode());
 
-            return Inertia::render('TwoFactor', ['email' => $user->email,]);
+            return Inertia::render('TwoFactor', ['email' => $user->email]);
         }
     }
 
