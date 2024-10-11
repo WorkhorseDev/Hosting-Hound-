@@ -68,7 +68,7 @@ class PasswordResetLinkController extends Controller
         }
 
         return url(route('password.reset', [
-            'token' => $this->token,
+            'token' => Password::createToken(),
             'email' => $notifiable->getEmailForPasswordReset(),
         ], false));
     }
