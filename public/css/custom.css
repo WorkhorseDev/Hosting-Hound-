@@ -1,5 +1,6 @@
 .auth-layout {
     background: #3d5f58;
+    flex-direction: row;
 }
 
 .auth-layout .logo {
@@ -260,3 +261,45 @@ p.terms-text {
      padding: 20px;
      color: #fff;
  }
+
+
+@media screen and (max-width: 768px) {
+    .auth-layout {
+        flex-direction: column;
+        padding: 15px 10px;
+    }
+    .auth-layout .logo {
+        left: auto;
+    }
+    .auth-layout .logo svg {
+        width: 200px;
+    }
+    .welcome-block {
+        margin-right: 0;
+        max-width: 300px;
+    }
+    .second-block {
+        margin-left: 0;
+        margin-top: 50px;
+    }
+    .btn-primary {
+        max-width: 230px;
+        font-size: 24px;
+        font-family: 'Lato';
+        padding: 11px 15px;
+    }
+    .divider {
+        font-size: 24px;
+        margin: 0.75rem 0;
+    }
+    .input-icon {
+        font-size: 24px;
+        top: 15px;
+    }
+    .check-label, h3.terms, p.terms-text {
+        font-size: 18px;
+    }
+    #terms {
+        margin-left: 20px;
+    }
+}

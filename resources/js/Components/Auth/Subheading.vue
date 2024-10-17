@@ -18,4 +18,10 @@ defineProps({
     text-align: center;
     line-height: 1.35em;
 }
+@media screen and (max-width: 768px) {
+    .subheading {
+        font-size: 1.5rem;
+        max-width: 250px;
+    }
+}
 </style>

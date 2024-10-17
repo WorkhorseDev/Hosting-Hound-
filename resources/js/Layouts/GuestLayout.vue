@@ -24,7 +24,7 @@ defineProps({
 </script>
 
 <template>
-    <div class="auth-layout min-h-screen flex flex-row justify-center items-center">
+    <div class="auth-layout min-h-screen flex justify-center items-center">
         <div class="welcome-block flex flex-col items-center ">
             <div v-if="showLogo" class="logo">
                 <ApplicationLogo />

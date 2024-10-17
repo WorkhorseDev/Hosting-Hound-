@@ -40,4 +40,12 @@ defineExpose({ focus: () => input.value.focus() });
 .auth-input::placeholder {
     color: #959595;
 }
+
+@media screen and (max-width: 768px) {
+    .auth-input {
+        width: 315px;
+        font-size: 22px;
+        padding-left: 65px;
+    }
+}
 </style>

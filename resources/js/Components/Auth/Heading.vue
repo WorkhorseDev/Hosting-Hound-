@@ -20,4 +20,10 @@ defineProps({
     margin-top: 2.2rem;
     margin-bottom: 2.2rem;
 }
+@media screen and (max-width: 768px) {
+    .heading {
+        font-size: 48px;
+        margin-bottom: 1rem;
+    }
+}
 </style>

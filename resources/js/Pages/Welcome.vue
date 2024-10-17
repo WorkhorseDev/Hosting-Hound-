@@ -18,7 +18,7 @@ defineProps({
 <template>
     <Head title="Welcome" />
 
-    <div class="auth-layout min-h-screen flex flex-row justify-center items-center">
+    <div class="auth-layout min-h-screen flex justify-center items-center">
         <div class="welcome-block flex flex-col items-center ">
             <div class="logo">
                 <ApplicationLogo />
