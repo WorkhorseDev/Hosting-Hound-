@@ -122,6 +122,11 @@
     -moz-border-radius: 34px;
     border-radius: 34px;
     margin-bottom: 30px;
+    min-height: 114px;
+}
+.main-panel_edit {
+    background: #3d5f58;
+    color: #ffffff;
 }
 
 .search-section {
@@ -261,6 +266,42 @@ p.terms-text {
      padding: 20px;
      color: #fff;
  }
+
+.panel-title {
+    font-size: 30px;
+    font-family: 'Lato';
+    font-weight: bold;
+    margin-left: 15px;
+}
+.main-panel .btn-back {
+    font-size: 40px;
+    cursor: pointer;
+}
+.panel-controls {
+    gap: 30px;
+}
+.panel-controls .btn-remove i,
+.panel-controls .btn-edit i {
+    font-size: 40px;
+    color: white;
+}
+.panel-controls .btn-remove {
+    font-size: 42px;
+}
+
+.panel-controls .btn-md {
+    font-family: 'Lato';
+    font-size: 24px;
+    background: #A7B57C;
+    text-align: center;
+    display: block;
+    padding: 8px 28px 8px;
+    color: #15202E;
+    border-radius: 45px;
+    -webkit-box-shadow: 8px 0px 8px -4px rgba(0, 0, 0, 0.5);
+    -moz-box-shadow: 5px 0px 8px -4px rgba(0, 0, 0, 0.5);
+    box-shadow: 0px 5px 8px -4px rgba(0, 0, 0, 0.5);
+}
 
 
 @media screen and (max-width: 768px) {

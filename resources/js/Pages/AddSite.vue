@@ -1,8 +1,143 @@
 <script setup>
 
+import {Head, Link} from "@inertiajs/vue3";
 </script>
 
 <template>
-<p>Here</p>
+    <Head title="Add Site" />
+
+    <div class="wrapper">
+        <div class="container dashboard">
+            <header class="header">
+                <div class="tabs">
+                    <a href="#" class="tab-item is-active">
+                        <span class="">Websites</span>
+                    </a>
+                    <a href="#" class="tab-item">
+                        <span class="">Billings</span>
+                    </a>
+                </div>
+
+                <div class="links">
+                    <span class="link-item link-item_add hidden">
+                       <Link :href="route('addSite')"><i class="fas fa-add"></i></Link>
+                    </span>
+                    <span class="link-item link-item_user">
+                        <i class="fas fa-user"></i>
+                    </span>
+                </div>
+            </header>
+
+            <div class="main-panel main-panel_edit">
+                <div class="flex flex-row items-center">
+                    <div class="pr-6">
+                        <span @click="goBack" class="btn-back"><i class="fas fa-arrow-left"></i></span>
+                    </div>
+                    <div class="panel-title">Add Website</div>
+                </div>
+                <div class="panel-controls flex flex-row justify-end items-center">
+                    <button class="btn-md btn-inverted">Save Changes</button>
+                    <button class="btn-remove">
+                        <i class="fa fa-trash-can"></i>
+                    </button>
+                    <button class="btn-edit">
+                        <i class="fa-solid fa-pencil"></i>
+                    </button>
+                </div>
+            </div>
+
+            <main class="main-content">
+                <div class="inner">
+                    <div class="grid grid-cols-3 gap-4">
+                        <div class="">
+                            <form action="">
+                                <div class="mb-5">
+                                    <label for="url" class="block text-sm font-medium leading-6 text-gray-900">URL</label>
+                                    <div class="mt-2">
+                                        <input id="url" name="url" type="text" autocomplete="url" placeholder="http://www.website.com" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                                    </div>
+                                </div>
+
+                                <div class="mb-5 mt-2 flex justify-center rounded-lg border border-dashed border-gray-900/25 ">
+                                    <label for="file-upload" class="relative cursor-pointer rounded-md bg-white font-semibold text-indigo-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-2 hover:text-indigo-500">
+                                        <span>Icon</span>
+                                        <input id="file-upload" name="file-upload" type="file" class="sr-only">
+                                    </label>
+                                </div>
+
+                                <div class="mb-5 ">
+                                    <label for="name" class="block text-sm font-medium leading-6 text-gray-900">Name</label>
+                                    <div class="mt-2">
+                                        <input id="name" name="name" type="text" autocomplete="name" placeholder="Website Name" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                                    </div>
+                                </div>
+
+                                <div class="mb-5">
+                                    <label for="color" class="block text-sm font-medium leading-6 text-gray-900">Color</label>
+                                    <div class="mt-2">
+                                        <select id="color" name="color" autocomplete="color" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6">
+                                            <option>Red</option>
+                                            <option>Blue</option>
+                                            <option>Green</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="mb-5">
+                                    <label for="company" class="block text-sm font-medium leading-6 text-gray-900">Company</label>
+                                    <div class="mt-2">
+                                        <input id="company" name="company" type="text" autocomplete="company" placeholder="Company Name" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                                    </div>
+                                </div>
+
+                                <div class="mb-5">
+                                    <label for="business_unit" class="block text-sm font-medium leading-6 text-gray-900">Business Unit</label>
+                                    <div class="mt-2">
+                                        <input id="business_unit" name="business_unit" type="text" autocomplete="business_unit" placeholder="Business Unit Name" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                                    </div>
+                                </div>
+
+                                <div class="mb-5">
+                                    <label for="tags" class="block text-sm font-medium leading-6 text-gray-900">Tags</label>
+                                    <div class="mt-2">
+                                        <input id="tags" name="tags" type="text" autocomplete="tags" placeholder="Type tags separated by commas" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                                    </div>
+                                </div>
+
+                                <div class="mb-5">
+                                    <label for="shared_with" class="block text-sm font-medium leading-6 text-gray-900">Shared with:</label>
+                                    <div class="mt-2">
+                                        <textarea id="shared_with" name="shared_with" rows="3" placeholder="Type a name or email serparated by a comma…" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"></textarea>
+                                    </div>
+                                </div>
+
+                                <div class="mb-5">
+                                    <label for="notes" class="block text-sm font-medium leading-6 text-gray-900">Notes</label>
+                                    <div class="mt-2">
+                                        <textarea id="notes" name="notes" rows="3" placeholder="Enter notes here" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"></textarea>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="">
+                            Form 2
+                        </div>
+                        <div class="">
+                            Form 3
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div> <!-- end .wrapper -->
 </template>
+<script>
+export default {
+    methods: {
+        goBack() {
+            window.history.back();
+        },
+    },
+};
+</script>
 
