@@ -53,7 +53,7 @@ class WebsiteController extends Controller
     /**
      * Add site
      */
-    public function addSite(Request $request)
+    public function saveSite(Request $request)
     {
         $result = Websites::addSite($request);
     }

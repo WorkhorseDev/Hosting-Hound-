@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Support\Facades\Auth;
 use MongoDB\Laravel\Eloquent\Model as Eloquent;
 
 class Websites extends Eloquent
@@ -14,7 +15,7 @@ class Websites extends Eloquent
      */
     protected $connection = 'mongodb';
     protected $collection = 'websites';
-    protected $fillable = ['_id', 'user_id', 'url', 'name', 'bu', 'tags', 'shared_with', 'notes', 'icon', 'company', 'color', 'hosts', 'domain_provider',
+    protected $fillable = ['_id', 'user_id', 'url', 'name', 'business_unit', 'tags', 'shared_with', 'notes', 'icon', 'company', 'color', 'hosts', 'domain_provider',
         'ssl_provider', 'email_provider', 'cms', 'service_type', 'service_name', 'server_type', 'renewal_type', 'cost', 'renewal_date','service_provider', 'software', 'passsword'];
 
     /**
@@ -63,21 +64,24 @@ class Websites extends Eloquent
      * @param array $site
      * @return string success
      */
-    public static function addSite(array $site)
+    public static function addSite($site)
     {
+        $fileName = time() . "_" . basename($_FILES["file"]["name"][1]);
+        $site->file('file')[1]->move(public_path() . '/icon/', $fileName);
+        $uploadfile = "/icon/" . $fileName;
         $site = Websites::create([
-            'user_id' => $site['id'],
-            'name' => $site['name'],
-            'url' => $site['url'],
-            'color' => $site['color'],
-            'icon' => $site['icon'],
-            'company' => $site['company'],
-            'bu' => $site['bu'],
-            'tags' => $site['tags'],
-            'shared_with' => $site['shared_with'],
-            'notes' => $site['notes'],
-            'service_provider' => $site['service_provider'],
-            'software' => $site['software'],
+            'user_id' => Auth::user()->_id,
+            'name' => $site->name,
+            'url' => $site->url,
+            'color' => $site->color,
+            'icon' => $uploadfile,
+            'company' => $site->company,
+            'business_unit' => $site->business_unit,
+            'tags' => $site->tags,
+            'shared_with' => $site->shared_with,
+            'notes' => $site->notes,
+            'service_provider' => isset($site->service_provider) ? $site->service_provider : '',
+            'software' => isset($site->software) ? $site->software : '',
         ]);
 
         return 'success';

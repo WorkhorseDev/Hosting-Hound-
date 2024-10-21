@@ -1,6 +1,38 @@
 <script setup>
 
-import {Head, Link} from "@inertiajs/vue3";
+import {Head, Link, useForm} from "@inertiajs/vue3";
+import TextInput from "@/Components/Auth/TextInput.vue";
+import {reactive} from "vue";
+
+const form = useForm({
+  url: '',
+  file: '',
+  name: '',
+  color: '',
+  company: '',
+  tags: '',
+  shared_with: '',
+  business_unit: '',
+  notes: ''
+});
+
+const formFile = reactive({
+  name: "",
+  file: null,
+  filename: null
+});
+
+const appendFile = (name, files) => {
+  formFile.filename = name;
+  formFile.file = files[0];
+}
+
+const submit = () => {
+  form.file =['file', formFile.file, formFile.filename];
+  form.post(route('saveSite'), {
+    onFinish: () => window.history.back(),
+  });
+};
 </script>
 
 <template>
@@ -8,6 +40,7 @@ import {Head, Link} from "@inertiajs/vue3";
 
     <div class="wrapper">
         <div class="container dashboard">
+          <form @submit.prevent="submit">
             <header class="header">
                 <div class="tabs">
                     <a href="#" class="tab-item is-active">
@@ -20,7 +53,7 @@ import {Head, Link} from "@inertiajs/vue3";
 
                 <div class="links">
                     <span class="link-item link-item_add hidden">
-                       <Link :href="route('addSite')"><i class="fas fa-add"></i></Link>
+                       <button type="submit"><i class="fas fa-add"></i></button>
                     </span>
                     <span class="link-item link-item_user">
                         <i class="fas fa-user"></i>
@@ -36,7 +69,7 @@ import {Head, Link} from "@inertiajs/vue3";
                     <div class="panel-title">Add Website</div>
                 </div>
                 <div class="panel-controls flex flex-row justify-end items-center">
-                    <button class="btn-md btn-inverted">Save Changes</button>
+                    <button type="submit" class="btn-md btn-inverted">Save Changes</button>
                     <button class="btn-remove">
                         <i class="fa fa-trash-can"></i>
                     </button>
@@ -54,28 +87,28 @@ import {Head, Link} from "@inertiajs/vue3";
                                 <div class="mb-5">
                                     <label for="url" class="block text-sm font-medium leading-6 text-gray-900">URL</label>
                                     <div class="mt-2">
-                                        <input id="url" name="url" type="text" autocomplete="url" placeholder="http://www.website.com" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                                      <TextInput v-model="form.url" id="url" name="url" type="text" autocomplete="url" placeholder="http://www.website.com" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"></TextInput>
                                     </div>
                                 </div>
 
                                 <div class="mb-5 mt-2 flex justify-center rounded-lg border border-dashed border-gray-900/25 ">
-                                    <label for="file-upload" class="relative cursor-pointer rounded-md bg-white font-semibold text-indigo-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-2 hover:text-indigo-500">
+                                    <label for="file_upload" class="relative cursor-pointer rounded-md bg-white font-semibold text-indigo-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-2 hover:text-indigo-500">
                                         <span>Icon</span>
-                                        <input id="file-upload" name="file-upload" type="file" class="sr-only">
+                                      <input type="file" @change="appendFile($event.target.name, $event.target.files)" ref="file">
                                     </label>
                                 </div>
 
                                 <div class="mb-5 ">
                                     <label for="name" class="block text-sm font-medium leading-6 text-gray-900">Name</label>
                                     <div class="mt-2">
-                                        <input id="name" name="name" type="text" autocomplete="name" placeholder="Website Name" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                                      <TextInput v-model="form.name" id="name" name="name" type="text" autocomplete="name" placeholder="Website Name" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"></TextInput>
                                     </div>
                                 </div>
 
                                 <div class="mb-5">
                                     <label for="color" class="block text-sm font-medium leading-6 text-gray-900">Color</label>
                                     <div class="mt-2">
-                                        <select id="color" name="color" autocomplete="color" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6">
+                                        <select v-model="form.color" id="color" name="color" autocomplete="color" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6">
                                             <option>Red</option>
                                             <option>Blue</option>
                                             <option>Green</option>
@@ -86,35 +119,35 @@ import {Head, Link} from "@inertiajs/vue3";
                                 <div class="mb-5">
                                     <label for="company" class="block text-sm font-medium leading-6 text-gray-900">Company</label>
                                     <div class="mt-2">
-                                        <input id="company" name="company" type="text" autocomplete="company" placeholder="Company Name" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                                      <TextInput v-model="form.company" id="company" name="company" type="text" autocomplete="company" placeholder="Company Name" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"></TextInput>
                                     </div>
                                 </div>
 
                                 <div class="mb-5">
                                     <label for="business_unit" class="block text-sm font-medium leading-6 text-gray-900">Business Unit</label>
                                     <div class="mt-2">
-                                        <input id="business_unit" name="business_unit" type="text" autocomplete="business_unit" placeholder="Business Unit Name" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                                      <TextInput v-model="form.business_unit" id="business_unit" name="business_unit" type="text" autocomplete="business_unit" placeholder="Business Unit Name" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"></TextInput>
                                     </div>
                                 </div>
 
                                 <div class="mb-5">
                                     <label for="tags" class="block text-sm font-medium leading-6 text-gray-900">Tags</label>
                                     <div class="mt-2">
-                                        <input id="tags" name="tags" type="text" autocomplete="tags" placeholder="Type tags separated by commas" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                                      <TextInput v-model="form.tags" id="tags" name="tags" type="text" autocomplete="tags" placeholder="Type tags separated by commas" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"></TextInput>
                                     </div>
                                 </div>
 
                                 <div class="mb-5">
                                     <label for="shared_with" class="block text-sm font-medium leading-6 text-gray-900">Shared with:</label>
                                     <div class="mt-2">
-                                        <textarea id="shared_with" name="shared_with" rows="3" placeholder="Type a name or email serparated by a comma…" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"></textarea>
+                                        <textarea v-model="form.shared_with" id="shared_with" name="shared_with" rows="3" placeholder="Type a name or email serparated by a comma…" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"></textarea>
                                     </div>
                                 </div>
 
                                 <div class="mb-5">
                                     <label for="notes" class="block text-sm font-medium leading-6 text-gray-900">Notes</label>
                                     <div class="mt-2">
-                                        <textarea id="notes" name="notes" rows="3" placeholder="Enter notes here" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"></textarea>
+                                        <textarea v-model="form.notes" id="notes" name="notes" rows="3" placeholder="Enter notes here" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"></textarea>
                                     </div>
                                 </div>
                             </form>
@@ -128,6 +161,7 @@ import {Head, Link} from "@inertiajs/vue3";
                     </div>
                 </div>
             </main>
+          </form>
         </div>
     </div> <!-- end .wrapper -->
 </template>

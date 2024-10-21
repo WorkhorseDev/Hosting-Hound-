@@ -25,6 +25,7 @@ Route::middleware('auth', 'twofactor')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::get('/dashboard', [App\Http\Controllers\WebsiteController::class, 'dashboard'])->name('dashboard');
     Route::get('/addSite', [App\Http\Controllers\WebsiteController::class, 'showAddSitePage'])->name('addSite');
+    Route::post('/saveSite', [App\Http\Controllers\WebsiteController::class, 'saveSite'])->name('saveSite');
 });
 
 require __DIR__.'/auth.php';
