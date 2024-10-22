@@ -63,7 +63,7 @@ const route = inject("route");
 
             <main class="main-content">
                 <div class="inner">
-                    <div class="empty-state">
+                    <div class="empty-state" v-show="!sites">
                         <div class="icon">
                             <i class="fa-solid fa-heart-crack"></i>
                         </div>
@@ -77,7 +77,7 @@ const route = inject("route");
                         </p>
                     </div>
                     <div class="data" v-if="sites && sites.length !== 0">
-
+                        <p>is site</p>
                     </div>
                 </div>
             </main>
@@ -87,7 +87,7 @@ const route = inject("route");
 <script>
 export default {
     props: {
-        sites: String,
+        sites: Array,
     }
 }
 

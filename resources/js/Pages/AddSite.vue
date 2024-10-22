@@ -1,7 +1,7 @@
 <script setup>
 
 import {Head, Link, useForm} from "@inertiajs/vue3";
-import TextInput from "@/Components/Auth/TextInput.vue";
+import TextInput from "@/Components/TextInput.vue";
 import {reactive} from "vue";
 
 const form = useForm({
@@ -21,7 +21,6 @@ const formFile = reactive({
   file: null,
   filename: null
 });
-
 const appendFile = (name, files) => {
   formFile.filename = name;
   formFile.file = files[0];
@@ -33,6 +32,8 @@ const submit = () => {
     onFinish: () => window.history.back(),
   });
 };
+
+const path = window.location.pathname;
 </script>
 
 <template>
@@ -71,15 +72,16 @@ const submit = () => {
                 <div class="panel-controls flex flex-row justify-end items-center">
                     <button type="submit" class="btn-md btn-inverted">Save Changes</button>
                     <button class="btn-remove">
-                        <i class="fa fa-trash-can"></i>
+                        <i class="fa fa-trash-can" v-if="path !== '/addSite'"></i>
                     </button>
                     <button class="btn-edit">
-                        <i class="fa-solid fa-pencil"></i>
+                        <i class="fa-solid fa-pencil" v-if="path !== '/addSite'"></i>
+                      <i class="fa-solid fa-pencil" style="color: #979797" v-if="path == '/addSite'"></i>
                     </button>
                 </div>
             </div>
 
-            <main class="main-content">
+            <main class="main-content add-site">
                 <div class="inner">
                     <div class="grid grid-cols-3 gap-4">
                         <div class="">
@@ -87,25 +89,27 @@ const submit = () => {
                                 <div class="mb-5">
                                     <label for="url" class="block text-sm font-medium leading-6 text-gray-900">URL</label>
                                     <div class="mt-2">
-                                      <TextInput v-model="form.url" id="url" name="url" type="text" autocomplete="url" placeholder="http://www.website.com" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"></TextInput>
+                                      <TextInput v-model="form.url" id="url" name="url" type="text" autocomplete="url" placeholder="http://www.website.com" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6"></TextInput>
                                     </div>
                                 </div>
 
-                                <div class="mb-5 mt-2 flex justify-center rounded-lg border border-dashed border-gray-900/25 ">
-                                    <label for="file_upload" class="relative cursor-pointer rounded-md bg-white font-semibold text-indigo-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-2 hover:text-indigo-500">
-                                        <span>Icon</span>
-                                      <input type="file" @change="appendFile($event.target.name, $event.target.files)" ref="file">
-                                    </label>
+                              <div class="mb-5 left">
+                                <label for="file-upload" class="block text-sm font-medium leading-6 text-gray-900">Icon </label>
+                                <div class="mt-2">
+                                  <label for="file" class="preview block text-sm font-medium leading-6 text-gray-900"> <i class="fa-solid fa-plus"></i> </label>
+                                  <input class="file" id="file" type="file" hidden="hidden" @change="appendFile($event.target.name, $event.target.files)"
+                                         ref="file">
                                 </div>
+                              </div>
 
-                                <div class="mb-5 ">
+                                <div class="mb-5 right">
                                     <label for="name" class="block text-sm font-medium leading-6 text-gray-900">Name</label>
                                     <div class="mt-2">
                                       <TextInput v-model="form.name" id="name" name="name" type="text" autocomplete="name" placeholder="Website Name" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"></TextInput>
                                     </div>
                                 </div>
 
-                                <div class="mb-5">
+                                <div class="mb-5 right color">
                                     <label for="color" class="block text-sm font-medium leading-6 text-gray-900">Color</label>
                                     <div class="mt-2">
                                         <select v-model="form.color" id="color" name="color" autocomplete="color" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6">
@@ -152,11 +156,15 @@ const submit = () => {
                                 </div>
                             </form>
                         </div>
-                        <div class="">
-                            Form 2
+                        <div class="service">
+                          <div class="mb-5">
+                            <label class="block text-sm font-medium leading-6 text-gray-900"> <i class="fa-solid fa-plus"></i> <span class="service">Service Providers</span> <i class="fa-solid fa-caret-up"></i></label>
+                          </div>
                         </div>
-                        <div class="">
-                            Form 3
+                        <div class="software">
+                          <div class="mb-5">
+                            <label class="block text-sm font-medium leading-6 text-gray-900"> <i class="fa-solid fa-plus"></i> <span class="service">Software & Add-Ons</span> <i class="fa-solid fa-caret-up"></i></label>
+                          </div>
                         </div>
                     </div>
                 </div>

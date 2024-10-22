@@ -272,6 +272,7 @@ p.terms-text {
     font-family: 'Lato';
     font-weight: bold;
     margin-left: 15px;
+    text-decoration: underline;
 }
 .main-panel .btn-back {
     font-size: 40px;
@@ -303,6 +304,83 @@ p.terms-text {
     box-shadow: 0px 5px 8px -4px rgba(0, 0, 0, 0.5);
 }
 
+.block.text-sm.font-medium {
+    font-size: 18px;
+    color: #15202E;
+    margin-left: 10px;
+}
+
+.preview {
+    width: 110px;
+    height: 110px;
+    border-radius: 110px;
+    background: #D8D8D8;
+    cursor: pointer;
+}
+
+.fa-solid.fa-plus {
+    width: 40px;
+    height: 40px;
+    border-radius: 40px;
+    background: #3D5F58;
+    color: #fff;
+    text-align: center;
+    padding-top: 10px;
+    margin-left: 65px;
+    cursor: pointer;
+}
+
+.right {
+    float: right;
+    width: 226px;
+    margin-bottom: 8px !important;
+}
+
+.right.color {
+    margin-bottom: 1.25rem !important;
+}
+
+.left {
+    float: left;
+    width: 140px;
+}
+
+.main-content.add-site {
+    padding: 40px;
+    padding-left: 80px;
+}
+
+.add-site input {
+    width: 338px;
+    border-radius: 5px;
+    background: #D8D8D8;
+    font-size: 18px;
+    color: #15202E;
+}
+
+.add-site .right input, .add-site .right #color {
+    width: 195px;
+}
+
+#shared_with, #notes {
+    resize: none;
+    background: #D8D8D8;
+    width: 338px;
+}
+
+span.service {
+    padding: 20px;
+}
+
+.fa-caret-up {
+    font-size: 30px;
+    vertical-align: middle;
+}
+
+
+[type='text']:focus {
+    --tw-ring-color: none !important;
+}
 
 @media screen and (max-width: 768px) {
     .auth-layout {
