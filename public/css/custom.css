@@ -377,6 +377,15 @@ span.service {
     vertical-align: middle;
 }
 
+select option {
+    color: #444645;
+    background: red;
+}
+
+.right #color {
+    height: 40px;
+    cursor: pointer;
+}
 
 [type='text']:focus {
     --tw-ring-color: none !important;
