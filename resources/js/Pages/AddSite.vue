@@ -8,7 +8,7 @@ const form = useForm({
   url: '',
   file: '',
   name: '',
-  color: '',
+  color: '#ff920a',
   company: '',
   tags: '',
   shared_with: '',
@@ -111,9 +111,7 @@ const path = window.location.pathname;
 
                                 <div class="mb-5 right color">
                                     <label for="color" class="block text-sm font-medium leading-6 text-gray-900">Color</label>
-                                    <div class="mt-2">
                                       <input type="color" v-model="form.color" id="color" name="color" value="#ff920a">
-                                    </div>
                                 </div>
 
                                 <div class="mb-5">
