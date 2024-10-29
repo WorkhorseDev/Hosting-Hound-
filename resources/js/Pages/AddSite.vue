@@ -8,7 +8,7 @@ const form = useForm({
   url: '',
   file: '',
   name: '',
-  color: '#ff920a',
+  color: '',
   company: '',
   tags: '',
   shared_with: '',
@@ -28,11 +28,11 @@ const appendFile = (name, files) => {
 
 const submit = () => {
   form.file =['file', formFile.file, formFile.filename];
+  form.color = this.color;
   form.post(route('saveSite'), {
     onFinish: () => window.history.back(),
   });
 };
-
 const path = window.location.pathname;
 </script>
 
@@ -111,7 +111,16 @@ const path = window.location.pathname;
 
                                 <div class="mb-5 right color">
                                     <label for="color" class="block text-sm font-medium leading-6 text-gray-900">Color</label>
-                                      <input type="color" v-model="form.color" id="color" name="color" value="#ff920a">
+                                  <div class="mt-2">
+                                    <div id="color" v-bind:style="{background: color}" @click="itemShow = !itemShow"  class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6">
+                                      <div class="for-caret"><i class="fa-solid fa-caret-down"></i></div>
+                                    </div>
+                                    <div class="select-item" v-if="itemShow">
+                                      <div style="background: #3D5F58" @click=setColor(dark_green)></div>
+                                      <div style="background: #A7B57C" @click=setColor(light_green)></div>
+                                      <div style="background: #FF920A" @click=setColor(orang)></div>
+                                    </div>
+                                  </div>
                                 </div>
 
                                 <div class="mb-5">
@@ -173,7 +182,20 @@ export default {
         goBack() {
             window.history.back();
         },
+       setColor(color) {
+          this.itemShow = false;
+          this.color = color;
+      }
     },
+  data() {
+    return {
+      itemShow: false,
+      color: '#FF920A',
+      orang: '#FF920A',
+      dark_green: '#3D5F58',
+      light_green: '#A7B57C'
+    };
+  },
 };
 </script>
 

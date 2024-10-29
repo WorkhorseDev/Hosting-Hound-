@@ -391,6 +391,48 @@ select option {
     --tw-ring-color: none !important;
 }
 
+.select-item {
+    cursor: pointer;
+    -webkit-box-shadow: 0px 3px 5px 0px rgba(112, 112, 112, 0.5);
+    -moz-box-shadow: 0px 3px 5px 0px rgba(112, 112, 112, 0.5);
+    box-shadow: 0px 3px 5px 0px rgba(112, 112, 112, 0.5);
+    border-radius: 5px;
+    background-color: #fff;
+    top: 100%;
+    left: 0;
+    right: 0;
+    z-index: 99;
+    max-height: 250px;
+    overflow: auto;
+    transform: scaleY(1);
+    opacity: 1;
+    transition: all 0.2s;
+    transform-origin: top;
+    color: #333;
+}
+
+.fa-solid.fa-caret-down {
+    padding: 10px;
+    font-size: 20px;
+    width: 100%;
+    text-align: center;
+    color: #15202E;
+}
+
+.for-caret {
+    width: 54px;
+    height: 39px;
+    background: #D8D8D8;
+    float: right;
+    top: -5px;
+    position: relative;
+}
+
+.select-item div {
+    height: 30px;
+}
+
+
 @media screen and (max-width: 768px) {
     .auth-layout {
         flex-direction: column;
