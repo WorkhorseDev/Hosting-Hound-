@@ -2,6 +2,7 @@
 
 import {Head, Link, useForm} from "@inertiajs/vue3";
 import TextInput from "@/Components/TextInput.vue";
+import ColorPickerSelect from "@/Components/ColorPickerSelect.vue";
 import {reactive} from "vue";
 
 const form = useForm({
@@ -15,6 +16,33 @@ const form = useForm({
   business_unit: '',
   notes: ''
 });
+
+const colors = [
+    {
+        "hex": "#FFA07A",
+        "name": "Light Salmon"
+    },
+    {
+        "hex": "#CD5C5C",
+        "name": "Indian Red"
+    },
+    {
+        "hex": "#DC143C",
+        "name": "Crimson"
+    },
+    {
+        "hex": "#20B2AA",
+        "name": "Light Sea Green"
+    },
+    {
+        "hex": "#008B8B",
+        "name": "Dark Cyan"
+    },
+    {
+        "hex": "#4682B4",
+        "name": "Steel Blue"
+    }
+]
 
 const formFile = reactive({
   name: "",
@@ -111,7 +139,8 @@ const path = window.location.pathname;
 
                                 <div class="mb-5 right color">
                                     <label for="color" class="block text-sm font-medium leading-6 text-gray-900">Color</label>
-                                      <input type="color" v-model="form.color" id="color" name="color" value="#ff920a">
+<!--                                      <input type="color" v-model="form.color" id="color" name="color" value="#ff920a">-->
+                                    <ColorPickerSelect :colorOptions="colors" label="Choose a color" empty-option="No Color" input-id="color-input" />
                                 </div>
 
                                 <div class="mb-5">

@@ -391,6 +391,11 @@ select option {
     --tw-ring-color: none !important;
 }
 
+.wrapper-dropdown > span > span {
+    padding: 0 12px;
+    margin-right: 5px;
+}
+
 @media screen and (max-width: 768px) {
     .auth-layout {
         flex-direction: column;
