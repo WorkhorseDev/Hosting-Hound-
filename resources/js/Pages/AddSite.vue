@@ -163,6 +163,64 @@ const path = window.location.pathname;
                           <div class="mb-5">
                             <label class="block text-sm font-medium leading-6 text-gray-900"> <i class="fa-solid fa-plus"></i> <span class="service">Service Providers</span> <i class="fa-solid fa-caret-up"></i></label>
                           </div>
+
+                            <div class="service-form">
+                                <div class="form-container">
+                                    <div class="form-header">Add Provider</div>
+
+                                    <div class="form-group">
+                                        <label>Host</label>
+                                        <select>
+                                            <option>Host</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <input type="text" placeholder="Host Name">
+                                    </div>
+
+                                    <div class="form-group">
+                                        <input type="text" placeholder="Web URL">
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label>Renewal Type</label>
+                                        <select>
+                                            <option>Annual</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="form-row">
+                                        <div class="form-group">
+                                            <input type="text" placeholder="$ 00.00">
+                                        </div>
+                                        <div class="form-group form-group-icon">
+                                            <input type="text" placeholder="00 / 00 / 00">
+                                            <i>📅</i>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group form-group-icon">
+                                        <input type="text" placeholder="UserName">
+                                        <i>👤</i>
+                                    </div>
+
+                                    <div class="form-group form-group-icon">
+                                        <input type="password" placeholder="••••••••">
+                                        <i>🔒</i>
+                                    </div>
+
+                                    <div class="form-group form-group-icon">
+                                        <input type="text" placeholder="PIN">
+                                        <i>🔍</i>
+                                    </div>
+
+                                    <div class="form-footer">
+                                        <button class="cancel-btn">Cancel</button>
+                                        <button class="submit-btn">Add Provider</button>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         <div class="software">
                           <div class="mb-5">
@@ -199,3 +257,92 @@ export default {
 };
 </script>
 
+<style scoped>
+.form-container {
+    width: 320px;
+    background-color: #e8e8e8;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.form-header {
+    font-size: 20px;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    font-size: 14px;
+    color: #555;
+    display: block;
+    margin-bottom: 5px;
+}
+
+.form-group input,
+.form-group select {
+    width: 100%;
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    outline: none;
+}
+
+.form-group-icon {
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
+.form-group-icon input {
+    padding-left: 35px;
+}
+
+.form-group-icon i {
+    position: absolute;
+    left: 10px;
+    font-size: 18px;
+    color: #555;
+}
+
+.form-row {
+    display: flex;
+    gap: 10px;
+}
+
+.form-row .form-group {
+    flex: 1;
+}
+
+.form-footer {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.form-footer button {
+    flex: 1;
+    padding: 10px;
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.cancel-btn {
+    background-color: #3a5656;
+    color: white;
+}
+
+.submit-btn {
+    background-color: #3a5656;
+    color: white;
+}
+</style>
