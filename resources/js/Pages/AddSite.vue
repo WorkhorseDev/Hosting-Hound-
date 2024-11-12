@@ -168,54 +168,67 @@ const path = window.location.pathname;
                                 <div class="form-container">
                                     <div class="form-header">Add Provider</div>
 
-                                    <div class="form-group">
-                                        <label>Host</label>
-                                        <select>
-                                            <option>Host</option>
-                                        </select>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <input type="text" placeholder="Host Name">
-                                    </div>
-
-                                    <div class="form-group">
-                                        <input type="text" placeholder="Web URL">
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label>Renewal Type</label>
-                                        <select>
-                                            <option>Annual</option>
-                                        </select>
-                                    </div>
-
-                                    <div class="form-row">
+                                    <div class="form-group-wrap bg-grey p-6 pt-4">
                                         <div class="form-group">
-                                            <input type="text" placeholder="$ 00.00">
+                                            <label>Host</label>
+                                            <select>
+                                                <option>Host</option>
+                                                <option>Domain Register</option>
+                                                <option>Email Plan Provider</option>
+                                                <option>SSL Provider</option>
+                                            </select>
                                         </div>
+
+                                        <div class="form-group">
+                                            <input type="text" placeholder="Host Name">
+                                        </div>
+
+                                        <div class="form-group">
+                                            <input type="text" placeholder="Web URL">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group-wrap p-6 pt-4">
+                                        <div class="form-group">
+                                            <label>Renewal Type</label>
+                                            <select class="bg-grey">
+                                                <option>Annual</option>
+                                            </select>
+                                        </div>
+
+                                        <div class="form-row">
+                                            <div class="form-group">
+                                                <label>Cost</label>
+                                                <input class="bg-grey" type="text" placeholder="$ 00.00">
+                                            </div>
+                                            <div class="form-group m-0">
+                                                <label>Renewal Date</label>
+                                                <div class="form-group form-group-icon">
+                                                    <input class="bg-grey" type="text" placeholder="00 / 00 / 00">
+                                                    <i class="fa-solid fa-calendar"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group-wrap bg-grey p-6 pt-4 security-group">
                                         <div class="form-group form-group-icon">
-                                            <input type="text" placeholder="00 / 00 / 00">
-                                            <i>📅</i>
+                                            <input type="text" placeholder="UserName">
+                                            <i class="fa-regular fa-user"></i>
+                                        </div>
+
+                                        <div class="form-group form-group-icon">
+                                            <input type="password" placeholder="••••••••">
+                                            <i class="fa-solid fa-lock"></i>
+                                        </div>
+
+                                        <div class="form-group form-group-icon m-0">
+                                            <input type="text" placeholder="PIN">
+                                            <i class="fa-solid fa-fingerprint"></i>
                                         </div>
                                     </div>
 
-                                    <div class="form-group form-group-icon">
-                                        <input type="text" placeholder="UserName">
-                                        <i>👤</i>
-                                    </div>
-
-                                    <div class="form-group form-group-icon">
-                                        <input type="password" placeholder="••••••••">
-                                        <i>🔒</i>
-                                    </div>
-
-                                    <div class="form-group form-group-icon">
-                                        <input type="text" placeholder="PIN">
-                                        <i>🔍</i>
-                                    </div>
-
-                                    <div class="form-footer">
+                                    <div class="form-footer p-5">
                                         <button class="cancel-btn">Cancel</button>
                                         <button class="submit-btn">Add Provider</button>
                                     </div>
@@ -259,39 +272,52 @@ export default {
 
 <style scoped>
 .form-container {
-    width: 320px;
-    background-color: #e8e8e8;
-    border-radius: 12px;
-    padding: 20px;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: #f3f3f3;
+    border-radius: 22px;
+    -webkit-box-shadow: 0px 2px 4px 0px rgba(0,0,0,0.5);
+    -moz-box-shadow: 0px 2px 4px 0px rgba(0,0,0,0.5);
+    box-shadow: 0px 2px 4px 0px rgba(0,0,0,0.5);
+    font-family: "Lato", sans-serif;
 }
 
 .form-header {
-    font-size: 20px;
+    font-size: 1.25rem;
+    font-family: "Lato", sans-serif;
     font-weight: bold;
     text-align: center;
-    margin-bottom: 20px;
+    padding: 15px;
+}
+
+.form-group-wrap.bg-grey {
+    background: #d8d8d8;
 }
 
 .form-group {
-    margin-bottom: 15px;
+    margin-bottom: 10px;
 }
 
 .form-group label {
-    font-size: 14px;
-    color: #555;
+    font-size: 1.125rem;
+    color: #15202E;
     display: block;
-    margin-bottom: 5px;
+    margin-bottom: 10px;
 }
 
 .form-group input,
 .form-group select {
     width: 100%;
     padding: 10px;
-    font-size: 14px;
+    font-size: 18px;
     border: 1px solid #ccc;
-    border-radius: 8px;
+    border-radius: 4px;
     outline: none;
+    background-color: #ffffff;
+    color: #7a8088;
+}
+
+.form-group input.bg-grey,
+.form-group select.bg-grey {
+    background-color: #d8d8d8;
 }
 
 .form-group-icon {
@@ -310,6 +336,21 @@ export default {
     font-size: 18px;
     color: #555;
 }
+.security-group input {
+    font-size: 1.2rem;
+    padding-left: 50px;
+    border-radius: 4px;
+    -webkit-box-shadow: 0px 5px 8px -6px rgba(0,0,0,0.75);
+    -moz-box-shadow: 0px 5px 8px -6px rgba(0,0,0,0.75);
+    box-shadow: 0px 5px 8px -6px rgba(0,0,0,0.75);
+}
+.security-group .form-group-icon {
+
+}
+.security-group .form-group-icon i {
+    font-size: 1.5rem;
+    left: 15px;
+}
 
 .form-row {
     display: flex;
@@ -323,7 +364,6 @@ export default {
 .form-footer {
     display: flex;
     gap: 10px;
-    margin-top: 20px;
 }
 
 .form-footer button {
