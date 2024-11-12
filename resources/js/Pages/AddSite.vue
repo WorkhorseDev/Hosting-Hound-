@@ -239,6 +239,77 @@ const path = window.location.pathname;
                           <div class="mb-5">
                             <label class="block text-sm font-medium leading-6 text-gray-900"> <i class="fa-solid fa-plus"></i> <span class="service">Software & Add-Ons</span> <i class="fa-solid fa-caret-up"></i></label>
                           </div>
+
+                            <div class="service-form">
+                                <div class="form-container">
+                                    <div class="form-header">Add Software</div>
+
+                                    <div class="form-group-wrap bg-grey p-6 pt-4">
+                                        <div class="form-group">
+                                            <label>Host</label>
+                                            <select>
+                                                <option>Software</option>
+                                                <option>CMS Name</option>
+                                                <option>Theme Name</option>
+                                                <option>Add-on Name</option>
+                                            </select>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <input type="text" placeholder="Software Name">
+                                        </div>
+
+                                        <div class="form-group">
+                                            <input type="text" placeholder="Web URL">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group-wrap p-6 pt-4">
+                                        <div class="form-group">
+                                            <label>Renewal Type</label>
+                                            <select class="bg-grey">
+                                                <option>Annual</option>
+                                            </select>
+                                        </div>
+
+                                        <div class="form-row">
+                                            <div class="form-group">
+                                                <label>Cost</label>
+                                                <input class="bg-grey" type="text" placeholder="$ 00.00">
+                                            </div>
+                                            <div class="form-group m-0">
+                                                <label>Renewal Date</label>
+                                                <div class="form-group form-group-icon">
+                                                    <input class="bg-grey" type="text" placeholder="00 / 00 / 00">
+                                                    <i class="fa-solid fa-calendar"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group-wrap bg-grey p-6 pt-4 security-group">
+                                        <div class="form-group form-group-icon">
+                                            <input type="text" placeholder="UserName">
+                                            <i class="fa-regular fa-user"></i>
+                                        </div>
+
+                                        <div class="form-group form-group-icon">
+                                            <input type="password" placeholder="••••••••">
+                                            <i class="fa-solid fa-lock"></i>
+                                        </div>
+
+                                        <div class="form-group form-group-icon m-0">
+                                            <input type="text" placeholder="PIN">
+                                            <i class="fa-solid fa-fingerprint"></i>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-footer p-5">
+                                        <button class="cancel-btn">Cancel</button>
+                                        <button class="submit-btn">Add Provider</button>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
