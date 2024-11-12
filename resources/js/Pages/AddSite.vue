@@ -89,7 +89,7 @@ const path = window.location.pathname;
                                 <div class="mb-5">
                                     <label for="url" class="block text-sm font-medium leading-6 text-gray-900">URL</label>
                                     <div class="mt-2">
-                                      <TextInput v-model="form.url" id="url" name="url" type="text" autocomplete="url" placeholder="http://www.website.com" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6"></TextInput>
+                                      <TextInput v-model="form.url" required id="url" name="url" type="text" autocomplete="url" placeholder="http://www.website.com" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6"></TextInput>
                                     </div>
                                 </div>
 
@@ -105,7 +105,7 @@ const path = window.location.pathname;
                                 <div class="mb-5 right">
                                     <label for="name" class="block text-sm font-medium leading-6 text-gray-900">Name</label>
                                     <div class="mt-2">
-                                      <TextInput v-model="form.name" id="name" name="name" type="text" autocomplete="name" placeholder="Website Name" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"></TextInput>
+                                      <TextInput v-model="form.name" required id="name" name="name" type="text" autocomplete="name" placeholder="Website Name" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"></TextInput>
                                     </div>
                                 </div>
 
@@ -161,16 +161,18 @@ const path = window.location.pathname;
                         </div>
                         <div class="service">
                           <div class="mb-5">
-                            <label class="block text-sm font-medium leading-6 text-gray-900"> <i class="fa-solid fa-plus"></i> <span class="service">Service Providers</span> <i class="fa-solid fa-caret-up"></i></label>
+                            <label class="block text-sm font-medium leading-6 text-gray-900 show-form" @click="serviceShow = !serviceShow"> <i class="fa-solid fa-plus"></i> <span class="service">Service Providers</span> <i class="fa-solid fa-caret-up"></i></label>
                           </div>
 
-                            <div class="service-form">
+                            <div class="service-form" v-if="serviceShow">
                                 <div class="form-container">
                                     <div class="form-header">Add Provider</div>
 
-                                    <div class="form-group-wrap bg-grey p-6 pt-4">
-                                        <div class="form-group">
-                                            <label>Host</label>
+                                    <div class="form-group-wrap bg-grey p-6 pt-4 globe-div">
+                                      <div class="globe">
+                                        <i class="fa-solid fa-globe"></i>
+                                      </div>
+                                        <div class="form-group right-side">
                                             <select>
                                                 <option>Host</option>
                                                 <option>Domain Register</option>
@@ -179,11 +181,11 @@ const path = window.location.pathname;
                                             </select>
                                         </div>
 
-                                        <div class="form-group">
+                                        <div class="form-group right-side">
                                             <input type="text" placeholder="Host Name">
                                         </div>
 
-                                        <div class="form-group">
+                                        <div class="form-group right-side">
                                             <input type="text" placeholder="Web URL">
                                         </div>
                                     </div>
@@ -237,32 +239,34 @@ const path = window.location.pathname;
                         </div>
                         <div class="software">
                           <div class="mb-5">
-                            <label class="block text-sm font-medium leading-6 text-gray-900"> <i class="fa-solid fa-plus"></i> <span class="service">Software & Add-Ons</span> <i class="fa-solid fa-caret-up"></i></label>
+                            <label class="block text-sm font-medium leading-6 text-gray-900 show-form" @click="softwareShow = !softwareShow"> <i class="fa-solid fa-plus"></i> <span class="service">Software & Add-Ons</span> <i class="fa-solid fa-caret-up"></i></label>
                           </div>
 
-                            <div class="service-form">
+                            <div class="service-form" v-if="softwareShow">
                                 <div class="form-container">
                                     <div class="form-header">Add Software</div>
 
-                                    <div class="form-group-wrap bg-grey p-6 pt-4">
-                                        <div class="form-group">
-                                            <label>Host</label>
-                                            <select>
-                                                <option>Software</option>
-                                                <option>CMS Name</option>
-                                                <option>Theme Name</option>
-                                                <option>Add-on Name</option>
-                                            </select>
-                                        </div>
-
-                                        <div class="form-group">
-                                            <input type="text" placeholder="Software Name">
-                                        </div>
-
-                                        <div class="form-group">
-                                            <input type="text" placeholder="Web URL">
-                                        </div>
+                                  <div class="form-group-wrap bg-grey p-6 pt-4 globe-div">
+                                    <div class="globe">
+                                      <i class="fa-solid fa-globe"></i>
                                     </div>
+                                    <div class="form-group right-side">
+                                      <select>
+                                        <option>Host</option>
+                                        <option>Domain Register</option>
+                                        <option>Email Plan Provider</option>
+                                        <option>SSL Provider</option>
+                                      </select>
+                                    </div>
+
+                                    <div class="form-group right-side">
+                                      <input type="text" placeholder="Host Name">
+                                    </div>
+
+                                    <div class="form-group right-side">
+                                      <input type="text" placeholder="Web URL">
+                                    </div>
+                                  </div>
 
                                     <div class="form-group-wrap p-6 pt-4">
                                         <div class="form-group">
@@ -331,7 +335,9 @@ export default {
     },
   data() {
     return {
-      itemShow: false,
+      serviceShow: false,
+      softwareShow: false,
+      showMe: false,
       color: '#FF920A',
       orang: '#FF920A',
       dark_green: '#3D5F58',
@@ -341,117 +347,3 @@ export default {
 };
 </script>
 
-<style scoped>
-.form-container {
-    background-color: #f3f3f3;
-    border-radius: 22px;
-    -webkit-box-shadow: 0px 2px 4px 0px rgba(0,0,0,0.5);
-    -moz-box-shadow: 0px 2px 4px 0px rgba(0,0,0,0.5);
-    box-shadow: 0px 2px 4px 0px rgba(0,0,0,0.5);
-    font-family: "Lato", sans-serif;
-}
-
-.form-header {
-    font-size: 1.25rem;
-    font-family: "Lato", sans-serif;
-    font-weight: bold;
-    text-align: center;
-    padding: 15px;
-}
-
-.form-group-wrap.bg-grey {
-    background: #d8d8d8;
-}
-
-.form-group {
-    margin-bottom: 10px;
-}
-
-.form-group label {
-    font-size: 1.125rem;
-    color: #15202E;
-    display: block;
-    margin-bottom: 10px;
-}
-
-.form-group input,
-.form-group select {
-    width: 100%;
-    padding: 10px;
-    font-size: 18px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    outline: none;
-    background-color: #ffffff;
-    color: #7a8088;
-}
-.form-group select {
-    background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M137.4 374.6c12.5 12.5 32.8 12.5 45.3 0l128-128c9.2-9.2 11.9-22.9 6.9-34.9s-16.6-19.8-29.6-19.8L32 192c-12.9 0-24.6 7.8-29.6 19.8s-2.2 25.7 6.9 34.9l128 128z"/></svg>');
-}
-
-.form-group input.bg-grey,
-.form-group select.bg-grey {
-    background-color: #d8d8d8;
-}
-
-.form-group-icon {
-    display: flex;
-    align-items: center;
-    position: relative;
-}
-
-.form-group-icon input {
-    padding-left: 35px;
-}
-
-.form-group-icon i {
-    position: absolute;
-    left: 10px;
-    font-size: 18px;
-    color: #555;
-}
-.security-group input {
-    font-size: 1.2rem;
-    padding-left: 50px;
-    border-radius: 4px;
-    -webkit-box-shadow: 0px 5px 8px -6px rgba(0,0,0,0.75);
-    -moz-box-shadow: 0px 5px 8px -6px rgba(0,0,0,0.75);
-    box-shadow: 0px 5px 8px -6px rgba(0,0,0,0.75);
-}
-.security-group .form-group-icon {
-
-}
-.security-group .form-group-icon i {
-    font-size: 1.5rem;
-    left: 15px;
-}
-
-.form-row {
-    display: flex;
-    gap: 10px;
-}
-
-.form-row .form-group {
-    flex: 1;
-}
-
-.form-footer {
-    display: flex;
-    gap: 15px;
-}
-
-.form-footer button {
-    flex: 1;
-    padding: 10px;
-    font-size: 1.2rem;
-    font-weight: bold;
-    border: none;
-    border-radius: 30px;
-    cursor: pointer;
-    webkit-box-shadow: 0px 5px 8px -4px rgba(0,0,0,0.5);
-    -moz-box-shadow: 0px 5px 8px -4px rgba(0,0,0,0.5);
-    box-shadow: 0px 5px 8px -4px rgba(0,0,0,0.5);
-    background-color: #3a5656;
-    color: white;
-}
-</style>
