@@ -5,6 +5,26 @@ import { Link } from '@inertiajs/vue3';
 import { inject } from "vue";
 
 const route = inject("route");
+
+// just for testing
+const sites = [{
+    url: 'https://website.com',
+    name: 'Test website 1',
+    logo: 'https://picsum.photos/70',
+    color: 'red'
+},{
+    url: 'https://website123.com',
+    name: 'Test website 2',
+    logo: 'https://picsum.photos/70',
+    color: '#ff930a'
+},{
+    url: 'https://website-qwe.com',
+    name: 'Test website 3',
+    logo: '',
+    color: 'blue'
+},
+];
+
 </script>
 
 <template>
@@ -76,11 +96,71 @@ const route = inject("route");
                             You can <Link :href="route('addSite')" class="new-site">add a new website</Link> by pressing the + icon at the top right-hand corner of this screen
                         </p>
                     </div>
-                    <div class="data" v-if="sites && sites.length !== 0">
-                      <div v-for="item in sites">
-                        <p>{{item.name}}</p>
-                      </div>
-                    </div>
+
+                    <!-- HTML-markup of the website card -->
+                    <div class="card-list">
+                        <div class="card-item">
+                            <span class="card-selection selected"></span>
+                            <div class="card-content">
+                                <div class="info">
+                                    <p class="card-title">Website Name</p>
+                                    <a href="#" class="card-link">http://www.website.com</a>
+                                </div>
+                                <div class="card-logo">
+                                    <!-- if there is no logo -->
+                                    <span>Logo</span>
+                                </div>
+                                <span class="card-color" style="background-color: #3c5f58;"></span>
+                            </div>
+                        </div>
+                        <div class="card-item">
+                            <span class="card-selection selected"></span>
+                            <div class="card-content">
+                                <div class="info">
+                                    <p class="card-title">Website Name</p>
+                                    <span class="card-link">http://www.website.com</span>
+                                </div>
+                                <div class="card-logo">
+                                    <!-- if there is no logo -->
+                                    <span>Logo</span>
+                                </div>
+                                <span class="card-color" style="background-color: #ff930a;"></span>
+                            </div>
+                        </div>
+                        <div class="card-item">
+                            <span class="card-selection selected"></span>
+                            <div class="card-content">
+                                <div class="info">
+                                    <p class="card-title">Website Name</p>
+                                    <span class="card-link">http://www.website.com</span>
+                                </div>
+                                <div class="card-logo">
+                                    <!-- if there is no logo -->
+                                    <span>Logo</span>
+                                </div>
+                                <span class="card-color" style="background-color: #a7b57c;"></span>
+                            </div>
+                        </div>
+                    </div> <!-- end .card-list -->
+
+
+                    <div class="data card-list" v-if="sites && sites.length !== 0">
+                        <div v-for="item in sites" class="card-item">
+<!--                            <p>{{item.name}}</p>-->
+                            <span class="card-selection selected"></span>
+                            <div class="card-content">
+                                <div class="info">
+                                    <p class="card-title">{{ item.name }}</p>
+                                    <span class="card-link">{{ item.url }}</span>
+                                </div>
+                                <div class="card-logo">
+                                    <img v-if="item.logo" :src="item.logo" :alt="item.name" />
+                                    <span v-else>Logo</span>
+                                </div>
+                                <span class="card-color" :style="{ backgroundColor: item.color }"></span>
+                            </div>
+                        </div> <!-- end .card-item -->
+                    </div> <!-- end .card-list -->
                 </div>
             </main>
         </div>
