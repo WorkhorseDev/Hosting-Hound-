@@ -77,7 +77,9 @@ const route = inject("route");
                         </p>
                     </div>
                     <div class="data" v-if="sites && sites.length !== 0">
-                        <p>is site</p>
+                      <div v-for="item in sites">
+                        <p>{{item.name}}</p>
+                      </div>
                     </div>
                 </div>
             </main>
