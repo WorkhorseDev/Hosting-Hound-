@@ -97,53 +97,6 @@ const sites = [{
                         </p>
                     </div>
 
-                    <!-- HTML-markup of the website card -->
-                    <div class="card-list">
-                        <div class="card-item">
-                            <span class="card-selection selected"></span>
-                            <div class="card-content">
-                                <div class="info">
-                                    <p class="card-title">Website Name</p>
-                                    <a href="#" class="card-link">http://www.website.com</a>
-                                </div>
-                                <div class="card-logo">
-                                    <!-- if there is no logo -->
-                                    <span>Logo</span>
-                                </div>
-                                <span class="card-color" style="background-color: #3c5f58;"></span>
-                            </div>
-                        </div>
-                        <div class="card-item">
-                            <span class="card-selection selected"></span>
-                            <div class="card-content">
-                                <div class="info">
-                                    <p class="card-title">Website Name</p>
-                                    <span class="card-link">http://www.website.com</span>
-                                </div>
-                                <div class="card-logo">
-                                    <!-- if there is no logo -->
-                                    <span>Logo</span>
-                                </div>
-                                <span class="card-color" style="background-color: #ff930a;"></span>
-                            </div>
-                        </div>
-                        <div class="card-item">
-                            <span class="card-selection selected"></span>
-                            <div class="card-content">
-                                <div class="info">
-                                    <p class="card-title">Website Name</p>
-                                    <span class="card-link">http://www.website.com</span>
-                                </div>
-                                <div class="card-logo">
-                                    <!-- if there is no logo -->
-                                    <span>Logo</span>
-                                </div>
-                                <span class="card-color" style="background-color: #a7b57c;"></span>
-                            </div>
-                        </div>
-                    </div> <!-- end .card-list -->
-
-
                     <div class="data card-list" v-if="sites && sites.length !== 0">
                         <div v-for="item in sites" class="card-item">
 <!--                            <p>{{item.name}}</p>-->
