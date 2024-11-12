@@ -571,6 +571,13 @@ select option {
     cursor: pointer;
 }
 
+.previe {
+    width: 125px;
+    height: 125px;
+    border-radius: 125px;
+    object-fit: cover;
+}
+
 @media screen and (max-width: 768px) {
     .auth-layout {
         flex-direction: column;

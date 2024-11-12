@@ -66,9 +66,12 @@ class Websites extends Eloquent
      */
     public static function addSite($site)
     {
-        $fileName = time() . "_" . basename($_FILES["file"]["name"][1]);
-        $site->file('file')[1]->move(public_path() . '/icon/', $fileName);
-        $uploadfile = "/icon/" . $fileName;
+        $uploadfile = '';
+        if(isset($_FILES["file"]["name"])) {
+            $fileName = time() . "_" . basename($_FILES["file"]["name"][1]);
+            $site->file('file')[1]->move(public_path() . '/icon/', $fileName);
+            $uploadfile = "/icon/" . $fileName;
+        }
         $site = Websites::create([
             'user_id' => Auth::user()->_id,
             'name' => $site->name,

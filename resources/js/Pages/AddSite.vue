@@ -1,39 +1,38 @@
 <script setup>
 
-import {Head, Link, useForm} from "@inertiajs/vue3";
+import {Head, useForm} from "@inertiajs/vue3";
 import TextInput from "@/Components/TextInput.vue";
 import {reactive} from "vue";
+import InputError from "@/Components/InputError.vue";
 
-const form = useForm({
-  url: '',
-  file: '',
-  name: '',
-  color: '',
-  company: '',
-  tags: '',
-  shared_with: '',
-  business_unit: '',
-  notes: ''
-});
+// const form = useForm({
+//   url: '',
+//   file: '',
+//   name: '',
+//   color: '',
+//   company: '',
+//   tags: '',
+//   shared_with: '',
+//   business_unit: '',
+//   notes: ''
+// });
 
-const formFile = reactive({
-  name: "",
-  file: null,
-  filename: null
-});
-const appendFile = (name, files) => {
-  formFile.filename = name;
-  formFile.file = files[0];
-}
+// const formFile = reactive({
+//   name: "",
+//   file: null,
+//   filename: null
+// });
 
-const submit = () => {
-  form.file =['file', formFile.file, formFile.filename];
-  form.color = this.color;
-  form.post(route('saveSite'), {
-    onFinish: () => window.history.back(),
-  });
-};
-const path = window.location.pathname;
+// const submit = () => {
+//   form.file =['file', this.formFile.file, this.formFile.filename];
+//   if(this !== undefined && this.color) {
+//     form.color = this.color;
+//   }
+//   form.post(route('saveSite'), {
+//     onFinish: () => window.history.back(),
+//   });
+// };
+// const path = window.location.pathname;
 </script>
 
 <template>
@@ -41,7 +40,6 @@ const path = window.location.pathname;
 
     <div class="wrapper">
         <div class="container dashboard">
-          <form @submit.prevent="submit">
             <header class="header">
                 <div class="tabs">
                     <a href="#" class="tab-item is-active">
@@ -61,7 +59,7 @@ const path = window.location.pathname;
                     </span>
                 </div>
             </header>
-
+          <form @submit.prevent="submit" id="addSite">
             <div class="main-panel main-panel_edit">
                 <div class="flex flex-row items-center">
                     <div class="pr-6">
@@ -80,23 +78,23 @@ const path = window.location.pathname;
                     </button>
                 </div>
             </div>
-
             <main class="main-content add-site">
                 <div class="inner">
                     <div class="grid grid-cols-3 gap-4">
-                        <div class="">
-                            <form action="">
+                        <div>
                                 <div class="mb-5">
                                     <label for="url" class="block text-sm font-medium leading-6 text-gray-900">URL</label>
                                     <div class="mt-2">
-                                      <TextInput v-model="form.url" required id="url" name="url" type="text" autocomplete="url" placeholder="http://www.website.com" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6"></TextInput>
+                                      <TextInput v-model="form.url" required id="url" name="url" type="text" autocomplete="url" placeholder="http://www.website.com" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6"/>
+                                      <InputError class="mt-2" :message="form.errors.name" />
                                     </div>
                                 </div>
 
                               <div class="mb-5 left">
-                                <label for="file-upload" class="block text-sm font-medium leading-6 text-gray-900">Icon </label>
+                                <label for="file-upload" class="block text-sm font-medium leading-6 text-gray-900">Icon</label>
                                 <div class="mt-2">
-                                  <label for="file" class="preview block text-sm font-medium leading-6 text-gray-900"> <i class="fa-solid fa-plus"></i> </label>
+                                  <img class="previe" v-if="img" :src="img" />
+                                  <label v-if="!img" for="file" class="preview block text-sm font-medium leading-6 text-gray-900"> <i class="fa-solid fa-plus"></i> </label>
                                   <input class="file" id="file" type="file" hidden="hidden" @change="appendFile($event.target.name, $event.target.files)"
                                          ref="file">
                                 </div>
@@ -105,7 +103,7 @@ const path = window.location.pathname;
                                 <div class="mb-5 right">
                                     <label for="name" class="block text-sm font-medium leading-6 text-gray-900">Name</label>
                                     <div class="mt-2">
-                                      <TextInput v-model="form.name" required id="name" name="name" type="text" autocomplete="name" placeholder="Website Name" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"></TextInput>
+                                      <input v-model="form.name" required id="name" name="name" type="text" autocomplete="name" placeholder="Website Name" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
                                     </div>
                                 </div>
 
@@ -118,7 +116,7 @@ const path = window.location.pathname;
                                     <div class="select-item" v-if="itemShow">
                                       <div style="background: #3D5F58" @click=setColor(dark_green)></div>
                                       <div style="background: #A7B57C" @click=setColor(light_green)></div>
-                                      <div style="background: #FF920A" @click=setColor(orang)></div>
+                                      <div style="background: #FF920A" @click=setColor(orange)></div>
                                     </div>
                                   </div>
                                 </div>
@@ -157,7 +155,6 @@ const path = window.location.pathname;
                                         <textarea v-model="form.notes" id="notes" name="notes" rows="3" placeholder="Enter notes here" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"></textarea>
                                     </div>
                                 </div>
-                            </form>
                         </div>
                         <div class="service">
                           <div class="mb-5">
@@ -323,6 +320,9 @@ const path = window.location.pathname;
     </div> <!-- end .wrapper -->
 </template>
 <script>
+import {reactive} from "vue";
+import {useForm} from "@inertiajs/vue3";
+
 export default {
     methods: {
         goBack() {
@@ -331,17 +331,50 @@ export default {
        setColor(color) {
           this.itemShow = false;
           this.color = color;
+      },
+       appendFile (name, files) {
+        this.formFile.filename = name;
+        this.formFile.file = files[0];
+        const file = files[0];
+        this.img = URL.createObjectURL(file);
+      },
+      submit ()  {
+        this.form.file =['file', this.formFile.file, this.formFile.filename];
+        if(this !== undefined && this.color) {
+          this.form.color = this.color;
+        }
+        this.form.post(route('saveSite'), {
+          onFinish: () => window.history.back(),
+        });
       }
     },
   data() {
     return {
+      path: window.location.pathname,
       serviceShow: false,
       softwareShow: false,
       showMe: false,
+      img: '',
       color: '#FF920A',
-      orang: '#FF920A',
+      orange: '#FF920A',
       dark_green: '#3D5F58',
-      light_green: '#A7B57C'
+      light_green: '#A7B57C',
+      formFile: reactive({
+        name: "",
+        file: null,
+        filename: null
+      }),
+      form : useForm({
+        url: '',
+        file: '',
+        name: '',
+        color: '',
+        company: '',
+        tags: '',
+        shared_with: '',
+        business_unit: '',
+        notes: ''
+      })
     };
   },
 };
