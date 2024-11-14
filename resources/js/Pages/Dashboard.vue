@@ -6,24 +6,24 @@ import { inject } from "vue";
 
 const route = inject("route");
 
-// just for testing
-const sites = [{
-    url: 'https://website.com',
-    name: 'Test website 1',
-    logo: 'https://picsum.photos/70',
-    color: 'red'
-},{
-    url: 'https://website123.com',
-    name: 'Test website 2',
-    logo: 'https://picsum.photos/70',
-    color: '#ff930a'
-},{
-    url: 'https://website-qwe.com',
-    name: 'Test website 3',
-    logo: '',
-    color: 'blue'
-},
-];
+// // just for testing
+// const sites = [{
+//     url: 'https://website.com',
+//     name: 'Test website 1',
+//     logo: 'https://picsum.photos/70',
+//     color: 'red'
+// },{
+//     url: 'https://website123.com',
+//     name: 'Test website 2',
+//     logo: 'https://picsum.photos/70',
+//     color: '#ff930a'
+// },{
+//     url: 'https://website-qwe.com',
+//     name: 'Test website 3',
+//     logo: '',
+//     color: 'blue'
+// },
+// ];
 
 </script>
 
