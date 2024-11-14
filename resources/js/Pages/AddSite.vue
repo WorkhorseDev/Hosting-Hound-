@@ -233,6 +233,37 @@ import InputError from "@/Components/InputError.vue";
                                     </div>
                                 </div>
                             </div>
+
+                            <div class="provider-list">
+                                <div class="provider-item">
+                                    <div class="inner">
+                                        <div class="row">
+                                            <span>Host Name</span>
+                                            <i class="icon fa-solid fa-lock"></i>
+                                        </div>
+                                    </div>
+                                    <div class="inner">
+                                        <div class="row">
+                                            <span>http://www.host.com</span>
+                                            <i class="icon fa-solid fa-lock"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="provider-item">
+                                    <div class="inner">
+                                        <div class="row">
+                                            <span>Host Name</span>
+                                            <i class="icon fa-solid fa-lock"></i>
+                                        </div>
+                                    </div>
+                                    <div class="inner">
+                                        <div class="row">
+                                            <span>http://www.host.com</span>
+                                            <i class="icon fa-solid fa-lock"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div> <!-- end .provider-list -->
                         </div>
                         <div class="software">
                           <div class="mb-5">

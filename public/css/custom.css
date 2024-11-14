@@ -548,6 +548,7 @@ select option {
 .service-form {
     width: 340px;
     margin-left: 40px;
+    margin-bottom: 25px;
 }
 
 .fa-globe {
@@ -661,6 +662,51 @@ select option {
     left: 0;
     right: 0;
     height: 10px;
+}
+
+.provider-list {
+    margin-left: 50px;
+}
+
+.provider-item {
+    position: relative;
+    margin-bottom: 15px;
+}
+
+.provider-item::before {
+    content: '';
+    position: absolute;
+    top: 15px;
+    bottom: 15px;
+    left: -15px;
+    width: 100px;
+    border: 2px solid #979797;
+    border-radius: 15px;
+}
+
+.provider-item .inner {
+    position: relative;
+    padding: 6px 3px;
+    background: #f7f7f7;
+}
+.provider-item .row {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #D8D8D8;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    padding: 6px 15px;
+    color: rgb(21, 32, 46, 0.57);
+    font-family: "Lato", sans-serif;
+    font-size: 1.125rem;
+    z-index: 1;
+}
+.provider-item .icon {
+    font-size: 1.4rem;
+    color: rgb(21, 32, 46, 0.62);
 }
 
 @media screen and (max-width: 768px) {
