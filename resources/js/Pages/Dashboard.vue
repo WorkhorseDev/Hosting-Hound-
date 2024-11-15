@@ -61,17 +61,19 @@ const route = inject("route");
                                 <i class="fa-solid fa-magnifying-glass"></i>
                             </button>
                         </form>
+
+                        <span class="filter-btn">
+                            <i class="icon fas fa-filter"></i>
+                        </span>
                     </div>
-                    <span class="filter-btn">
-                        <i class="fas fa-filter"></i>
-                    </span>
+                    <span class="select-items" v-if="selectAll"><em>{{sites.length}} selected item (s)</em></span>
                 </div>
-              <span class="select-items" v-if="selectAll"><em>{{sites.length}} selected item (s)</em></span>
-              <div v-if="selectAll" class="form-footer p-5">
-                <button class="btn" type="button">Share</button>
-                <button class="btn" type="button">Unshare</button>
-                <button class="btn" type="button">Delete</button>
-              </div>
+
+                <div v-if="selectAll" class="panel-controls flex flex-row justify-end items-center gap-6">
+                    <button class="btn-md" type="button">Share</button>
+                    <button class="btn-md" type="button">Unshare</button>
+                    <button class="btn-md" type="button">Delete</button>
+                </div>
             </div>
 
             <div class="sort-panel">
