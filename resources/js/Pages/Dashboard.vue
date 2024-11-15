@@ -81,7 +81,7 @@ const route = inject("route");
                         <span class="select-text">select all</span>
                     </label>
                     <label for="sort_by_company" class="option-item">
-                        <input type="radio" name="select" id="sort_by_company">
+                        <input type="radio" name="select" @click="sortedArray" id="sort_by_company">
                         <span class="select-text">sort by company</span>
                     </label>
                 </div>
@@ -126,12 +126,20 @@ const route = inject("route");
 </template>
 <script>
 export default {
-    props: {
-        sites: Array,
-        selectAll: false
-    },
-   methods: {
-     },
+  data() {
+    return {
+      selectAll: false,
+    }
+  },
+  props: {
+    sites: Array,
+  },
+  methods: {
+    sortedArray(){
+      this.selectAll = false;
+      return this.sites.sort((a, b) => (a.company > b.company ? 1 : -1));
+    }
+  },
 }
 
 </script>

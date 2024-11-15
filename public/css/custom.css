@@ -215,6 +215,7 @@
     width: 32px;
     height: 32px;
     margin-right: 10px;
+    cursor: pointer;
 }
 
 .options [type='checkbox']:checked, .options [type=radio]:checked, .options [type=radio]:focus , .options [type=radio]:checked+label {
