@@ -66,16 +66,22 @@ const route = inject("route");
                         <i class="fas fa-filter"></i>
                     </span>
                 </div>
+              <span class="select-items" v-if="selectAll"><em>{{sites.length}} selected item (s)</em></span>
+              <div v-if="selectAll" class="form-footer p-5">
+                <button class="btn" type="button">Share</button>
+                <button class="btn" type="button">Unshare</button>
+                <button class="btn" type="button">Delete</button>
+              </div>
             </div>
 
             <div class="sort-panel">
                 <div class="options">
                     <label for="select_all" class="option-item">
-                        <input type="radio" name="select_all" id="select_all">
+                        <input type="radio" @click="selectAll = !selectAll" name="select" id="select_all">
                         <span class="select-text">select all</span>
                     </label>
                     <label for="sort_by_company" class="option-item">
-                        <input type="radio" name="sort_by_company" id="sort_by_company">
+                        <input type="radio" name="select" id="sort_by_company">
                         <span class="select-text">sort by company</span>
                     </label>
                 </div>
@@ -99,7 +105,7 @@ const route = inject("route");
 
                     <div class="data card-list" v-if="sites && sites.length !== 0">
                         <div v-for="item in sites" class="card-item">
-                            <span class="card-selection selected"></span>
+                           <label class="options"><input type="checkbox" name="sites" :checked="selectAll" :id=item._id class="card-selection selected sites"></label>
                             <div class="card-content">
                                 <div class="info">
                                     <p class="card-title">{{ item.name }}</p>
@@ -122,7 +128,10 @@ const route = inject("route");
 export default {
     props: {
         sites: Array,
-    }
+        selectAll: false
+    },
+   methods: {
+     },
 }
 
 </script>
