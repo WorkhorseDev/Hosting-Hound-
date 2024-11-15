@@ -69,7 +69,7 @@ const route = inject("route");
                     <span class="select-items" v-if="selectAll"><em>{{sites.length}} selected item (s)</em></span>
                 </div>
 
-                <div v-if="selectAll" class="panel-controls flex flex-row justify-end items-center gap-6">
+                <div v-if="selectAll" class="panel-controls flex flex-row justify-end items-center gap-5">
                     <button class="btn-md" type="button">Share</button>
                     <button class="btn-md" type="button">Unshare</button>
                     <button class="btn-md" type="button">Delete</button>
