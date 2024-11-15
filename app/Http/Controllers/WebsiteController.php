@@ -55,7 +55,8 @@ class WebsiteController extends Controller
      */
     public function saveSite(Request $request)
     {
-        $result = Websites::addSite($request);
+       Websites::addSite($request);
+
     }
 
     public function showAddSitePage()

@@ -664,16 +664,16 @@ select option {
     height: 10px;
 }
 
-.provider-list {
+.provider-list, .software-list {
     margin-left: 50px;
 }
 
-.provider-item {
+.provider-item, .software-item {
     position: relative;
     margin-bottom: 15px;
 }
 
-.provider-item::before {
+.provider-item::before, .software-item:before {
     content: '';
     position: absolute;
     top: 15px;
@@ -684,12 +684,12 @@ select option {
     border-radius: 15px;
 }
 
-.provider-item .inner {
+.provider-item .inner, .software-item .inner {
     position: relative;
     padding: 6px 3px;
     background: #f7f7f7;
 }
-.provider-item .row {
+.provider-item .row, .software-item  .row {
     position: relative;
     display: flex;
     align-items: center;
@@ -704,7 +704,7 @@ select option {
     font-size: 1.125rem;
     z-index: 1;
 }
-.provider-item .icon {
+.provider-item .icon, .software-item .icon {
     font-size: 1.4rem;
     color: rgb(21, 32, 46, 0.62);
 }

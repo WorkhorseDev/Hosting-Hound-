@@ -99,7 +99,6 @@ const route = inject("route");
 
                     <div class="data card-list" v-if="sites && sites.length !== 0">
                         <div v-for="item in sites" class="card-item">
-<!--                            <p>{{item.name}}</p>-->
                             <span class="card-selection selected"></span>
                             <div class="card-content">
                                 <div class="info">
@@ -107,7 +106,7 @@ const route = inject("route");
                                     <span class="card-link">{{ item.url }}</span>
                                 </div>
                                 <div class="card-logo">
-                                    <img v-if="item.logo" :src="item.logo" :alt="item.name" />
+                                    <img v-if="item.icon" :src="item.icon" :alt="item.name" />
                                     <span v-else>Logo</span>
                                 </div>
                                 <span class="card-color" :style="{ backgroundColor: item.color }"></span>

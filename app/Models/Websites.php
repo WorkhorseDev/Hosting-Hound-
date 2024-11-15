@@ -15,8 +15,7 @@ class Websites extends Eloquent
      */
     protected $connection = 'mongodb';
     protected $collection = 'websites';
-    protected $fillable = ['_id', 'user_id', 'url', 'name', 'business_unit', 'tags', 'shared_with', 'notes', 'icon', 'company', 'color', 'hosts', 'domain_provider',
-        'ssl_provider', 'email_provider', 'cms', 'service_type', 'service_name', 'server_type', 'renewal_type', 'cost', 'renewal_date','service_provider', 'software', 'passsword'];
+    protected $fillable = ['_id', 'user_id', 'url', 'name', 'business_unit', 'tags', 'shared_with', 'notes', 'icon', 'company', 'color', 'hosts', 'provider', 'software'];
 
     /**
      * Delete sites
@@ -52,7 +51,7 @@ class Websites extends Eloquent
         $site->tags = $site['tags'];
         $site->shared_with = $site['shared_with'];
         $site->notes = $site['notes'];
-        $site->service_provider = $site['service_provider'];
+        $site->service_provider = $site['provider'];
         $site->software = $site['software'];
         $site->save();
         return 'success';
@@ -72,7 +71,7 @@ class Websites extends Eloquent
             $site->file('file')[1]->move(public_path() . '/icon/', $fileName);
             $uploadfile = "/icon/" . $fileName;
         }
-        $site = Websites::create([
+         Websites::create([
             'user_id' => Auth::user()->_id,
             'name' => $site->name,
             'url' => $site->url,
@@ -83,7 +82,7 @@ class Websites extends Eloquent
             'tags' => $site->tags,
             'shared_with' => $site->shared_with,
             'notes' => $site->notes,
-            'service_provider' => isset($site->service_provider) ? $site->service_provider : '',
+            'provider' => isset($site->provider) ? $site->provider : '',
             'software' => isset($site->software) ? $site->software : '',
         ]);
 
