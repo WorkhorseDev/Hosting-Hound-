@@ -146,6 +146,7 @@ const route = inject("route");
 </template>
 <script>
 import {useForm} from "@inertiajs/vue3";
+import {toRaw} from "vue";
 
 export default {
   props: {
@@ -214,10 +215,12 @@ export default {
       this.showDeleteBlock = false;
     },
     deleteSite() {
-      console.log(reactive(this.checkedSites));
-      this.form.sitesList = this.checkedSites;
+      var arr = toRaw(this.checkedSites);
+      for (const key in arr) {
+        this.form.sitesList.push(key);
+      }
       this.form.post(route('deleteSites'), {
-        onFinish: () => this.form.get(route('deleteSites'))
+        onFinish: () => this.form.get(route('dashboard'))
       });
     }
   },

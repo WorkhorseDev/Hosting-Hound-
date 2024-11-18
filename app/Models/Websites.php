@@ -26,8 +26,8 @@ class Websites extends Eloquent
     public static function deleteSites(array $sites)
     {
         foreach ($sites as $site) {
-            $file = Websites::find($site);
-            $file->delete();
+            $siteEl = Websites::find($site);
+            $siteEl->delete();
         }
 
         return 'success';
