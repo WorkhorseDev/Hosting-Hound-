@@ -1,8 +1,7 @@
 <script setup>
-import {Head} from '@inertiajs/vue3';
+import {Head, useForm} from '@inertiajs/vue3';
 import { Link } from '@inertiajs/vue3';
-
-import { inject } from "vue";
+import { inject,reactive } from "vue";
 
 const route = inject("route");
 
@@ -66,26 +65,45 @@ const route = inject("route");
                             <i class="icon fas fa-filter"></i>
                         </span>
                     </div>
-                    <span class="select-items" v-if="selectAll"><em>{{sites.length}} selected item (s)</em></span>
+                    <span class="select-items" v-if="selectAll && !showShareBlock && !showUnshareBlock && !showDeleteBlock"><em>{{countAll}} selected item (s)</em></span>
+                    <span class="select-items" v-if="showShareBlock"><em>Share {{siteLength}} item (s) with</em></span>
+                    <span class="select-items" v-if="showUnshareBlock"><em>Unshare {{siteLength}} item (s) ?</em></span>
+                  <span class="select-items" v-if="showDeleteBlock"><em>Delete  {{siteLength}} item (s) ?</em></span>
                 </div>
-
-                <div v-if="selectAll" class="panel-controls flex flex-row justify-end items-center gap-5">
-                    <button class="btn-md" type="button">Share</button>
-                    <button class="btn-md" type="button">Unshare</button>
-                    <button class="btn-md" type="button">Delete</button>
+                <div v-if="(selectAll || selectOnes) && !showShareBlock && !showUnshareBlock && !showDeleteBlock" class="panel-controls flex flex-row justify-end items-center gap-5">
+                    <button class="btn-md" type="button" @click="showShare">Share</button>
+                    <button class="btn-md" type="button" @click="showUnshare">Unshare</button>
+                    <button class="btn-md" type="button" @click="showDelete">Delete</button>
                 </div>
+              <div v-if="showShareBlock && !showUnshareBlock && !showDeleteBlock" class="panel-controls flex flex-row justify-end items-center gap-5">
+                <textarea placeholder="Type a name or email serparated by a comma…" id="share" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm
+                ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"></textarea>
+                <button class="btn-md" type="button" @click="cancel">Cancel</button>
+                <button class="btn-md" type="button" @click="share">Share</button>
+              </div>
+              <div v-if="showUnshareBlock && !showDeleteBlock" class="panel-controls flex flex-row justify-end items-center gap-5">
+                <textarea :placeholder="placeholderUnshare" id="unshare" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"></textarea>
+                <button class="btn-md" type="button" @click="cancel">Cancel</button>
+                <button class="btn-md" type="button" @click="unshare">Unshare</button>
+              </div>
+              <div v-if="showDeleteBlock" class="panel-controls flex flex-row justify-end items-center gap-5">
+                <textarea readonly :placeholder="plaсeholderDelete" id="delete" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"></textarea>
+                <button class="btn-md" type="button" @click="cancel">Cancel</button>
+                <button class="btn-md" type="button" @click="deleteSite">Delete</button>
+              </div>
             </div>
 
             <div class="sort-panel">
                 <div class="options">
                     <label for="select_all" class="option-item">
-                        <input type="radio" @click="selectAll = !selectAll" name="select" id="select_all">
+                        <input type="checkbox" @click="selectAll = !selectAll" id="select_all">
                         <span class="select-text">select all</span>
                     </label>
                     <label for="sort_by_company" class="option-item">
-                        <input type="radio" name="select" @click="sortedArray" id="sort_by_company">
+                        <input type="checkbox" @click="sortedArray" id="sort_by_company">
                         <span class="select-text">sort by company</span>
                     </label>
+                  <span class="message" v-if="showDeleteBlock"><i class="fas fa-exclamation-triangle"></i> THIS ACTION CANNOT BE UNDONE <i class="fas fa-exclamation-triangle"></i></span>
                 </div>
             </div>
 
@@ -107,7 +125,7 @@ const route = inject("route");
 
                     <div class="data card-list" v-if="sites && sites.length !== 0">
                         <div v-for="item in sites" class="card-item">
-                           <label class="options"><input type="checkbox" name="sites" :checked="selectAll" :id=item._id class="card-selection selected sites"></label>
+                           <label class="options"><input v-model="checkedSites[item._id]" type="checkbox" name="sites" @change="getCheck($event)" :checked="selectAll" :id=item._id class="card-selection selected sites"></label>
                             <div class="card-content">
                                 <div class="info">
                                     <p class="card-title">{{ item.name }}</p>
@@ -127,19 +145,80 @@ const route = inject("route");
     </div> <!-- end .wrapper -->
 </template>
 <script>
+import {useForm} from "@inertiajs/vue3";
+
 export default {
+  props: {
+    sites: Array,
+  },
   data() {
     return {
       selectAll: false,
+      selectOnes: false,
+      showShareBlock: false,
+      siteLength: 0,
+      countAll: this.sites.length,
+      showUnshareBlock: false,
+      showDeleteBlock: false,
+      checkedSites:[],
+      form: useForm({
+        sitesList: []
+      })
     }
   },
-  props: {
-    sites: Array,
+  computed: {
+    plaсeholderDelete() {
+     return "Are you sure you want to delete " + this.siteLength + " selected item(s)?";
+    },
+    placeholderUnshare() {
+    return  "Are you sure you want to unshare " + this.siteLength + " selected item(s)?";
+    }
   },
   methods: {
     sortedArray(){
       this.selectAll = false;
       return this.sites.sort((a, b) => (a.company > b.company ? 1 : -1));
+    },
+    getCheck(el) {
+      this.selectOnes = true;
+      if(!el.target.checked && this.selectAll) {
+        this.countAll--;
+        this.siteLength--;
+      } else if(!el.target.checked && !this.selectAll) {
+        this.siteLength--;
+      } else if (el.target.checked && !this.selectAll) {
+        this.siteLength++;
+      }
+    },
+    showShare() {
+      this.showShareBlock = true;
+      if(this.selectAll) {
+        this.siteLength = this.countAll;
+      }
+    },
+    showUnshare() {
+      this.showUnshareBlock = true;
+      if(this.selectAll) {
+        this.siteLength = this.countAll;
+      }
+    },
+    showDelete() {
+      this.showDeleteBlock = true;
+      if(this.selectAll) {
+        this.siteLength = this.countAll;
+      }
+    },
+    cancel() {
+      this.showShareBlock = false;
+      this.showUnshareBlock = false;
+      this.showDeleteBlock = false;
+    },
+    deleteSite() {
+      console.log(reactive(this.checkedSites));
+      this.form.sitesList = this.checkedSites;
+      this.form.post(route('deleteSites'), {
+        onFinish: () => this.form.get(route('deleteSites'))
+      });
     }
   },
 }

@@ -39,7 +39,8 @@ class WebsiteController extends Controller
      */
     public function deleteSites(Request $request)
     {
-        $result = Websites::deleteSites($request->sites);
+        dd($request);
+         Websites::deleteSites($request->sites);
     }
 
     /**
