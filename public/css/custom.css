@@ -761,6 +761,63 @@ select option {
     border-radius: 17px;
 }
 
+.left-line {
+    height: 40px;
+    border-left: 2px solid #979797;
+}
+
+.left-line.second {
+    height: 63px;
+    padding-left: 20px;
+    margin-top: 10px;
+}
+
+.left-line.second.third {
+    height: 100px;
+}
+
+.arrow-right {
+    width: 0;
+    height: 0;
+    border-top: 19px solid transparent;
+    border-bottom: 18px solid transparent;
+    border-left: 20px solid #15202E;
+    position: absolute;
+    right: -15px;
+    top: -2px;
+    border-radius: 6px;
+}
+
+.tags {
+    width: 65px;
+    height: 33px;
+    display: inline-block;
+    background: #15202E;
+    opacity: 0.8;
+    border-radius: 5px;
+    margin-top: 10px;
+    position: relative;
+}
+
+.tags p.info {
+    color: #fff;
+    text-align: center;
+}
+
+.text-block {
+    margin-top: 10px;
+}
+
+.circle {
+    width: 21px;
+    height: 21px;
+    display: inline-block;
+    border-radius: 21px;
+    background: #3D5F58;
+    margin-right: 10px;
+    margin-left: -9px;
+}
+
 .in-textarea {
     color: #3D5F58;
     font-size: 35px;

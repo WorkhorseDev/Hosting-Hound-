@@ -60,15 +60,39 @@ import InputError from "@/Components/InputError.vue";
           </div>
           <div class="grid grid-cols-3 gap-4">
             <div>
-              <em class="gray-text">Company Information</em>
-              <p class="info">{{ site.name }}</p>
-              <p class="info">{{ site.business_unit }}</p>
-              <em class="gray-text">Notes</em>
-              <p class="info">{{ site.notes }}</p>
-              <em class="gray-text">Tags</em>
-              <p class="info">{{ site.tags }}</p>
-              <em class="gray-text">Shared With:</em>
-              <p class="info">{{ site.shared_with }}</p>
+              <div class="left-line"></div>
+              <div class="text-block">
+                <div class="circle"></div>
+                <em class="gray-text">Company Information</em>
+              </div>
+              <div class="left-line second">
+                <p class="info">{{ site.name }}</p>
+                <p class="info">{{ site.business_unit }}</p>
+              </div>
+              <div class="text-block">
+                <div class="circle"></div>
+                <em class="gray-text">Notes</em>
+              </div>
+              <div class="left-line second third">
+                <p class="info">{{ site.notes }}</p>
+              </div>
+              <div class="text-block">
+                <div class="circle"></div>
+                <em class="gray-text">Tags</em>
+              </div>
+              <div class="left-line second">
+                <div class="tags">
+                  <p class="info">{{ site.tags }}</p>
+                  <div class="arrow-right"></div>
+                </div>
+              </div>
+              <div class="text-block">
+                <div class="circle"></div>
+                <em class="gray-text">Shared With:</em>
+              </div>
+              <div class="left-line second">
+                <p class="info">{{ site.shared_with }}</p>
+              </div>
             </div>
             <div class="mb-5">
               <em class="gray-text">Service Providers</em>
