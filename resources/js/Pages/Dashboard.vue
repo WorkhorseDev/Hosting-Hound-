@@ -76,17 +76,20 @@ const route = inject("route");
                     <button class="btn-md" type="button" @click="showDelete">Delete</button>
                 </div>
               <div v-if="showShareBlock && !showUnshareBlock && !showDeleteBlock" class="panel-controls flex flex-row justify-end items-center gap-5">
+                <i class="fa fa-users in-textarea" aria-hidden="true"></i>
                 <textarea placeholder="Type a name or email serparated by a comma…" id="share" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm
                 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"></textarea>
                 <button class="btn-md" type="button" @click="cancel">Cancel</button>
                 <button class="btn-md" type="button" @click="share">Share</button>
               </div>
               <div v-if="showUnshareBlock && !showDeleteBlock" class="panel-controls flex flex-row justify-end items-center gap-5">
+                <i class="fa-solid fa-circle-exclamation in-textarea"></i>
                 <textarea :placeholder="placeholderUnshare" id="unshare" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"></textarea>
                 <button class="btn-md" type="button" @click="cancel">Cancel</button>
                 <button class="btn-md" type="button" @click="unshare">Unshare</button>
               </div>
               <div v-if="showDeleteBlock" class="panel-controls flex flex-row justify-end items-center gap-5">
+                <i class="fa-solid fa-trash-can in-textarea"></i>
                 <textarea readonly :placeholder="plaсeholderDelete" id="delete" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"></textarea>
                 <button class="btn-md" type="button" @click="cancel">Cancel</button>
                 <button class="btn-md" type="button" @click="deleteSite">Delete</button>
@@ -124,9 +127,9 @@ const route = inject("route");
                     </div>
 
                     <div class="data card-list" v-if="sites && sites.length !== 0">
-                        <div v-for="item in sites" class="card-item" @click="siteDetail(item._id)">
+                        <div v-for="item in sites" class="card-item">
                            <label class="options"><input v-model="checkedSites[item._id]" type="checkbox" name="sites" @change="getCheck($event)" :checked="selectAll" :id=item._id class="card-selection selected sites"></label>
-                            <div class="card-content">
+                            <div class="card-content" @click="siteDetail(item._id)">
                                 <div class="info">
                                     <p class="card-title">{{ item.name }}</p>
                                     <span class="card-link">{{ item.url }}</span>

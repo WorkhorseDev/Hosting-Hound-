@@ -757,6 +757,15 @@ select option {
     resize: none;
     color: #15202E;
     font-size: 18px;
+    padding-left: 63px;
+    border-radius: 17px;
+}
+
+.in-textarea {
+    color: #3D5F58;
+    font-size: 35px;
+    position: relative;
+    left: 75px;
 }
 
 .message {
