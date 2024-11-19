@@ -80,9 +80,9 @@ import InputError from "@/Components/InputError.vue";
                 <div class="circle"></div>
                 <em class="gray-text">Tags</em>
               </div>
-              <div class="left-line second">
-                <div class="tags">
-                  <p class="info">{{ site.tags }}</p>
+              <div class="left-line second" v-if="site.tags">
+                <div class="tags" v-for="tag in (site.tags.split(','))">
+                  <p class="info">{{ tag }}</p>
                   <div class="arrow-right"></div>
                 </div>
               </div>
@@ -94,8 +94,12 @@ import InputError from "@/Components/InputError.vue";
                 <p class="info">{{ site.shared_with }}</p>
               </div>
             </div>
-            <div class="mb-5">
-              <em class="gray-text">Service Providers</em>
+            <div class="mb-5 block-serv">
+              <div class="left-line"></div>
+              <div class="text-block">
+                <div class="circle"></div>
+                <em class="gray-text">Service Providers</em>
+              </div>
               <div class="card-content detail" v-for="item in site.provider">
                 <div class="info">
                   <p class="card-title">{{ item.name }}</p>
@@ -105,8 +109,12 @@ import InputError from "@/Components/InputError.vue";
                 <span class="card-color" style="backgroundColor: #000"></span>
               </div>
             </div>
-            <div class="mb-5">
-              <em class="gray-text">Software & Add-ons</em>
+            <div class="mb-5 block-serv">
+              <div class="left-line"></div>
+              <div class="text-block">
+                <div class="circle"></div>
+                <em class="gray-text">Software & Add-ons</em>
+              </div>
               <div class="card-content detail" v-for="item in site.software">
                 <div class="info">
                   <p class="card-title">{{ item.name }}</p>
