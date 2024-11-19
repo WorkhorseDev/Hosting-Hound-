@@ -767,6 +767,29 @@ select option {
     margin-left: 260px;
 }
 
+.inner.sited-detail {
+    width: 85%;
+    margin: auto;
+}
+
+em.gray-text {
+    color: #15202E;
+    font-size: 18px;
+    opacity: 0.54;
+}
+ p.info {
+     color: #15202E;
+     font-size: 20px;
+ }
+
+ .fa-solid.fa-sort-up {
+     font-size: 45px;
+ }
+
+ .card-content.detail {
+     margin-bottom: 30px;
+ }
+
 @media screen and (max-width: 768px) {
     .auth-layout {
         flex-direction: column;
