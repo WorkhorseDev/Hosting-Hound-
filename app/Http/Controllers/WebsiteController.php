@@ -63,4 +63,12 @@ class WebsiteController extends Controller
     {
         return Inertia::render('AddSite');
     }
+
+    public function showSiteDetailPage()
+    {
+        $site = Websites::find(request('id'));
+        return Inertia::render('DetailSite', [
+            'site' => $site,
+        ]);
+    }
 }

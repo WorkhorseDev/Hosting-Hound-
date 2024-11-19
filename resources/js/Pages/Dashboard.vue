@@ -124,7 +124,7 @@ const route = inject("route");
                     </div>
 
                     <div class="data card-list" v-if="sites && sites.length !== 0">
-                        <div v-for="item in sites" class="card-item">
+                        <div v-for="item in sites" class="card-item" @click="siteDetail(item._id)">
                            <label class="options"><input v-model="checkedSites[item._id]" type="checkbox" name="sites" @change="getCheck($event)" :checked="selectAll" :id=item._id class="card-selection selected sites"></label>
                             <div class="card-content">
                                 <div class="info">
@@ -176,7 +176,10 @@ export default {
     }
   },
   methods: {
-    sortedArray(){
+    siteDetail(id) {
+      window.location.href= 'siteDetail/'+id;
+    },
+    sortedArray() {
       this.selectAll = false;
       return this.sites.sort((a, b) => (a.company > b.company ? 1 : -1));
     },
