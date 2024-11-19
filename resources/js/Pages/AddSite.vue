@@ -66,9 +66,10 @@ import InputError from "@/Components/InputError.vue";
                 <div class="mb-5 left">
                   <label for="file-upload" class="block text-sm font-medium leading-6 text-gray-900">Icon</label>
                   <div class="mt-2">
-                    <img class="previe" v-if="img" :src="img"/>
-                    <label v-if="!img" for="file" class="preview block text-sm font-medium leading-6 text-gray-900"> <i
-                        class="fa-solid fa-plus"></i> </label>
+                    <label  for="file" class="preview block text-sm font-medium leading-6 text-gray-900">
+                      <i v-if="!img"  class="fa-solid fa-plus"></i>
+                      <img class="previe" v-if="img" :src="img"/>
+                    </label>
                     <input class="file" id="file" type="file" hidden="hidden"
                            @change="appendFile($event.target.name, $event.target.files)"
                            ref="file">
@@ -226,16 +227,16 @@ import InputError from "@/Components/InputError.vue";
                 </div>
 
                 <div class="provider-list" v-if="!serviceShow">
-                  <div class="provider-item">
+                  <div class="provider-item" v-for="item in form.providers">
                     <div class="inner">
                       <div class="row">
-                        <span>{{ providerName }}</span>
+                        <span>{{ item.name }}</span>
                         <i class="icon fa-solid fa-lock"></i>
                       </div>
                     </div>
                     <div class="inner">
                       <div class="row">
-                        <span>{{providerHost}}</span>
+                        <span>{{item.url}}</span>
                         <i class="icon fa-solid fa-lock"></i>
                       </div>
                     </div>
@@ -246,7 +247,7 @@ import InputError from "@/Components/InputError.vue";
               <div class="software">
                 <div class="mb-5">
                   <label class="block text-sm font-medium leading-6 text-gray-900 show-form"
-                         @click="softwareShow = !softwareShow"> <i class="fa-solid fa-plus"></i> <span class="service">Software & Add-Ons</span>
+                         @click="showSoftware"> <i class="fa-solid fa-plus"></i> <span class="service">Software & Add-Ons</span>
                     <i class="fa-solid fa-caret-up"></i></label>
                 </div>
 
@@ -260,10 +261,11 @@ import InputError from "@/Components/InputError.vue";
                       </div>
                       <div class="form-group right-side">
                         <select v-model="form.software.type">
-                          <option>Host</option>
-                          <option>Domain Register</option>
-                          <option>Email Plan Provider</option>
-                          <option>SSL Provider</option>
+                          <option>Software</option>
+                          <option>CMS</option>
+                          <option>Theme</option>
+                          <option>Plugin</option>
+                          <option>Other</option>
                         </select>
                       </div>
 
@@ -323,16 +325,16 @@ import InputError from "@/Components/InputError.vue";
                   </div>
                 </div>
                 <div class="software-list" v-if="!softwareShow">
-                  <div class="software-item">
+                  <div class="software-item" v-for="item in form.softwares">
                     <div class="inner">
                       <div class="row">
-                        <span>{{softwareName}}</span>
+                        <span>{{item.name}}</span>
                         <i class="icon fa-solid fa-lock"></i>
                       </div>
                     </div>
                     <div class="inner">
                       <div class="row">
-                        <span>{{softwareHost}}</span>
+                        <span>{{item.url}}</span>
                         <i class="icon fa-solid fa-lock"></i>
                       </div>
                     </div>
@@ -375,15 +377,38 @@ export default {
       });
     },
     setSoftware() {
-      this.softwareName = this.form.software.name;
-      this.softwareHost = this.form.software.url;
       this.softwareShow = false;
+      this.form.softwares.push(this.form.software);
+      this.form.software= {
+        type: '',
+        name:'',
+        url: '',
+        renewal_type: '',
+        cost: '',
+        renewal_date: '',
+        user_mame: '',
+        password: '',
+        pin: ''
+      };
     },
 
     setProvider() {
-      this.providerName = this.form.provider.name;
-      this.providerHost = this.form.provider.url;
       this.serviceShow = false;
+      this.form.providers.push(this.form.provider);
+      this.form.provider= {
+            type: '',
+            name:'',
+            url: '',
+            renewal_type: '',
+            cost: '',
+            renewal_date: '',
+            user_mame: '',
+            password: '',
+            pin: ''
+      };
+    },
+    showSoftware() {
+      this.softwareShow = !this.softwareShow
     }
   },
   data() {
@@ -428,6 +453,8 @@ export default {
             password: '',
             pin: ''
         },
+        softwares: [],
+        providers: [],
         software: {
           type: '',
           name:'',

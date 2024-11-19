@@ -51,8 +51,8 @@ class Websites extends Eloquent
         $site->tags = $site['tags'];
         $site->shared_with = $site['shared_with'];
         $site->notes = $site['notes'];
-        $site->service_provider = $site['provider'];
-        $site->software = $site['software'];
+        $site->service_provider = $site['providers'];
+        $site->software = $site['softwares'];
         $site->save();
         return 'success';
     }
@@ -82,8 +82,8 @@ class Websites extends Eloquent
             'tags' => $site->tags,
             'shared_with' => $site->shared_with,
             'notes' => $site->notes,
-            'provider' => isset($site->provider) ? $site->provider : '',
-            'software' => isset($site->software) ? $site->software : '',
+            'provider' => isset($site->providers) ? $site->providers : '',
+            'software' => isset($site->softwares) ? $site->softwares : '',
         ]);
 
         return 'success';

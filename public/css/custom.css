@@ -374,6 +374,10 @@ p.terms-text {
     margin-bottom: 8px !important;
 }
 
+.right.mb-5 {
+    margin-right: 35px;
+}
+
 .right.color {
     margin-bottom: 1.25rem !important;
 }
@@ -611,9 +615,9 @@ select option {
 }
 
 .previe {
-    width: 125px;
-    height: 125px;
-    border-radius: 125px;
+    width: 110px;
+    height: 110px;
+    border-radius: 110px;
     object-fit: cover;
 }
 
