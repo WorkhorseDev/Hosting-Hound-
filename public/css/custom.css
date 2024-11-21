@@ -865,7 +865,7 @@ em.gray-text {
      font-size: 20px;
  }
 
- .fa-solid.fa-sort-up {
+ .fa-solid.fa-sort-up,.fa-solid.fa-sort-down {
      font-size: 45px;
  }
 

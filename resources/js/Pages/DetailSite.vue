@@ -8,7 +8,6 @@ import InputError from "@/Components/InputError.vue";
 
 <template>
   <Head title="Add Site"/>
-`z
   <div class="wrapper">
     <div class="container dashboard">
       <header class="header">
@@ -100,12 +99,13 @@ import InputError from "@/Components/InputError.vue";
                 <div class="circle"></div>
                 <em class="gray-text">Service Providers</em>
               </div>
-              <div class="card-content detail" v-for="item in site.provider">
+              <div class="card-content detail" v-for="item in site.provider" @click="showDetail(item)">
                 <div class="info">
                   <p class="card-title">{{ item.name }}</p>
                   <span class="card-link">{{ item.url }}</span>
                 </div>
-                <i class="fa-solid fa-sort-up"></i>
+                <i v-if="!item.show" class="fa-solid fa-sort-up"></i>
+                <i v-if="item.show" class="fa-solid fa-sort-down"></i>
                 <span class="card-color" style="backgroundColor: #000"></span>
               </div>
             </div>
@@ -136,12 +136,32 @@ import {useForm} from "@inertiajs/vue3";
 
 export default {
   props: {
-    site: Array,
+    site: Array
+  },
+  data() {
+    return {
+      showProvider: false,
+      showP: false,
+      element: {}
+    }
   },
   methods: {
     goBack() {
       window.history.back();
     },
+    showDetail(item) {
+      item.show = !item.show;
+      this.showP = !this.showP;
+      this.element.type =  item.type;
+      this.element.name =  item.name;
+      this.element.url =  item.url;
+      this.element.renewal_type =  item.renewal_type;
+      this.element.cost =  item.cost;
+      this.element.renewal_date =  item.renewal_date;
+      this.element.user_mame =  item.user_mame;
+      this.element.password =  item.password;
+      this.element.pin =  item.pin;
+    }
   }
 }
 </script>
