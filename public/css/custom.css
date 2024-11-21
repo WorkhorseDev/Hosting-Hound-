@@ -809,6 +809,13 @@ select option {
     margin-bottom: 20px;
 }
 
+.inner .fas.fa-edit {
+    font-size: 21px;
+    display: inline-block;
+    margin-left: 200px;
+    cursor: pointer;
+}
+
 .tags p.info {
     color: #fff;
     text-align: center;

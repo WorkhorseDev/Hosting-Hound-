@@ -171,7 +171,7 @@ import InputError from "@/Components/InputError.vue";
                       </div>
 
                       <div class="form-group right-side">
-                        <input type="text" v-model="form.provider.name" placeholder="Host Name">
+                        <input type="text" v-model="form.provider.name" placeholder="Name">
                       </div>
 
                       <div class="form-group right-side">
@@ -184,6 +184,8 @@ import InputError from "@/Components/InputError.vue";
                         <label>Renewal Type</label>
                         <select class="bg-grey" v-model="form.provider.renewal_type">
                           <option>Annual</option>
+                          <option>Monthly</option>
+                          <option>Weekly</option>
                         </select>
                       </div>
 
@@ -221,16 +223,18 @@ import InputError from "@/Components/InputError.vue";
 
                     <div class="form-footer p-5">
                       <button class="cancel-btn"  @click="serviceShow = !serviceShow">Cancel</button>
-                      <button type="button" class="btn" @click="setProvider">Add Provider</button>
+                      <button  v-if="serviceSave === false" type="button" class="btn" @click="setProvider">Add Provider</button>
+                      <button v-if="serviceSave !== false" type="button" class="btn" @click="saveProvider(serviceSave)">Save Provider</button>
                     </div>
                   </div>
                 </div>
 
                 <div class="provider-list" v-if="!serviceShow">
-                  <div class="provider-item" v-for="item in form.providers">
+                  <div class="provider-item"v-for="(item, key, index) in form.providers" :key="key">
                     <div class="inner">
                       <div class="row">
                         <span>{{ item.name }}</span>
+                        <i class="fas fa-edit" @click="editProvider(key,item)"></i>
                         <i class="icon fa-solid fa-lock"></i>
                       </div>
                     </div>
@@ -270,7 +274,7 @@ import InputError from "@/Components/InputError.vue";
                       </div>
 
                       <div class="form-group right-side">
-                        <input type="text" placeholder="Host Name" v-model="form.software.name">
+                        <input type="text" placeholder="Name" v-model="form.software.name">
                       </div>
 
                       <div class="form-group right-side">
@@ -283,6 +287,8 @@ import InputError from "@/Components/InputError.vue";
                         <label>Renewal Type</label>
                         <select class="bg-grey" v-model="form.software.renewal_type">
                           <option>Annual</option>
+                          <option>Monthly</option>
+                          <option>Weekly</option>
                         </select>
                       </div>
 
@@ -320,15 +326,17 @@ import InputError from "@/Components/InputError.vue";
 
                     <div class="form-footer p-5">
                       <button class="cancel-btn"  @click="softwareShow = !softwareShow">Cancel</button>
-                      <button class="btn" type="button" @click="setSoftware">Add Provider</button>
+                      <button class="btn" type="button"  v-if="softwareSave === false" @click="setSoftware">Add Provider</button>
+                      <button v-if="softwareSave !== false" type="button" class="btn" @click="saveSoftware(softwareSave)">Save Provider</button>
                     </div>
                   </div>
                 </div>
                 <div class="software-list" v-if="!softwareShow">
-                  <div class="software-item" v-for="item in form.softwares">
+                  <div class="software-item" v-for="(item, key, index) in form.softwares" :key="key">
                     <div class="inner">
                       <div class="row">
                         <span>{{item.name}}</span>
+                        <i class="fas fa-edit" @click="editSoftware(key,item)"></i>
                         <i class="icon fa-solid fa-lock"></i>
                       </div>
                     </div>
@@ -354,6 +362,36 @@ import {useForm} from "@inertiajs/vue3";
 
 export default {
   methods: {
+    editProvider(key,item) {
+      this.form.provider= {
+        type: item.type,
+        name: item.name,
+        url: item.url,
+        renewal_type: item.renewal_type,
+        cost: item.cost,
+        renewal_date: item.renewal_date,
+        user_mame: item.user_mame,
+        password: item.password,
+        pin: item.pin
+      };
+      this.serviceShow = true;
+      this.serviceSave = key;
+    },
+    editSoftware(key,item) {
+      this.form.software= {
+        type: item.type,
+        name: item.name,
+        url: item.url,
+        renewal_type: item.renewal_type,
+        cost: item.cost,
+        renewal_date: item.renewal_date,
+        user_mame: item.user_mame,
+        password: item.password,
+        pin: item.pin
+      };
+      this.softwareShow = true;
+      this.softwareSave = key;
+    },
     goBack() {
       window.history.back();
     },
@@ -391,7 +429,54 @@ export default {
         pin: ''
       };
     },
-
+    saveSoftware(key) {
+      this.softwareShow = false;
+      this.softwareSave = false;
+      this.form.softwares[key].type =  this.form.software.type;
+      this.form.softwares[key].name =  this.form.software.name;
+      this.form.softwares[key].url =  this.form.software.url;
+      this.form.softwares[key].renewal_type =  this.form.software.renewal_type;
+      this.form.softwares[key].cost =  this.form.software.cost;
+      this.form.softwares[key].renewal_date =  this.form.software.renewal_date;
+      this.form.softwares[key].user_mame =  this.form.software.user_mame;
+      this.form.softwares[key].password =  this.form.software.password;
+      this.form.softwares[key].pin =  this.form.software.pin;
+      this.form.software= {
+        type: '',
+        name:'',
+        url: '',
+        renewal_type: '',
+        cost: '',
+        renewal_date: '',
+        user_mame: '',
+        password: '',
+        pin: ''
+      };
+    },
+    saveProvider(key) {
+      this.serviceShow = false;
+      this.serviceSave = false;
+      this.form.providers[key].type =  this.form.provider.type;
+      this.form.providers[key].name =  this.form.provider.name;
+      this.form.providers[key].url =  this.form.provider.url;
+      this.form.providers[key].renewal_type =  this.form.provider.renewal_type;
+      this.form.providers[key].cost =  this.form.provider.cost;
+      this.form.providers[key].renewal_date =  this.form.provider.renewal_date;
+      this.form.providers[key].user_mame =  this.form.provider.user_mame;
+      this.form.providers[key].password =  this.form.provider.password;
+      this.form.providers[key].pin =  this.form.provider.pin;
+      this.form.provider= {
+        type: '',
+        name:'',
+        url: '',
+        renewal_type: '',
+        cost: '',
+        renewal_date: '',
+        user_mame: '',
+        password: '',
+        pin: ''
+      };
+    },
     setProvider() {
       this.serviceShow = false;
       this.form.providers.push(this.form.provider);
@@ -432,6 +517,8 @@ export default {
         file: null,
         filename: null
       }),
+      serviceSave: false,
+      softwareSave: false,
       form: useForm({
         url: '',
         file: '',
