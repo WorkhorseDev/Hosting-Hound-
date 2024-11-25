@@ -550,9 +550,7 @@ select option {
     -moz-box-shadow: 0px 5px 8px -6px rgba(0,0,0,0.75);
     box-shadow: 0px 5px 8px -6px rgba(0,0,0,0.75);
 }
-.security-group .form-group-icon {
 
-}
 .security-group .form-group-icon i {
     font-size: 1.5rem;
     left: 15px;
@@ -593,8 +591,96 @@ select option {
     margin-bottom: 25px;
 }
 
-.fa-globe {
+.service-form.detail {
+    margin-left: 0px;
+    margin-top: -20px;
+    display: none;
+}
+
+.detail .fa-solid.fa-pen {
+    position: relative;
+    left: 120px;
+    cursor: pointer;
+}
+
+.detail .globe-div {
+    padding: 5px;
+    padding-left: 30px;
+    margin-bottom: 20px;
+}
+
+.detail .globe-div .globe {
+    margin-top: 7px;
+    border: 9px solid #fff;
+    background: #fff;
+    border-radius: 33px;
+}
+
+.detail .form-container {
+    height: 650px;
+}
+
+.fa-regular.fa-copy {
+    left: 240px;
+    cursor: pointer;
+}
+
+.user-detail .form-group-icon input {
+    width: 275px;
+    border-radius: 23px;
+    height: 39px;
+}
+
+.fa-solid.fa-eye-slash, .fa-solid.fa-eye {
+    margin-left: 200px;
+    cursor: pointer;
+}
+
+.user-detail {
+    margin-top: -40px;
+}
+
+.fa-globe, .fa-solid.fa-sack-dollar {
     font-size: 33px;
+}
+
+.fa-solid.fa-sack-dollar, .fa-solid.fa-key{
+    padding-right: 10px;
+}
+
+.dark-line {
+    height: 17px;
+    border-left: 2px solid #15202E;
+    margin-left: 15px;
+    margin-top: 10px;
+}
+
+.detail .globe-div .right-side {
+    color: #15202E;
+    margin-bottom: 0px;
+    opacity: 0.75;
+}
+
+.fa-solid.fa-key {
+    font-size: 24px;
+}
+
+.text {
+    font-size: 20px;
+    opacity: 0.7;
+    font-weight: 700;
+}
+
+.subscribe {
+    margin-top: -24px;
+    height: 100px;
+    border-bottom: 15px solid #A7B57C;
+}
+
+.fas.fa-hourglass-half {
+    font-size: 24px;
+    margin-left: 8px;
+    margin-top: 16px;
 }
 
 .globe {
@@ -604,6 +690,16 @@ select option {
 .right-side {
     float: right;
     width: 230px;
+    opacity: 0.75;
+}
+
+.right-side span {
+    opacity: 1;
+}
+
+.right-side em {
+    width: 135px;
+    display: inline-block;
 }
 
 .globe-div {
