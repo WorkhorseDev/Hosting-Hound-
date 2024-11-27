@@ -153,7 +153,7 @@ import {toRaw} from "vue";
 
 export default {
   props: {
-    sites: Array,
+    sites: [],
   },
   data() {
     return {
