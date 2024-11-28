@@ -184,6 +184,7 @@ export default {
     },
     sortedArray() {
       this.selectAll = false;
+      console.log(this.sites);
       return this.sites.sort((a, b) => (a.company > b.company ? 1 : -1));
     },
     getCheck(el) {
