@@ -184,7 +184,9 @@ export default {
     },
     sortedArray() {
       this.selectAll = false;
-      return this.sites.sort((a, b) => (a.company > b.company ? 1 : -1));
+      let arr = [];
+      return this.sites.sort(arr = (a, b) => a-b).reverse();
+      //return this.sites.sort((a, b) => (a.company > b.company ? 1 : -1));
     },
     getCheck(el) {
       this.selectOnes = true;
