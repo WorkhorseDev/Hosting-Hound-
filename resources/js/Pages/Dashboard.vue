@@ -185,7 +185,7 @@ export default {
     },
     sortedArray() {
       this.selectAll = false;
-      console.log(this.arr);
+      this.arr = Object.values(JSON.parse(JSON.stringify(this.arr)));
 
       return this.arr.sort((a, b) => (a.company > b.company ? 1 : -1));
     },
