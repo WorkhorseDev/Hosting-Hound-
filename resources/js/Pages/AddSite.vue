@@ -30,7 +30,7 @@ import InputError from "@/Components/InputError.vue";
                     </span>
         </div>
       </header>
-      <form @submit.prevent="submit" id="addSite">
+      <vf-form @submit.prevent="submit" id="addSite">
         <div class="main-panel main-panel_edit">
           <div class="flex flex-row items-center">
             <div class="pr-6">
@@ -352,7 +352,7 @@ import InputError from "@/Components/InputError.vue";
             </div>
           </div>
         </main>
-      </form>
+      </vf-form>
     </div>
   </div> <!-- end .wrapper -->
 </template>
