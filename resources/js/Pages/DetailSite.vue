@@ -112,7 +112,7 @@ import InputError from "@/Components/InputError.vue";
 
                 <div class="service-form detail" :id="'id'+key">
                   <div class="form-container">
-                    <div class="form-header"><i class="fa-solid fa-pen"></i></div>
+                    <div class="form-header"><span class="serv-detail">Host Provider</span><i class="fa-solid fa-pen"></i></div>
                     <div class="form-group-wrap bg-grey p-6 pt-4 globe-div">
                       <div class="globe">
                         <i class="fa-solid fa-globe"></i>

@@ -305,6 +305,13 @@ import InputError from "@/Components/InputError.vue";
                           </div>
                         </div>
                       </div>
+
+                      <div class="form-row">
+                        <div class="form-group">
+                          <label>Bills to CC ending in</label>
+                          <input class="bg-grey" type="text" placeholder="####" v-model="form.software.cc">
+                        </div>
+                      </div>
                     </div>
 
                     <div class="form-group-wrap bg-grey p-6 pt-4 security-group">
@@ -538,7 +545,8 @@ export default {
             renewal_date: '',
             user_mame: '',
             password: '',
-            pin: ''
+            pin: '',
+            cc: ''
         },
         softwares: [],
         providers: [],
@@ -551,7 +559,8 @@ export default {
           renewal_date: '',
           user_mame: '',
           password: '',
-          pin: ''
+          pin: '',
+          cc: ''
         }
       })
     };
