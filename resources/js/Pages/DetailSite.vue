@@ -138,6 +138,9 @@ import InputError from "@/Components/InputError.vue";
                       <div class="form-group right-side">
                         <em>Renewal Type:</em> <span>{{element.renewal_type}}</span>
                       </div>
+                      <div class="form-group right-side">
+                        <em>Last 4 digits of CC:</em> <span>{{element.cc}}</span>
+                      </div>
                     </div>
                     <div class="form-group-wrap p-6 pt-4">
                       <i class="fa-solid fa-key"></i> <span class="text"> Login Information</span>
@@ -253,6 +256,7 @@ export default {
       this.element.user_mame =  item.user_mame;
       this.password = this.element.password =  item.password;
       this.pin = this.element.pin =  item.pin;
+      this.cc = this.element.cc =  item.cc;
     }
   }
 }

@@ -39,7 +39,7 @@ import InputError from "@/Components/InputError.vue";
             <div class="panel-title">Add Website</div>
           </div>
           <div class="panel-controls flex flex-row justify-end items-center">
-            <button type="submit" class="btn-md btn-inverted">Save Changes</button>
+            <button type="submit" @click="submit" class="btn-md btn-inverted">Save Changes</button>
             <button class="btn-remove">
               <i class="fa fa-trash-can" v-if="path !== '/addSite'"></i>
             </button>
@@ -56,10 +56,10 @@ import InputError from "@/Components/InputError.vue";
                 <div class="mb-5">
                   <label for="url" class="block text-sm font-medium leading-6 text-gray-900">URL</label>
                   <div class="mt-2">
-                    <TextInput v-model="form.url" required id="url" name="url" type="text" autocomplete="url"
+                      <TextInput v-model="form.url" required id="url" name="url" type="text" autocomplete="url"
                                placeholder="http://www.website.com"
                                class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6"/>
-                    <InputError class="mt-2" :message="form.errors.name"/>
+                    <InputError v-if="urlError" class="mt-2" :message="form.errors.url"/>
                   </div>
                 </div>
 
@@ -82,6 +82,7 @@ import InputError from "@/Components/InputError.vue";
                     <input v-model="form.name" required id="name" name="name" type="text" autocomplete="name"
                            placeholder="Website Name"
                            class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                    <InputError v-if="nameError" class="mt-2" :message="form.errors.name"/>
                   </div>
                 </div>
 
@@ -202,6 +203,13 @@ import InputError from "@/Components/InputError.vue";
                           </div>
                         </div>
                       </div>
+
+                      <div class="form-row">
+                        <div class="form-group">
+                          <label>Bills to CC ending in</label>
+                          <input class="bg-grey cc" type="text" placeholder="####" v-model="form.software.cc">
+                        </div>
+                      </div>
                     </div>
 
                     <div class="form-group-wrap bg-grey p-6 pt-4 security-group">
@@ -309,7 +317,7 @@ import InputError from "@/Components/InputError.vue";
                       <div class="form-row">
                         <div class="form-group">
                           <label>Bills to CC ending in</label>
-                          <input class="bg-grey" type="text" placeholder="####" v-model="form.software.cc">
+                          <input class="bg-grey cc" type="text" placeholder="####" v-model="form.software.cc">
                         </div>
                       </div>
                     </div>
@@ -379,7 +387,8 @@ export default {
         renewal_date: item.renewal_date,
         user_mame: item.user_mame,
         password: item.password,
-        pin: item.pin
+        pin: item.pin,
+        cc: item.cc
       };
       this.serviceShow = true;
       this.serviceSave = key;
@@ -394,7 +403,8 @@ export default {
         renewal_date: item.renewal_date,
         user_mame: item.user_mame,
         password: item.password,
-        pin: item.pin
+        pin: item.pin,
+        cc: item.cc
       };
       this.softwareShow = true;
       this.softwareSave = key;
@@ -413,6 +423,16 @@ export default {
       this.img = URL.createObjectURL(file);
     },
     submit() {
+      if(this.form.url === '') {
+        this.urlError = true;
+        this.form.errors.url = "Field URL is required";
+        return false;
+      }
+      if(this.form.name === '') {
+        this.nameError = true;
+        this.form.errors.name = "Field Name is required";
+        return false;
+      }
       this.form.file = ['file', this.formFile.file, this.formFile.filename];
       if (this !== undefined && this.color) {
         this.form.color = this.color;
@@ -433,7 +453,8 @@ export default {
         renewal_date: '',
         user_mame: '',
         password: '',
-        pin: ''
+        pin: '',
+        cc: ''
       };
     },
     saveSoftware(key) {
@@ -448,6 +469,7 @@ export default {
       this.form.softwares[key].user_mame =  this.form.software.user_mame;
       this.form.softwares[key].password =  this.form.software.password;
       this.form.softwares[key].pin =  this.form.software.pin;
+      this.form.softwares[key].cc =  this.form.software.cc;
       this.form.software= {
         type: '',
         name:'',
@@ -457,7 +479,8 @@ export default {
         renewal_date: '',
         user_mame: '',
         password: '',
-        pin: ''
+        pin: '',
+        cc: ''
       };
     },
     saveProvider(key) {
@@ -472,6 +495,7 @@ export default {
       this.form.providers[key].user_mame =  this.form.provider.user_mame;
       this.form.providers[key].password =  this.form.provider.password;
       this.form.providers[key].pin =  this.form.provider.pin;
+      this.form.providers[key].cc =  this.form.provider.cc;
       this.form.provider= {
         type: '',
         name:'',
@@ -481,7 +505,8 @@ export default {
         renewal_date: '',
         user_mame: '',
         password: '',
-        pin: ''
+        pin: '',
+        cc: ''
       };
     },
     setProvider() {
@@ -496,7 +521,8 @@ export default {
             renewal_date: '',
             user_mame: '',
             password: '',
-            pin: ''
+            pin: '',
+            cc: ''
       };
     },
     showSoftware() {
@@ -505,6 +531,8 @@ export default {
   },
   data() {
     return {
+      nameError: false,
+      urlError: false,
       softwareName: 'Host Name',
       softwareHost: 'https://www.host.com',
       providerName: 'Host Name',
