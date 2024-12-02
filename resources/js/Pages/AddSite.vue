@@ -207,7 +207,7 @@ import InputError from "@/Components/InputError.vue";
                       <div class="form-row">
                         <div class="form-group">
                           <label>Bills to CC ending in</label>
-                          <input class="bg-grey cc" type="text" placeholder="####" v-model="form.software.cc">
+                          <input class="bg-grey cc" type="text" placeholder="####" v-model="form.provider.cc">
                         </div>
                       </div>
                     </div>
