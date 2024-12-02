@@ -603,8 +603,11 @@ select option {
 
 .detail .fa-solid.fa-pen {
     position: relative;
-    left: 70px;
     cursor: pointer;
+    float: right;
+    padding: 10px;
+    padding-top: 0px;
+    padding-bottom: 20px;
 }
 
 .form-header .serv-detail {
@@ -627,6 +630,10 @@ select option {
 
 .detail .form-container {
     height: 650px;
+}
+
+.edit-provider.detail .form-container {
+    height: 810px;
 }
 
 .fa-regular.fa-copy {
@@ -977,6 +984,22 @@ em.gray-text {
  .card-content.detail {
      margin-bottom: 30px;
  }
+
+ .edit-provider {
+     display: none;
+ }
+
+.form-header .fa-arrow-left.detail {
+    float: left;
+    padding: 10px;
+    cursor: pointer;
+}
+
+.form-header .fa-trash-can.detail {
+    float: right;
+    padding: 10px;
+    cursor: pointer;
+}
 
 @media screen and (max-width: 768px) {
     .auth-layout {

@@ -36,31 +36,32 @@ class Websites extends Eloquent
     /**
      * Edit site detail
      *
-     * @param array $site
+     * @param $site
      * @return string success
      */
-    public static function editSite(array $site)
+    public static function editSite($data)
     {
-        $site = Websites::find($site['id']);
-        $site->url = $site['url'];
-        $site->name = $site['name'];
-        $site->color = $site['color'];
-        $site->icon = $site['icon'];
-        $site->company = $site['company'];
-        $site->bu = $site['bu'];
-        $site->tags = $site['tags'];
-        $site->shared_with = $site['shared_with'];
-        $site->notes = $site['notes'];
-        $site->service_provider = $site['providers'];
-        $site->software = $site['softwares'];
+        $site = Websites::find($data->id);
+        $site->url = $data->url;
+        $site->name = $data->name;
+        $site->color = $data->color;
+        $site->icon = $data->icon;
+        $site->company = $data->company;
+        $site->business_unit = $data->business_unit;
+        $site->tags = $data->tags;
+        $site->shared_with = $data->shared_with;
+        $site->notes = $data->notes;
+        $site->provider = $data->providers;
+        $site->software = $data->softwares;
         $site->save();
+
         return 'success';
     }
 
     /**
      * Add new site
      *
-     * @param array $site
+     * @param  $site
      * @return string success
      */
     public static function addSite($site)

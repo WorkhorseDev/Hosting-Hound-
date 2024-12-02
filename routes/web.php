@@ -26,6 +26,7 @@ Route::middleware('auth', 'twofactor')->group(function () {
     Route::get('/dashboard', [App\Http\Controllers\WebsiteController::class, 'dashboard'])->name('dashboard');
     Route::get('/addSite', [App\Http\Controllers\WebsiteController::class, 'showAddSitePage'])->name('addSite');
     Route::post('/saveSite', [App\Http\Controllers\WebsiteController::class, 'saveSite'])->name('saveSite');
+    Route::post('/editSite', [App\Http\Controllers\WebsiteController::class, 'editSite'])->name('editSite');
     Route::post('/deleteSites', [App\Http\Controllers\WebsiteController::class, 'deleteSites'])->name('deleteSites');
     Route::get('/siteDetail/{id}', [App\Http\Controllers\WebsiteController::class, 'showSiteDetailPage'])->name('siteDetail');
 });
