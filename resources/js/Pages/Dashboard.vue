@@ -99,11 +99,11 @@ const route = inject("route");
             <div class="sort-panel">
                 <div class="options">
                     <label for="select_all" class="option-item">
-                        <input type="checkbox" @click="selectAll = !selectAll" id="select_all">
+                        <input type="checkbox" :checked="selectAll" @click="selectAll = !selectAll" id="select_all">
                         <span class="select-text">select all</span>
                     </label>
                     <label for="sort_by_company" class="option-item">
-                        <input type="checkbox" @click="sortedArray" id="sort_by_company">
+                        <input type="checkbox" :checked="sortCompany" @change="sortedArray" id="sort_by_company">
                         <span class="select-text">sort by company</span>
                     </label>
                   <span class="message" v-if="showDeleteBlock"><i class="fas fa-exclamation-triangle"></i> THIS ACTION CANNOT BE UNDONE <i class="fas fa-exclamation-triangle"></i></span>
@@ -157,6 +157,7 @@ export default {
   },
   data() {
     return {
+      sortCompany: false,
       selectAll: false,
       selectOnes: false,
       showShareBlock: false,
@@ -186,7 +187,7 @@ export default {
     sortedArray() {
       this.selectAll = false;
       this.arr = Object.values(JSON.parse(JSON.stringify(this.arr)));
-
+      this.sortCompany = !this.sortCompany;
       return this.arr.sort((a, b) => (a.company > b.company ? 1 : -1));
     },
     getCheck(el) {

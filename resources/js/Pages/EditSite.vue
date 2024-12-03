@@ -7,7 +7,7 @@ import InputError from "@/Components/InputError.vue";
 </script>
 
 <template>
-  <Head title="Add Site"/>
+  <Head title="Edit Site Details"/>
 
   <div class="wrapper">
     <div class="container dashboard">
@@ -36,16 +36,15 @@ import InputError from "@/Components/InputError.vue";
             <div class="pr-6">
               <span @click="goBack" class="btn-back"><i class="fas fa-arrow-left"></i></span>
             </div>
-            <div class="panel-title">Add Website</div>
+            <div class="panel-title">Edit Site Details</div>
           </div>
           <div class="panel-controls flex flex-row justify-end items-center">
             <button type="submit" @click="submit" class="btn-md btn-inverted">Save Changes</button>
             <button class="btn-remove">
-              <i class="fa fa-trash-can" v-if="path !== '/addSite'"></i>
+              <i class="fa fa-trash-can"></i>
             </button>
             <button class="btn-edit">
-              <i class="fa-solid fa-pencil" v-if="path !== '/addSite'"></i>
-              <i class="fa-solid fa-pencil" style="color: #979797" v-if="path == '/addSite'"></i>
+              <i class="fa-solid fa-pencil"></i>
             </button>
           </div>
         </div>
@@ -56,7 +55,7 @@ import InputError from "@/Components/InputError.vue";
                 <div class="mb-5">
                   <label for="url" class="block text-sm font-medium leading-6 text-gray-900">URL</label>
                   <div class="mt-2">
-                      <TextInput v-model="form.url" required id="url" name="url" type="text" autocomplete="url"
+                      <TextInput v-bind:value="site.url" v-model="site.url" required id="url" name="url" type="text" autocomplete="url"
                                placeholder="http://www.website.com"
                                class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6"/>
                     <InputError v-if="urlError" class="mt-2" :message="form.errors.url"/>
@@ -68,7 +67,7 @@ import InputError from "@/Components/InputError.vue";
                   <div class="mt-2">
                     <label  for="file" class="preview block text-sm font-medium leading-6 text-gray-900">
                       <i v-if="!img"  class="fa-solid fa-plus"></i>
-                      <img class="previe" v-if="img" :src="img"/>
+                      <img class="previe" v-if="img" v-bind:src="img"/>
                     </label>
                     <input class="file" id="file" type="file" hidden="hidden"
                            @change="appendFile($event.target.name, $event.target.files)"
@@ -79,7 +78,7 @@ import InputError from "@/Components/InputError.vue";
                 <div class="mb-5 right">
                   <label for="name" class="block text-sm font-medium leading-6 text-gray-900">Name</label>
                   <div class="mt-2">
-                    <input v-model="form.name" required id="name" name="name" type="text" autocomplete="name"
+                    <input v-bind:value="site.name" v-model="site.name" required id="name" name="name" type="text" autocomplete="name"
                            placeholder="Website Name"
                            class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
                     <InputError v-if="nameError" class="mt-2" :message="form.errors.name"/>
@@ -104,7 +103,7 @@ import InputError from "@/Components/InputError.vue";
                 <div class="mb-5">
                   <label for="company" class="block text-sm font-medium leading-6 text-gray-900">Company</label>
                   <div class="mt-2">
-                    <TextInput v-model="form.company" id="company" name="company" type="text" autocomplete="company"
+                    <TextInput v-bind:value="site.company" v-model="site.company" id="company" name="company" type="text" autocomplete="company"
                                placeholder="Company Name"
                                class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"></TextInput>
                   </div>
@@ -114,7 +113,7 @@ import InputError from "@/Components/InputError.vue";
                   <label for="business_unit" class="block text-sm font-medium leading-6 text-gray-900">Business
                     Unit</label>
                   <div class="mt-2">
-                    <TextInput v-model="form.business_unit" id="business_unit" name="business_unit" type="text"
+                    <TextInput v-bind:value="site.business_unit" v-model="site.business_unit" id="business_unit" name="business_unit" type="text"
                                autocomplete="business_unit" placeholder="Business Unit Name"
                                class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"></TextInput>
                   </div>
@@ -123,7 +122,7 @@ import InputError from "@/Components/InputError.vue";
                 <div class="mb-5">
                   <label for="tags" class="block text-sm font-medium leading-6 text-gray-900">Tags</label>
                   <div class="mt-2">
-                    <TextInput v-model="form.tags" id="tags" name="tags" type="text" autocomplete="tags"
+                    <TextInput v-bind:model-value="site.tags" v-model="site.tags" id="tags" name="tags" type="text" autocomplete="tags"
                                placeholder="Type tags separated by commas"
                                class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"></TextInput>
                   </div>
@@ -133,7 +132,7 @@ import InputError from "@/Components/InputError.vue";
                   <label for="shared_with" class="block text-sm font-medium leading-6 text-gray-900">Shared
                     with:</label>
                   <div class="mt-2">
-                    <textarea v-model="form.shared_with" id="shared_with" name="shared_with" rows="3"
+                    <textarea v-bind:value="site.shared_with" v-model="form.shared_with" id="shared_with" name="shared_with" rows="3"
                               placeholder="Type a name or email serparated by a comma…"
                               class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"></textarea>
                   </div>
@@ -142,7 +141,7 @@ import InputError from "@/Components/InputError.vue";
                 <div class="mb-5">
                   <label for="notes" class="block text-sm font-medium leading-6 text-gray-900">Notes</label>
                   <div class="mt-2">
-                    <textarea v-model="form.notes" id="notes" name="notes" rows="3" placeholder="Enter notes here"
+                    <textarea v-bind:value="site.notes" v-model="form.notes" id="notes" name="notes" rows="3" placeholder="Enter notes here"
                               class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"></textarea>
                   </div>
                 </div>
@@ -376,6 +375,9 @@ import {reactive} from "vue";
 import {useForm} from "@inertiajs/vue3";
 
 export default {
+  props: {
+    site: Array
+  },
   methods: {
     editProvider(key,item) {
       this.form.provider= {
@@ -550,7 +552,7 @@ export default {
       softwareShow: false,
       showMe: false,
       img: '',
-      color: '#FF920A',
+      color: this.site.color,
       orange: '#FF920A',
       dark_green: '#3D5F58',
       light_green: '#A7B57C',

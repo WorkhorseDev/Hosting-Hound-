@@ -29,6 +29,7 @@ Route::middleware('auth', 'twofactor')->group(function () {
     Route::post('/editSite', [App\Http\Controllers\WebsiteController::class, 'editSite'])->name('editSite');
     Route::post('/deleteSites', [App\Http\Controllers\WebsiteController::class, 'deleteSites'])->name('deleteSites');
     Route::get('/siteDetail/{id}', [App\Http\Controllers\WebsiteController::class, 'showSiteDetailPage'])->name('siteDetail');
+    Route::get('/editSiteView/{id}', [App\Http\Controllers\WebsiteController::class, 'editSiteView'])->name('editSiteView');
 });
 
 require __DIR__.'/auth.php';

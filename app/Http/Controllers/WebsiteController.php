@@ -59,6 +59,12 @@ class WebsiteController extends Controller
 
     }
 
+    public function editSiteView()
+    {
+        $site = Websites::find(request('id'));
+        return Inertia::render('EditSite', [ 'site' => $site]);
+    }
+
     public function showAddSitePage()
     {
         return Inertia::render('AddSite');

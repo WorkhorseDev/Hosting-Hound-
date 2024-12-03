@@ -37,7 +37,7 @@ import InputError from "@/Components/InputError.vue";
         </div>
         <div class="panel-controls flex flex-row justify-end items-center">
           <button class="btn-edit">
-            <i class="fa-solid fa-pencil" v-if="path !== '/addSite'"></i>
+            <i class="fa-solid fa-pencil" @click="goEdit" v-if="path !== '/addSite'"></i>
             <i class="fa-solid fa-pencil" style="color: #979797" v-if="path == '/addSite'"></i>
           </button>
         </div>
@@ -553,6 +553,9 @@ export default {
       this.form.providers = this.site.provider;
       this.form.softwares = this.site.software;
       this.form.post(route('editSite'), {});
+    },
+    goEdit () {
+      window.location.href = window.location.protocol + '//' + window.location.host+'/editSiteView/'+this.site._id;
     },
     editProvider(el, key) {
       var block = document.getElementById('id' + key);
