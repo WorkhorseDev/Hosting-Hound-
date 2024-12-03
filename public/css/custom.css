@@ -923,9 +923,11 @@ select option {
 
 .inner .fas.fa-edit {
     font-size: 21px;
+    float: right;
     display: inline-block;
-    margin-left: 200px;
     cursor: pointer;
+    position: absolute;
+    right: 50px;
 }
 
 .tags p.info {
