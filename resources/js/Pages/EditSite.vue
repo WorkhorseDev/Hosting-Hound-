@@ -41,7 +41,7 @@ import InputError from "@/Components/InputError.vue";
           <div class="panel-controls flex flex-row justify-end items-center">
             <button type="submit" @click="submit" class="btn-md btn-inverted">Save Changes</button>
             <button class="btn-remove">
-              <i class="fa fa-trash-can"></i>
+              <i class="fa fa-trash-can" @click="deleteSite"></i>
             </button>
             <button class="btn-edit">
               <i class="fa-solid fa-pencil"></i>
@@ -371,7 +371,7 @@ import InputError from "@/Components/InputError.vue";
   </div> <!-- end .wrapper -->
 </template>
 <script>
-import {reactive} from "vue";
+import {reactive, toRaw} from "vue";
 import {useForm} from "@inertiajs/vue3";
 
 export default {
@@ -543,6 +543,12 @@ export default {
     },
     showSoftware() {
       this.softwareShow = !this.softwareShow
+    },
+    deleteSite() {
+      this.form.sitesList.push(this.site._id);
+      this.form.post(route('deleteSites'), {
+        onFinish: () => this.form.get(route('dashboard'))
+      });
     }
   },
   data() {
@@ -572,6 +578,7 @@ export default {
       serviceSave: false,
       softwareSave: false,
       form: useForm({
+        sitesList: [],
         id: this.site._id,
         url: '',
         file: '',
