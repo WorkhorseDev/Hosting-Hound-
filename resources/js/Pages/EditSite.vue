@@ -431,12 +431,12 @@ export default {
       this.img = URL.createObjectURL(file);
     },
     submit() {
-      if(this.form.url === '') {
+      if(this.site.url === '') {
         this.urlError = true;
         this.form.errors.url = "Field URL is required";
         return false;
       }
-      if(this.form.name === '') {
+      if(this.site.name === '') {
         this.nameError = true;
         this.form.errors.name = "Field Name is required";
         return false;
@@ -445,7 +445,15 @@ export default {
       if (this !== undefined && this.color) {
         this.form.color = this.color;
       }
-      this.form.post(route('saveSite'), {
+      this.form.url = this.site.url;
+      this.form.name = this.site.name;
+      this.form.color = this.site.color;
+      this.form.company = this.site.company;
+      this.form.tags = this.site.tags;
+      this.form.shared_with = this.site.shared_with;
+      this.form.business_unit = this.site.business_unit;
+      this.form.notes = this.site.notes;
+      this.form.post(route('editSite'), {
         onFinish: () => this.form.get(route('dashboard'))
       });
     },
@@ -564,6 +572,7 @@ export default {
       serviceSave: false,
       softwareSave: false,
       form: useForm({
+        id: this.site._id,
         url: '',
         file: '',
         name: '',
@@ -572,7 +581,7 @@ export default {
         tags: '',
         shared_with: '',
         business_unit: '',
-        notes: '',
+        notes:'',
         provider: {
             type: '',
             name:'',
@@ -585,8 +594,8 @@ export default {
             pin: '',
             cc: ''
         },
-        softwares: [],
-        providers: [],
+        softwares: this.site.software,
+        providers: this.site.provider,
         software: {
           type: '',
           name:'',
