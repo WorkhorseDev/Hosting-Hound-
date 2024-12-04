@@ -275,6 +275,11 @@
     color: rgba(21, 32, 46, 1);
 }
 
+.readonly {
+    width: 40px;
+    display: block;
+}
+
 [type='checkbox']:checked, #terms {
     background-color: transparent;
     border: 2px solid #fff;

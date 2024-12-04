@@ -29,8 +29,16 @@ class WebsiteController extends Controller
     public function dashboard()
     {
         $sites = Websites::all()->where('user_id', '=', Auth::user()->_id);
+        $data = $sites->toArray();
+        $allSite = Websites::all();
+        foreach ($allSite as $site) {
+            if (str_contains($site->shared_with, Auth::user()->email)) {
+                $site->readonly = true;
+                array_push($data, $site);
+            }
+        }
         return Inertia::render('Dashboard', [
-            'sites' => $sites,
+            'sites' => $data,
         ]);
     }
 
@@ -73,8 +81,21 @@ class WebsiteController extends Controller
     public function showSiteDetailPage()
     {
         $site = Websites::find(request('id'));
+        if (str_contains($site->shared_with, Auth::user()->email)) {
+            $site->readonly = true;
+        }
         return Inertia::render('DetailSite', [
             'site' => $site,
         ]);
+    }
+
+    public function shareSites(Request $request)
+    {
+       Websites::shareSites($request->sitesList ,$request->share);
+    }
+
+    public function unShareSites(Request $request)
+    {
+        Websites::unShareSites($request->sitesList);
     }
 }

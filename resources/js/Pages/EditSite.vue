@@ -132,7 +132,7 @@ import InputError from "@/Components/InputError.vue";
                   <label for="shared_with" class="block text-sm font-medium leading-6 text-gray-900">Shared
                     with:</label>
                   <div class="mt-2">
-                    <textarea v-bind:value="site.shared_with" v-model="form.shared_with" id="shared_with" name="shared_with" rows="3"
+                    <textarea v-bind:value="site.shared_with" v-model="site.shared_with" id="shared_with" name="shared_with" rows="3"
                               placeholder="Type a name or email serparated by a comma…"
                               class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"></textarea>
                   </div>
@@ -141,7 +141,7 @@ import InputError from "@/Components/InputError.vue";
                 <div class="mb-5">
                   <label for="notes" class="block text-sm font-medium leading-6 text-gray-900">Notes</label>
                   <div class="mt-2">
-                    <textarea v-bind:value="site.notes" v-model="form.notes" id="notes" name="notes" rows="3" placeholder="Enter notes here"
+                    <textarea v-bind:value="site.notes" v-model="site.notes" id="notes" name="notes" rows="3" placeholder="Enter notes here"
                               class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"></textarea>
                   </div>
                 </div>

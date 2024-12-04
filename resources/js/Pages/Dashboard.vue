@@ -77,7 +77,7 @@ const route = inject("route");
                 </div>
               <div v-if="showShareBlock && !showUnshareBlock && !showDeleteBlock" class="panel-controls flex flex-row justify-end items-center gap-5">
                 <i class="fa fa-users in-textarea" aria-hidden="true"></i>
-                <textarea placeholder="Type a name or email serparated by a comma…" id="share" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm
+                <textarea v-model="form.share" placeholder="Type a name or email serparated by a comma…" id="share" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm
                 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"></textarea>
                 <button class="btn-md" type="button" @click="cancel">Cancel</button>
                 <button class="btn-md" type="button" @click="share">Share</button>
@@ -128,7 +128,10 @@ const route = inject("route");
 
                     <div class="data card-list" v-if="arr && arr.length !== 0">
                         <div v-for="item in arr" class="card-item">
-                           <label class="options"><input v-model="checkedSites[item._id]" type="checkbox" name="sites" @change="getCheck($event)" :checked="selectAll" :id=item._id class="card-selection selected sites"></label>
+                           <label class="options">
+                             <span class="readonly" v-if="item.readonly"></span>
+                             <input v-if="!item.readonly" v-model="checkedSites[item._id]" type="checkbox" name="sites" @change="getCheck($event)" :checked="selectAll" :id=item._id class="card-selection selected sites">
+                           </label>
                             <div class="card-content" @click="siteDetail(item._id)">
                                 <div class="info">
                                     <p class="card-title">{{ item.name }}</p>
@@ -167,7 +170,8 @@ export default {
       showDeleteBlock: false,
       checkedSites:[],
       form: useForm({
-        sitesList: []
+        sitesList: [],
+        share: ''
       }),
       arr: this.sites
     }
@@ -230,6 +234,24 @@ export default {
         this.form.sitesList.push(key);
       }
       this.form.post(route('deleteSites'), {
+        onFinish: () => this.form.get(route('dashboard'))
+      });
+    },
+    share() {
+      var arr = toRaw(this.checkedSites);
+      for (const key in arr) {
+        this.form.sitesList.push(key);
+      }
+      this.form.post(route('share'), {
+        onFinish: () => this.form.get(route('dashboard'))
+      });
+    },
+    unshare() {
+      var arr = toRaw(this.checkedSites);
+      for (const key in arr) {
+        this.form.sitesList.push(key);
+      }
+      this.form.post(route('unShareSites'), {
         onFinish: () => this.form.get(route('dashboard'))
       });
     }
