@@ -36,7 +36,7 @@ import InputError from "@/Components/InputError.vue";
           <div class="panel-title">Site Details</div>
         </div>
         <div class="panel-controls flex flex-row justify-end items-center">
-          <button class="btn-edit">
+          <button class="btn-edit" v-if="!site.readonly">
             <i class="fa-solid fa-pencil" @click="goEdit" v-if="path !== '/addSite'"></i>
             <i class="fa-solid fa-pencil" style="color: #979797" v-if="path == '/addSite'"></i>
           </button>

@@ -2,9 +2,10 @@
 
 namespace App\Models;
 
+use App\Mail\ShareMail;
 use Illuminate\Support\Facades\Auth;
 use MongoDB\Laravel\Eloquent\Model as Eloquent;
-
+use Illuminate\Support\Facades\Mail;
 class Websites extends Eloquent
 {
 
@@ -42,6 +43,14 @@ class Websites extends Eloquent
     public static function editSite($data)
     {
         $site = Websites::find($data->id);
+        if(!empty($data->shared_with)) {
+            $usersNew = explode(",", $data->shared_with);
+            $useOld =  explode(",", $site->shared_with);
+            $res = array_diff($usersNew, $useOld);
+            if(!empty($res)) {
+                Websites::share(implode(",",$res));
+            }
+        }
         $site->url = $data->url;
         $site->name = $data->name;
         $site->color = $data->color;
@@ -87,7 +96,50 @@ class Websites extends Eloquent
             'software' => isset($site->softwares) ? $site->softwares : '',
         ]);
 
+        if(!empty($site->shared_with)) {
+           Websites::share($site->shared_with);
+        }
+
         return 'success';
+    }
+
+    public static function share($share_arr)
+    {
+        $users = explode(",", $share_arr);
+        $email = "";
+        foreach ($users as $user) {
+            if(strpos($user, '@')) {
+                $email = $user;
+            } else {
+                $user = User::get()->where('name', Auth::user()->name);
+                $email = $user->email;
+            }
+            if (!empty($email)) {
+                Mail::send('emails.share', ['name' => Auth::user()->name], function ($message) use ($user) {
+                    $message->from('info@workhorsedev.com');
+                    $message->subject("Shared site from HostingHound");
+                    $message->to($user);
+                });
+            }
+        }
+    }
+    public static function shareSites($data, $share)
+    {
+        foreach ($data as $site) {
+            $siteEl = Websites::find($site);
+            $siteEl->shared_with = $share;
+            $siteEl->save();
+        }
+        Websites::share($share);
+    }
+
+    public static function unShareSites($data)
+    {
+        foreach ($data as $site) {
+            $siteEl = Websites::find($site);
+            $siteEl->shared_with = '';
+            $siteEl->save();
+        }
     }
 
 }

@@ -30,6 +30,8 @@ Route::middleware('auth', 'twofactor')->group(function () {
     Route::post('/deleteSites', [App\Http\Controllers\WebsiteController::class, 'deleteSites'])->name('deleteSites');
     Route::get('/siteDetail/{id}', [App\Http\Controllers\WebsiteController::class, 'showSiteDetailPage'])->name('siteDetail');
     Route::get('/editSiteView/{id}', [App\Http\Controllers\WebsiteController::class, 'editSiteView'])->name('editSiteView');
+    Route::post('/share', [App\Http\Controllers\WebsiteController::class, 'shareSites'])->name('share');
+    Route::post('/unShareSites', [App\Http\Controllers\WebsiteController::class, 'unShareSites'])->name('unShareSites');
 });
 
 require __DIR__.'/auth.php';
