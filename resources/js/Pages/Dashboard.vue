@@ -61,7 +61,7 @@ const route = inject("route");
                             </button>
                         </form>
 
-                        <span class="filter-btn">
+                        <span class="filter-btn" @click="showFilter" :class="{ active: isFilterOpen }" >
                             <i class="icon fas fa-filter"></i>
                         </span>
                     </div>
@@ -126,25 +126,87 @@ const route = inject("route");
                         </p>
                     </div>
 
-                    <div class="data card-list" v-if="arr && arr.length !== 0">
-                        <div v-for="item in arr" class="card-item">
-                           <label class="options">
-                             <span class="readonly" v-if="item.readonly"></span>
-                             <input v-if="!item.readonly" v-model="checkedSites[item._id]" type="checkbox" name="sites" @change="getCheck($event)" :checked="selectAll" :id=item._id class="card-selection selected sites">
-                           </label>
-                            <div class="card-content" @click="siteDetail(item._id)">
-                                <div class="info">
-                                    <p class="card-title">{{ item.name }}</p>
-                                    <span class="card-link">{{ item.url }}</span>
-                                </div>
-                                <div class="card-logo">
-                                    <img v-if="item.icon" :src="item.icon" :alt="item.name" />
-                                    <span v-else>Logo</span>
-                                </div>
-                                <span class="card-color" :style="{ backgroundColor: item.color }"></span>
+                    <div class="data-container">
+                        <div class="filter-block" v-if="isFilterOpen">
+                            <div class="filter-form">
+                                <div class="heading row flex justify-center text-2xl mb-5">Filter items below</div>
+                                <div class="filter-inner">
+                                    <div class="filter-search mb-5">
+                                        <input type="text" class="filter-search-input" id="filter-search" placeholder="Search term...">
+                                        <button type="button" class="search-btn">
+                                            <i class="fa-solid fa-magnifying-glass"></i>
+                                        </button>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="company">Company</label>
+                                        <select id="company">
+                                            <option>All Companies</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="hosts">Hosts</label>
+                                        <select id="hosts">
+                                            <option>View All</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="domain-provider">Domain Provider</label>
+                                        <select id="domain-provider">
+                                            <option>View All</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="ssl-provider">SSL Provider</label>
+                                        <select id="ssl-provider">
+                                            <option>View All</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="email-provider">Email Provider</label>
+                                        <select id="email-provider">
+                                            <option>View All</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="cms">Content Management System</label>
+                                        <select id="cms">
+                                            <option>All CMS</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="row flex justify-center">
+                                        <button type="submit" class="btn-md btn-inverted">Apply Filters</button>
+                                    </div>
+                                </div> <!-- end .filter-inner -->
                             </div>
-                        </div> <!-- end .card-item -->
-                    </div> <!-- end .card-list -->
+                        </div>
+
+                        <div class="data card-list" v-if="arr && arr.length !== 0">
+                            <div v-for="item in arr" class="card-item">
+                                <label class="options">
+                                    <span class="readonly" v-if="item.readonly"></span>
+                                    <input v-if="!item.readonly" v-model="checkedSites[item._id]" type="checkbox" name="sites" @change="getCheck($event)" :checked="selectAll" :id=item._id class="card-selection selected sites">
+                                </label>
+                                <div class="card-content" @click="siteDetail(item._id)">
+                                    <div class="info">
+                                        <p class="card-title">{{ item.name }}</p>
+                                        <span class="card-link">{{ item.url }}</span>
+                                    </div>
+                                    <div class="card-logo">
+                                        <img v-if="item.icon" :src="item.icon" :alt="item.name" />
+                                        <span v-else>Logo</span>
+                                    </div>
+                                    <span class="card-color" :style="{ backgroundColor: item.color }"></span>
+                                </div>
+                            </div> <!-- end .card-item -->
+                        </div> <!-- end .card-list -->
+                    </div>
                 </div>
             </main>
         </div>
@@ -173,7 +235,8 @@ export default {
         sitesList: [],
         share: ''
       }),
-      arr: this.sites
+      arr: this.sites,
+      isFilterOpen: false
     }
   },
   computed: {
@@ -205,6 +268,11 @@ export default {
         this.siteLength++;
       }
     },
+
+      showFilter() {
+        this.isFilterOpen = !this.isFilterOpen;
+      },
+
     showShare() {
       this.showShareBlock = true;
       if(this.selectAll) {

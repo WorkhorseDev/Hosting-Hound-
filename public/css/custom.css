@@ -143,7 +143,6 @@
 
 .search-bar {
     position: relative;
-    background: #ebebeb;
     -webkit-box-shadow: 0px 3px 3px 0px rgba(112,112,112,0.5);
     -moz-box-shadow: 0px 3px 3px 0px rgba(112,112,112,0.5);
     box-shadow: 0px 3px 3px 0px rgba(112,112,112,0.5);
@@ -152,8 +151,14 @@
     border-radius: 34px;
     overflow: hidden;
     margin-right: 20px;
+    display: flex;
+    align-items: stretch;
 }
 
+.search-bar .search-form {
+    position: relative;
+    z-index: 2;
+}
 .search-bar .search-input {
     width: 370px;
     height: 70px;
@@ -164,6 +169,7 @@
     -moz-border-radius: 34px;
     border-radius: 34px;
     padding-left: 75px;
+    padding-right: 25px;
 }
 
 .search-bar .search-btn {
@@ -180,14 +186,29 @@
 }
 
 .filter-btn {
-    position: absolute;
-    top: 25px;
-    right: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #ebebeb;
+    color: #424c57;
+    font-size: 2rem;
+    padding-right: 30px;
+    padding-left: 60px;
+    margin-left: -35px;
+    z-index: 1;
+    cursor: pointer;
+}
+.filter-btn.active {
+    background: #3D5F58;
+    color: #ffffff;
 }
 
-.filter-btn .icon {
-    font-size: 1.5rem;
-    color: #424c57;
+.filter-block {
+    width: 450px;
+    padding: 25px;
+    border: 1px solid #ebebeb;
+    box-shadow: 0px 3px 5px 0px rgba(112, 112, 112, 0.5);
+    border-radius: 20px;
 }
 
 .main-content {
