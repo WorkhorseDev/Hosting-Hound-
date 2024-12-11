@@ -16,7 +16,7 @@ class Websites extends Eloquent
      */
     protected $connection = 'mongodb';
     protected $collection = 'websites';
-    protected $fillable = ['_id', 'user_id', 'url', 'name', 'business_unit', 'tags', 'shared_with', 'notes', 'icon', 'company', 'color', 'hosts', 'provider', 'software'];
+    protected $fillable = ['_id', 'user_id', 'url', 'host', 'name', 'business_unit', 'tags', 'shared_with', 'notes', 'icon', 'company', 'color', 'hosts', 'provider', 'software'];
 
     /**
      * Delete sites
@@ -51,10 +51,16 @@ class Websites extends Eloquent
                 Websites::share(implode(",",$res));
             }
         }
+        $uploadfile = '';
+        if(isset($_FILES["file"]["name"])) {
+            $fileName = time() . "_" . basename($_FILES["file"]["name"][1]);
+            $data->file('file')[1]->move(public_path() . '/icon/', $fileName);
+            $uploadfile = "/icon/" . $fileName;
+        }
         $site->url = $data->url;
         $site->name = $data->name;
         $site->color = $data->color;
-        $site->icon = $data->icon;
+        $site->icon = $uploadfile != '' ? $uploadfile : $data->icon;
         $site->company = $data->company;
         $site->business_unit = $data->business_unit;
         $site->tags = $data->tags;

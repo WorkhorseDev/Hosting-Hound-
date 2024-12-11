@@ -31,14 +31,42 @@ class WebsiteController extends Controller
         $sites = Websites::all()->where('user_id', '=', Auth::user()->_id);
         $data = $sites->toArray();
         $allSite = Websites::all();
-        foreach ($allSite as $site) {
+        $companies = [];
+        $hosts = [];
+        $providers = [];
+        $sslArr = [];
+        $emails = [];
+        $cms = [];
+        foreach ($allSite as $key=>$site) {
+            if(!empty($site->company)) {
+                array_push($companies, $site->company);
+            }
+            if (!empty($site->provider)) {
+                foreach ($site->provider as $host) {
+                    if ($host['type'] == 'Host')
+                        array_push($hosts, $host['name']);
+                    if ($host['type'] == 'Domain Register')
+                        array_push($providers, $host['name']);
+                    if ($host['type'] == 'SSL Provider')
+                        array_push($sslArr, $host['name']);
+                    if ($host['type'] == 'Email Plan Provider')
+                        array_push($emails, $host['name']);
+                }
+            }
+            if (!empty($site->software)) {
+                foreach ($site->software as $host) {
+                    if ($host['type'] == 'CMS')
+                        array_push($cms, $host['name']);
+                }
+            }
             if (str_contains($site->shared_with, Auth::user()->email)) {
                 $site->readonly = true;
                 array_push($data, $site);
             }
         }
         return Inertia::render('Dashboard', [
-            'sites' => $data,
+            'sites' => $data, 'companies' => array_unique($companies), 'hosts' => array_unique($hosts), 'providers' => array_unique($providers),
+            'sslArr' => array_unique($sslArr), 'emails' => $emails, 'cms' => $cms
         ]);
     }
 

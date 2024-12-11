@@ -1,216 +1,215 @@
 <script setup>
 import {Head, useForm} from '@inertiajs/vue3';
-import { Link } from '@inertiajs/vue3';
-import { inject,reactive } from "vue";
+import {Link} from '@inertiajs/vue3';
+import {inject, reactive} from "vue";
 
 const route = inject("route");
-
-// // just for testing
-// const sites = [{
-//     url: 'https://website.com',
-//     name: 'Test website 1',
-//     logo: 'https://picsum.photos/70',
-//     color: 'red'
-// },{
-//     url: 'https://website123.com',
-//     name: 'Test website 2',
-//     logo: 'https://picsum.photos/70',
-//     color: '#ff930a'
-// },{
-//     url: 'https://website-qwe.com',
-//     name: 'Test website 3',
-//     logo: '',
-//     color: 'blue'
-// },
-// ];
-
 </script>
 
 <template>
-    <Head title="Dashboard" />
+  <Head title="Dashboard"/>
 
-    <div class="wrapper">
-        <div class="container dashboard">
-            <header class="header">
-                <div class="tabs">
-                    <a href="#" class="tab-item is-active">
-                        <span class="">Websites</span>
-                    </a>
-                    <a href="#" class="tab-item">
-                        <span class="">Billings</span>
-                    </a>
-                </div>
+  <div class="wrapper">
+    <div class="container dashboard">
+      <header class="header">
+        <div class="tabs">
+          <a href="#" class="tab-item is-active">
+            <span class="">Websites</span>
+          </a>
+          <a href="#" class="tab-item">
+            <span class="">Billings</span>
+          </a>
+        </div>
 
-                <div class="links">
+        <div class="links">
                     <span class="link-item link-item_add">
                        <Link :href="route('addSite')"><i class="fas fa-add"></i></Link>
                     </span>
-                    <span class="link-item link-item_user">
+          <span class="link-item link-item_user">
                         <i class="fas fa-user"></i>
                     </span>
-                </div>
-            </header>
+        </div>
+      </header>
 
-            <div class="main-panel">
-                <div class="search-section">
-                    <div class="search-bar">
-                        <form action="" class="search-form" id="search_form">
-                            <input type="text" class="search-input" id="search" placeholder="search...">
-                            <button type="button" class="search-btn">
-                                <i class="fa-solid fa-magnifying-glass"></i>
-                            </button>
-                        </form>
+      <div class="main-panel">
+        <div class="search-section">
+          <div class="search-bar">
+            <form action="" class="search-form" id="search_form">
+              <input type="text" v-model="searchData" @change="search" class="search-input" id="search"
+                     placeholder="search...">
+              <button type="button" class="search-btn">
+                <i class="fa-solid fa-magnifying-glass"></i>
+              </button>
+            </form>
 
-                        <span class="filter-btn" @click="showFilter" :class="{ active: isFilterOpen }" >
+            <span class="filter-btn" @click="showFilter" :class="{ active: isFilterOpen }">
                             <i class="icon fas fa-filter"></i>
                         </span>
-                    </div>
-                    <span class="select-items" v-if="selectAll && !showShareBlock && !showUnshareBlock && !showDeleteBlock"><em>{{countAll}} selected item (s)</em></span>
-                    <span class="select-items" v-if="showShareBlock"><em>Share {{siteLength}} item (s) with</em></span>
-                    <span class="select-items" v-if="showUnshareBlock"><em>Unshare {{siteLength}} item (s) ?</em></span>
-                  <span class="select-items" v-if="showDeleteBlock"><em>Delete  {{siteLength}} item (s) ?</em></span>
-                </div>
-                <div v-if="(selectAll || selectOnes) && !showShareBlock && !showUnshareBlock && !showDeleteBlock" class="panel-controls flex flex-row justify-end items-center gap-5">
-                    <button class="btn-md" type="button" @click="showShare">Share</button>
-                    <button class="btn-md" type="button" @click="showUnshare">Unshare</button>
-                    <button class="btn-md" type="button" @click="showDelete">Delete</button>
-                </div>
-              <div v-if="showShareBlock && !showUnshareBlock && !showDeleteBlock" class="panel-controls flex flex-row justify-end items-center gap-5">
-                <i class="fa fa-users in-textarea" aria-hidden="true"></i>
-                <textarea v-model="form.share" placeholder="Type a name or email serparated by a comma…" id="share" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm
-                ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"></textarea>
-                <button class="btn-md" type="button" @click="cancel">Cancel</button>
-                <button class="btn-md" type="button" @click="share">Share</button>
-              </div>
-              <div v-if="showUnshareBlock && !showDeleteBlock" class="panel-controls flex flex-row justify-end items-center gap-5">
-                <i class="fa-solid fa-circle-exclamation in-textarea"></i>
-                <textarea :placeholder="placeholderUnshare" id="unshare" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"></textarea>
-                <button class="btn-md" type="button" @click="cancel">Cancel</button>
-                <button class="btn-md" type="button" @click="unshare">Unshare</button>
-              </div>
-              <div v-if="showDeleteBlock" class="panel-controls flex flex-row justify-end items-center gap-5">
-                <i class="fa-solid fa-trash-can in-textarea"></i>
-                <textarea readonly :placeholder="plaсeholderDelete" id="delete" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"></textarea>
-                <button class="btn-md" type="button" @click="cancel">Cancel</button>
-                <button class="btn-md" type="button" @click="deleteSite">Delete</button>
-              </div>
-            </div>
-
-            <div class="sort-panel">
-                <div class="options">
-                    <label for="select_all" class="option-item">
-                        <input type="checkbox" :checked="selectAll" @click="selectAll = !selectAll" id="select_all">
-                        <span class="select-text">select all</span>
-                    </label>
-                    <label for="sort_by_company" class="option-item">
-                        <input type="checkbox" :checked="sortCompany" @change="sortedArray" id="sort_by_company">
-                        <span class="select-text">sort by company</span>
-                    </label>
-                  <span class="message" v-if="showDeleteBlock"><i class="fas fa-exclamation-triangle"></i> THIS ACTION CANNOT BE UNDONE <i class="fas fa-exclamation-triangle"></i></span>
-                </div>
-            </div>
-
-            <main class="main-content">
-                <div class="inner">
-                    <div class="empty-state" v-show="!sites">
-                        <div class="icon">
-                            <i class="fa-solid fa-heart-crack"></i>
-                        </div>
-                        <p>
-                            Oh no!
-                            <br>
-                            No websites found here
-                        </p>
-                        <p>
-                            You can <Link :href="route('addSite')" class="new-site">add a new website</Link> by pressing the + icon at the top right-hand corner of this screen
-                        </p>
-                    </div>
-
-                    <div class="data-container">
-                        <div class="filter-block" v-if="isFilterOpen">
-                            <div class="filter-form">
-                                <div class="heading row flex justify-center text-2xl mb-5">Filter items below</div>
-                                <div class="filter-inner">
-                                    <div class="filter-search mb-5">
-                                        <input type="text" class="filter-search-input" id="filter-search" placeholder="Search term...">
-                                        <button type="button" class="search-btn">
-                                            <i class="fa-solid fa-magnifying-glass"></i>
-                                        </button>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="company">Company</label>
-                                        <select id="company">
-                                            <option>All Companies</option>
-                                        </select>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="hosts">Hosts</label>
-                                        <select id="hosts">
-                                            <option>View All</option>
-                                        </select>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="domain-provider">Domain Provider</label>
-                                        <select id="domain-provider">
-                                            <option>View All</option>
-                                        </select>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="ssl-provider">SSL Provider</label>
-                                        <select id="ssl-provider">
-                                            <option>View All</option>
-                                        </select>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="email-provider">Email Provider</label>
-                                        <select id="email-provider">
-                                            <option>View All</option>
-                                        </select>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="cms">Content Management System</label>
-                                        <select id="cms">
-                                            <option>All CMS</option>
-                                        </select>
-                                    </div>
-
-                                    <div class="row flex justify-center">
-                                        <button type="submit" class="btn-md btn-inverted">Apply Filters</button>
-                                    </div>
-                                </div> <!-- end .filter-inner -->
-                            </div>
-                        </div>
-
-                        <div class="data card-list" v-if="arr && arr.length !== 0">
-                            <div v-for="item in arr" class="card-item">
-                                <label class="options">
-                                    <span class="readonly" v-if="item.readonly"></span>
-                                    <input v-if="!item.readonly" v-model="checkedSites[item._id]" type="checkbox" name="sites" @change="getCheck($event)" :checked="selectAll" :id=item._id class="card-selection selected sites">
-                                </label>
-                                <div class="card-content" @click="siteDetail(item._id)">
-                                    <div class="info">
-                                        <p class="card-title">{{ item.name }}</p>
-                                        <span class="card-link">{{ item.url }}</span>
-                                    </div>
-                                    <div class="card-logo">
-                                        <img v-if="item.icon" :src="item.icon" :alt="item.name" />
-                                        <span v-else>Logo</span>
-                                    </div>
-                                    <span class="card-color" :style="{ backgroundColor: item.color }"></span>
-                                </div>
-                            </div> <!-- end .card-item -->
-                        </div> <!-- end .card-list -->
-                    </div>
-                </div>
-            </main>
+          </div>
+          <span class="select-items"
+                v-if="selectAll && !showShareBlock && !showUnshareBlock && !showDeleteBlock"><em>{{ countAll }} selected item (s)</em></span>
+          <span class="select-items" v-if="showShareBlock"><em>Share {{ siteLength }} item (s) with</em></span>
+          <span class="select-items" v-if="showUnshareBlock"><em>Unshare {{ siteLength }} item (s) ?</em></span>
+          <span class="select-items" v-if="showDeleteBlock"><em>Delete  {{ siteLength }} item (s) ?</em></span>
         </div>
-    </div> <!-- end .wrapper -->
+        <div v-if="(selectAll || selectOnes) && !showShareBlock && !showUnshareBlock && !showDeleteBlock"
+             class="panel-controls flex flex-row justify-end items-center gap-5">
+          <button class="btn-md" type="button" @click="showShare">Share</button>
+          <button class="btn-md" type="button" @click="showUnshare">Unshare</button>
+          <button class="btn-md" type="button" @click="showDelete">Delete</button>
+        </div>
+        <div v-if="showShareBlock && !showUnshareBlock && !showDeleteBlock"
+             class="panel-controls flex flex-row justify-end items-center gap-5">
+          <i class="fa fa-users in-textarea" aria-hidden="true"></i>
+          <textarea v-model="form.share" placeholder="Type a name or email serparated by a comma…" id="share" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm
+                ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"></textarea>
+          <button class="btn-md" type="button" @click="cancel">Cancel</button>
+          <button class="btn-md" type="button" @click="share">Share</button>
+        </div>
+        <div v-if="showUnshareBlock && !showDeleteBlock"
+             class="panel-controls flex flex-row justify-end items-center gap-5">
+          <i class="fa-solid fa-circle-exclamation in-textarea"></i>
+          <textarea :placeholder="placeholderUnshare" id="unshare"
+                    class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"></textarea>
+          <button class="btn-md" type="button" @click="cancel">Cancel</button>
+          <button class="btn-md" type="button" @click="unshare">Unshare</button>
+        </div>
+        <div v-if="showDeleteBlock" class="panel-controls flex flex-row justify-end items-center gap-5">
+          <i class="fa-solid fa-trash-can in-textarea"></i>
+          <textarea readonly :placeholder="plaсeholderDelete" id="delete"
+                    class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"></textarea>
+          <button class="btn-md" type="button" @click="cancel">Cancel</button>
+          <button class="btn-md" type="button" @click="deleteSite">Delete</button>
+        </div>
+      </div>
+
+      <div class="sort-panel">
+        <div class="options">
+          <label for="select_all" class="option-item">
+            <input type="checkbox" :checked="selectAll" @click="selectAll = !selectAll" id="select_all">
+            <span class="select-text">select all</span>
+          </label>
+          <label for="sort_by_company" class="option-item">
+            <input type="checkbox" :checked="sortCompany" @change="sortedArray" id="sort_by_company">
+            <span class="select-text">sort by company</span>
+          </label>
+          <span class="message" v-if="showDeleteBlock"><i class="fas fa-exclamation-triangle"></i> THIS ACTION CANNOT BE UNDONE <i
+              class="fas fa-exclamation-triangle"></i></span>
+        </div>
+      </div>
+
+      <main class="main-content">
+        <div class="inner">
+          <div class="empty-state" v-show="!sites">
+            <div class="icon">
+              <i class="fa-solid fa-heart-crack"></i>
+            </div>
+            <p>
+              Oh no!
+              <br>
+              No websites found here
+            </p>
+            <p>
+              You can
+              <Link :href="route('addSite')" class="new-site">add a new website</Link>
+              by pressing the + icon at the top right-hand corner of this screen
+            </p>
+          </div>
+
+          <div class="data-container">
+            <div class="filter-block" v-if="isFilterOpen">
+              <div class="filter-form">
+                <div class="heading row flex justify-center text-2xl mb-5">Filter items below</div>
+                <div class="filter-inner">
+                  <div class="filter-search mb-5">
+                    <input type="text" @change="search" v-model="searchData" class="filter-search-input"
+                           id="filter-search" placeholder="Search term...">
+                    <button type="button" class="search-btn">
+                      <i class="fa-solid fa-magnifying-glass"></i>
+                    </button>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="company">Company</label>
+                    <select id="company" v-model="companySort">
+                      <option>All Companies</option>
+                      <option v-for="company in companies">{{ company }}</option>
+                    </select>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="hosts">Hosts</label>
+                    <select id="hosts" v-model="hostSort">
+                      <option>View All</option>
+                      <option v-for="host in hosts">{{ host }}</option>
+                    </select>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="domain-provider">Domain Provider</label>
+                    <select id="domain-provider" v-model="providerSort">
+                      <option>View All</option>
+                      <option v-for="provider in providers">{{ provider }}</option>
+                    </select>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="ssl-provider">SSL Provider</label>
+                    <select id="ssl-provider" v-model="sslSort">
+                      <option>View All</option>
+                      <option v-for="provider in sslArr">{{ provider }}</option>
+                    </select>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="email-provider">Email Provider</label>
+                    <select id="email-provider" v-model="emailSort">
+                      <option>View All</option>
+                      <option v-for="provider in emails">{{ provider }}</option>
+                    </select>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="cms">Content Management System</label>
+                    <select id="cms" v-model="cmsSort">
+                      <option>All CMS</option>
+                      <option v-for="provider in cms">{{ provider }}</option>
+                    </select>
+                  </div>
+
+                  <div class="row flex justify-center">
+                    <button type="button" @click="sortField" class="btn-md btn-inverted">Apply Filters</button>
+                  </div>
+                </div> <!-- end .filter-inner -->
+              </div>
+            </div>
+
+            <div class="data card-list" v-if="arr && arr.length !== 0">
+              <div v-for="item in arr" class="card-item">
+                <label class="options">
+                  <span class="readonly" v-if="item.readonly"></span>
+                  <input v-if="!item.readonly" v-model="checkedSites[item._id]" type="checkbox" name="sites"
+                         @change="getCheck($event)" :checked="selectAll" :id=item._id
+                         class="card-selection selected sites">
+                </label>
+                <div class="card-content" @click="siteDetail(item._id)">
+                  <div class="info">
+                    <p class="card-title">{{ item.name }}</p>
+                    <span class="card-link">{{ item.url }}</span>
+                  </div>
+                  <div class="card-logo">
+                    <img v-if="item.icon" :src="item.icon" :alt="item.name"/>
+                    <span v-else>Logo</span>
+                  </div>
+                  <span class="card-color" :style="{ backgroundColor: item.color }"></span>
+                </div>
+              </div> <!-- end .card-item -->
+            </div> <!-- end .card-list -->
+          </div>
+        </div>
+      </main>
+    </div>
+  </div> <!-- end .wrapper -->
 </template>
 <script>
 import {useForm} from "@inertiajs/vue3";
@@ -219,9 +218,22 @@ import {toRaw} from "vue";
 export default {
   props: {
     sites: [],
+    companies: [],
+    hosts: [],
+    providers: [],
+    sslArr: [],
+    emails: [],
+    cms: []
   },
   data() {
     return {
+      searchData: '',
+      companySort: '',
+      providerSort: '',
+      sslSort: '',
+      hostSort: '',
+      emailSort: '',
+      cmsSort: '',
       sortCompany: false,
       selectAll: false,
       selectOnes: false,
@@ -230,7 +242,8 @@ export default {
       countAll: this.sites.length,
       showUnshareBlock: false,
       showDeleteBlock: false,
-      checkedSites:[],
+      checkedSites: [],
+      data: [],
       form: useForm({
         sitesList: [],
         share: ''
@@ -241,61 +254,152 @@ export default {
   },
   computed: {
     plaсeholderDelete() {
-     return "Are you sure you want to delete " + this.siteLength + " selected item(s)?";
+      return "Are you sure you want to delete " + this.siteLength + " selected item(s)?";
     },
     placeholderUnshare() {
-    return  "Are you sure you want to unshare " + this.siteLength + " selected item(s)?";
+      return "Are you sure you want to unshare " + this.siteLength + " selected item(s)?";
     }
   },
   methods: {
-    siteDetail(id) {
-      window.location.href= 'siteDetail/'+id;
+    sortField() {
+      this.arr = Object.values(JSON.parse(JSON.stringify(this.arr)));
+      if (this.companySort)  {
+        if (this.companySort === 'All Companies') {
+          this.arr = this.sites;
+        } else {
+          this.arr = [];
+          this.sites.filter(item => {
+            if (item.company) {
+              if (this.companySort.toLowerCase() === item.company.toLowerCase()) {
+                this.arr.push(item);
+              }
+            }
+          });
+        }
+      }
+      if (this.hostSort && this.hostSort !== '') {
+         this.arr = this.sortProviders('Host', this.hostSort, this.arr)
+      }
+      if (this.providerSort && this.providerSort !== '') {
+        this.arr = this.sortProviders('Domain Register', this.providerSort, this.arr)
+      }
+      if (this.sslSort && this.sslSort !== '') {
+        this.arr = this.sortProviders('SSL Provider', this.sslSort, this.arr)
+      }
+      if (this.emailSort && this.emailSort !== '') {
+        this.arr = this.sortProviders('Email Plan Provider', this.emailSort, this.arr)
+      }
+      if (this.cmsSort && this.cmsSort !== '') {
+        this.arr = this.sortSoftware('CMS', this.cmsSort, this.arr)
+      }
+      return this.arr;
     },
+    sortSoftware (filed, value, arr) {
+      if (this.cmsSort === 'View All') {
+        this.arr = this.sites;
+        return this.arr;
+      }
+      arr.filter(item => {
+        if (item.software && item.software.length !== 0) {
+          for (var host in item.software) {
+            if (item.software[host].type === filed) {
+              if (item.software[host].name.toLowerCase() === value.toLowerCase()) {
+                this.data.push(item);
+              }
+            }
+          }
+        }
+      });
+      return this.data;
+    },
+    sortProviders(filed, value, arr) {
+      if ((this.hostSort === 'View All' && this.providerSort === 'View All' && this.sslSort === 'View All' && this.emailSort === 'View All')) {
+        this.arr = this.sites;
+        return this.arr;
+      }
+      arr.filter(item => {
+        if (item.provider && item.provider.length !== 0) {
+          for (var host in item.provider) {
+            if (item.provider[host].type === filed) {
+              if (item.provider[host].name.toLowerCase() === value.toLowerCase()) {
+                this.data.push(item);
+              }
+            }
+          }
+        }
+      });
+      return this.data;
+    },
+    search() {
+      this.arr = Object.values(JSON.parse(JSON.stringify(this.arr)));
+      this.arr = this.arr.filter(item => {
+        return (
+            item.name
+                .toLowerCase()
+                .indexOf(this.searchData.toLowerCase()) != -1 ||
+            item.url
+                .toLowerCase()
+                .indexOf(this.searchData.toLowerCase()) != -1
+        );
+      });
+    }
+    ,
+    siteDetail(id) {
+      window.location.href = 'siteDetail/' + id;
+    }
+    ,
     sortedArray() {
       this.selectAll = false;
       this.arr = Object.values(JSON.parse(JSON.stringify(this.arr)));
       this.sortCompany = !this.sortCompany;
       return this.arr.sort((a, b) => (a.company > b.company ? 1 : -1));
-    },
+    }
+    ,
     getCheck(el) {
       this.selectOnes = true;
-      if(!el.target.checked && this.selectAll) {
+      if (!el.target.checked && this.selectAll) {
         this.countAll--;
         this.siteLength--;
-      } else if(!el.target.checked && !this.selectAll) {
+      } else if (!el.target.checked && !this.selectAll) {
         this.siteLength--;
       } else if (el.target.checked && !this.selectAll) {
         this.siteLength++;
       }
-    },
+    }
+    ,
 
-      showFilter() {
-        this.isFilterOpen = !this.isFilterOpen;
-      },
+    showFilter() {
+      this.isFilterOpen = !this.isFilterOpen;
+    }
+    ,
 
     showShare() {
       this.showShareBlock = true;
-      if(this.selectAll) {
+      if (this.selectAll) {
         this.siteLength = this.countAll;
       }
-    },
+    }
+    ,
     showUnshare() {
       this.showUnshareBlock = true;
-      if(this.selectAll) {
+      if (this.selectAll) {
         this.siteLength = this.countAll;
       }
-    },
+    }
+    ,
     showDelete() {
       this.showDeleteBlock = true;
-      if(this.selectAll) {
+      if (this.selectAll) {
         this.siteLength = this.countAll;
       }
-    },
+    }
+    ,
     cancel() {
       this.showShareBlock = false;
       this.showUnshareBlock = false;
       this.showDeleteBlock = false;
-    },
+    }
+    ,
     deleteSite() {
       var arr = toRaw(this.checkedSites);
       for (const key in arr) {
@@ -304,7 +408,8 @@ export default {
       this.form.post(route('deleteSites'), {
         onFinish: () => this.form.get(route('dashboard'))
       });
-    },
+    }
+    ,
     share() {
       var arr = toRaw(this.checkedSites);
       for (const key in arr) {
@@ -313,7 +418,8 @@ export default {
       this.form.post(route('share'), {
         onFinish: () => this.form.get(route('dashboard'))
       });
-    },
+    }
+    ,
     unshare() {
       var arr = toRaw(this.checkedSites);
       for (const key in arr) {
@@ -323,7 +429,8 @@ export default {
         onFinish: () => this.form.get(route('dashboard'))
       });
     }
-  },
+  }
+  ,
 }
 
 </script>
