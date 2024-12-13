@@ -204,11 +204,12 @@
 }
 
 .filter-block {
-    width: 380px;
+    width: 100%;
     box-shadow: 0px 3px 5px 0px rgba(112, 112, 112, 0.5);
     border-radius: 40px;
     overflow: hidden;
     flex: 380px 1 0;
+    max-width: 380px;
 }
 
 .filter-form .heading {
@@ -857,6 +858,7 @@ select option {
     flex-wrap: wrap;
     flex-direction: row;
     justify-content: flex-start;
+    flex-grow: 1;
 }
 
 .card-item {
