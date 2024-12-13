@@ -184,7 +184,7 @@ const route = inject("route");
               </div>
             </div>
 
-            <div class="data card-list" v-if="arr && arr.length !== 0">
+            <div class="data card-list" v-if="arr && arr.length !== 0" :class="{ filter_active: isFilterOpen }">
               <div v-for="item in arr" class="card-item">
                 <label class="options">
                   <span class="readonly" v-if="item.readonly"></span>

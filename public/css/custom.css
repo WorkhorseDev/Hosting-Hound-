@@ -208,6 +208,7 @@
     box-shadow: 0px 3px 5px 0px rgba(112, 112, 112, 0.5);
     border-radius: 40px;
     overflow: hidden;
+    flex: 380px 1 0;
 }
 
 .filter-form .heading {
@@ -264,7 +265,8 @@
     padding: 12px;
     border: none;
 }
-.filter-inner .btn-md {ont-family: 'Lato';
+.filter-inner .btn-md {
+    font-family: 'Lato', sans-serif;
     font-size: 24px;
     background: #3D5F58;
     text-align: center;
@@ -836,6 +838,14 @@ select option {
     object-fit: cover;
 }
 
+.data-container {
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    gap: 50px;
+    margin: 0 -20px;
+}
+
 .card-list {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -857,7 +867,7 @@ select option {
 
     width: calc(33.333% - 20px);
 }
-.card-list.filter-active .card-item {
+.card-list.filter_active .card-item {
     width: calc(50% - 20px);
 }
 .card-item .options input {
