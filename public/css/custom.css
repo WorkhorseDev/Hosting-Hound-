@@ -220,6 +220,13 @@
     padding: 20px 25px 60px 25px;
     margin: 0;
 }
+.filter-form .form-group {
+    margin-bottom: 15px;
+}
+.filter-form .form-group label {
+    margin-bottom: 7px;
+}
+
 .filter-inner {
     padding: 20px 25px 30px;
     background: #F3F3F3;
