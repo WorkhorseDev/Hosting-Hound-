@@ -204,12 +204,79 @@
 }
 
 .filter-block {
-    width: 450px;
-    padding: 25px;
-    border: 1px solid #ebebeb;
+    width: 380px;
     box-shadow: 0px 3px 5px 0px rgba(112, 112, 112, 0.5);
-    border-radius: 20px;
+    border-radius: 40px;
+    overflow: hidden;
 }
+
+.filter-form .heading {
+    font-size: 1.55rem;
+    color: #fff;
+    font-family: "Lato", sans-serif;
+    background: #3D5F58;
+    padding: 20px 25px 60px 25px;
+    margin: 0;
+}
+.filter-inner {
+    padding: 20px 25px 30px;
+    background: #F3F3F3;
+    border-top-right-radius: 35px;
+    border-top-left-radius: 35px;
+    margin-top: -40px;
+}
+
+.filter-search {
+    position: relative;
+}
+.filter-search input {
+    width: 100%;
+    -webkit-border-radius: 15px;
+    -moz-border-radius: 15px;
+    border-radius: 15px;
+    padding: 12px;
+    padding-left: 55px;
+    border: none;
+    background: #ebebeb;
+    box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.5);
+    font-size: 1.2rem;
+    font-style: italic;
+    font-family: 'Lato', sans-serif;
+}
+.filter-search .search-btn {
+    font-size: 22px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 50px;
+    z-index: 1;
+}
+.filter-search .search-btn i {
+    color: #15202e;
+}
+
+.filter-inner .form-group select {
+    -webkit-border-radius: 15px;
+    -moz-border-radius: 15px;
+    border-radius: 15px;
+    background-color: #d8d8d8;
+    padding: 12px;
+    border: none;
+}
+.filter-inner .btn-md {ont-family: 'Lato';
+    font-size: 24px;
+    background: #3D5F58;
+    text-align: center;
+    display: block;
+    padding: 8px 28px 8px;
+    color: #ffffff;
+    border-radius: 45px;
+    -webkit-box-shadow: 8px 0px 8px -4px rgba(0, 0, 0, 0.5);
+    -moz-box-shadow: 5px 0px 8px -4px rgba(0, 0, 0, 0.5);
+    box-shadow: 0px 5px 8px -4px rgba(0, 0, 0, 0.5);
+}
+
 
 .main-content {
     position: relative;
@@ -775,6 +842,11 @@ select option {
     gap: 25px;
     padding: 20px 0;
     margin: 0 -20px;
+
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: flex-start;
 }
 
 .card-item {
@@ -782,7 +854,16 @@ select option {
     flex-direction: row;
     align-items: center;
     justify-content: flex-start;
+
+    width: calc(33.333% - 20px);
 }
+.card-list.filter-active .card-item {
+    width: calc(50% - 20px);
+}
+.card-item .options input {
+    margin-right: 15px;
+}
+
 .card-selection {
     display: inline-block;
     width: 30px;
@@ -827,6 +908,7 @@ select option {
     font-size: 14px;
     color: #666;
     overflow: hidden;
+    flex: 70px 0 0;
 }
 .card-logo img {
     max-width: 100%;

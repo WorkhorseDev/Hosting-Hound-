@@ -177,7 +177,7 @@ const route = inject("route");
                     </select>
                   </div>
 
-                  <div class="row flex justify-center">
+                  <div class="row flex justify-center mt-6">
                     <button type="button" @click="sortField" class="btn-md btn-inverted">Apply Filters</button>
                   </div>
                 </div> <!-- end .filter-inner -->
