@@ -44,11 +44,11 @@ class WebsiteController extends Controller
             }
         }
         foreach ($data as $site) {
-            if (!empty($site->company)) {
-                array_push($companies, $site->company);
+            if (!empty($site['company'])) {
+                array_push($companies, $site['company']);
             }
-            if (!empty($site->provider)) {
-                foreach ($site->provider as $host) {
+            if (!empty($site['provider'])) {
+                foreach ($site['provider'] as $host) {
                     if(isset($host['type'])) {
                         if ($host['type'] == 'Host')
                             array_push($hosts, $host['name']);
@@ -61,8 +61,8 @@ class WebsiteController extends Controller
                     }
                 }
             }
-            if (!empty($site->software)) {
-                foreach ($site->software as $host) {
+            if (!empty($site['software'])) {
+                foreach ($site['software'] as $host) {
                     if(isset($host['type'])) {
                         if ($host['type'] == 'CMS')
                             array_push($cms, $host['name']);
