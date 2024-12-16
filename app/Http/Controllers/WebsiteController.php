@@ -37,10 +37,16 @@ class WebsiteController extends Controller
         $sslArr = [];
         $emails = [];
         $cms = [];
-        foreach ($allSite as $key=>$site) {
-            if(!empty($site->company)) {
+        foreach ($allSite as $site) {
+            if (!empty($site->company)) {
                 array_push($companies, $site->company);
             }
+            if (str_contains($site->shared_with, Auth::user()->email)) {
+                $site->readonly = true;
+                array_push($data, $site);
+            }
+        }
+        foreach ($data as $site) {
             if (!empty($site->provider)) {
                 foreach ($site->provider as $host) {
                     if(isset($host['type'])) {
@@ -62,10 +68,6 @@ class WebsiteController extends Controller
                             array_push($cms, $host['name']);
                     }
                 }
-            }
-            if (str_contains($site->shared_with, Auth::user()->email)) {
-                $site->readonly = true;
-                array_push($data, $site);
             }
         }
         return Inertia::render('Dashboard', [
