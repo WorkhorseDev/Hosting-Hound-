@@ -24,6 +24,29 @@ class WebsiteController extends Controller
     }
 
     /**
+     * Show the application billing page
+     */
+    public function billing()
+    {
+        $sites = Websites::all()->where('user_id', '=', Auth::user()->_id);
+        $hosts = [];
+        foreach ($sites as $key=>$site) {
+            if (!empty($site->provider)) {
+                foreach ($site->provider as $host) {
+
+                }
+            }
+            if (!empty($site->software)) {
+                foreach ($site->software as $host) {
+
+                }
+            }
+        }
+
+        return Inertia::render('Billing');
+    }
+
+    /**
      * Show the application dashboard
      */
     public function dashboard()
