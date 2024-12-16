@@ -10,7 +10,7 @@ const route = inject("route");
   <Head title="Billing"/>
 
   <div class="wrapper">
-    <div class="container dashboard">
+    <div class="container dashboard billing">
       <header class="header">
         <div class="tabs">
           <Link :href="route('dashboard')" class="tab-item">
@@ -48,6 +48,189 @@ const route = inject("route");
           </div>
         </div>
       </div>
+      <main class="main-content">
+        <div class="inner">
+          <div class="empty-state" v-show="!sites">
+            <div class="icon">
+              <i class="fa-solid fa-heart-crack"></i>
+            </div>
+            <p>
+              Oh no!
+              <br>
+              No websites found here
+            </p>
+            <p>
+              You can
+              <Link :href="route('addSite')" class="new-site">add a new website</Link>
+              by pressing the + icon at the top right-hand corner of this screen
+            </p>
+          </div>
+
+          <div class="data-container">
+            <div class="filter-block" v-if="isFilterOpen">
+              <div class="filter-form">
+                <div class="heading row flex justify-center text-2xl mb-5">Filter</div>
+                <div class="filter-inner">
+                  <div class="filter-search mb-5">
+                    <input type="text" @change="search" v-model="searchData" class="filter-search-input"
+                           id="filter-search" placeholder="Search term...">
+                    <button type="button" class="search-btn">
+                      <i class="fa-solid fa-magnifying-glass"></i>
+                    </button>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="company">Company</label>
+                    <select id="company" v-model="companySort">
+                      <option>All Companies</option>
+                      <option v-for="company in companies">{{ company }}</option>
+                    </select>
+                  </div>
+
+                  <div class="row flex flex-row gap-3">
+                    <div class="form-group w-1/2">
+                      <label for="hosts">Source Type</label>
+                      <select id="hosts" v-model="hostSort">
+                        <option>View All</option>
+                        <option v-for="host in hosts">{{ host }}</option>
+                      </select>
+                    </div>
+
+                    <div class="form-group w-1/2">
+                      <label for="domain-provider">Source Name </label>
+                      <select id="domain-provider" v-model="providerSort">
+                        <option>View All</option>
+                        <option v-for="provider in providers">{{ provider }}</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <div class="row flex flex-row gap-3">
+                    <div class="form-group w-1/2">
+                      <label for="ssl-provider">Deadline Time Frame</label>
+                      <select id="ssl-provider" v-model="sslSort">
+                        <option>View All</option>
+                        <option v-for="provider in sslArr">{{ provider }}</option>
+                      </select>
+                    </div>
+
+                    <div class="form-group w-1/2">
+                      <label for="email-provider"> </label>
+                      <select id="email-provider" v-model="emailSort">
+                        <option>View All</option>
+                        <option v-for="provider in emails">{{ provider }}</option>
+                      </select>
+                    </div>
+                  </div>
+
+
+                  <div class="row flex flex-row gap-3">
+                    <div class="form-group w-1/2">
+                      <label for="ssl-provider">Cost Range</label>
+                      <select id="ssl-provider" v-model="sslSort">
+                        <option>View All</option>
+                        <option v-for="provider in sslArr">{{ provider }}</option>
+                      </select>
+                    </div>
+
+                    <div class="form-group w-1/2">
+                      <label for="email-provider"> </label>
+                      <select id="email-provider" v-model="emailSort">
+                        <option>View All</option>
+                        <option v-for="provider in emails">{{ provider }}</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <div class="row flex justify-center mt-6">
+                    <button type="button" @click="sortField" class="btn-md btn-inverted">Apply Filters</button>
+                  </div>
+                </div> <!-- end .filter-inner -->
+              </div>
+            </div>
+
+            <div class="data card-list" v-if="arr && arr.length !== 0" :class="{ filter_active: isFilterOpen }">
+              <div v-for="item in arr" class="card-item">
+                <div class="card-content" @click="hostDetail(item._id)">
+                  <div class="info">
+                    <p class="card-title">{{ item.provider.type }}</p>
+                    <p class="card-link">$ {{ item.provider.cost }} - {{item.provider.renewal_date}}</p>
+                    <span class="card-link">{{ item.url }}</span>
+                  </div>
+                  <div class="card-logo">
+                    <img v-if="item.icon" :src="item.icon"/>
+                    <span v-else>Logo</span>
+                  </div>
+                  <span class="card-color" :style="{ backgroundColor: item.color }"></span>
+                </div>
+              </div> <!-- end .card-item -->
+            </div> <!-- end .card-list -->
+          </div>
+        </div>
+      </main>
     </div>
   </div>
 </template>
+<script>
+import {useForm} from "@inertiajs/vue3";
+
+export default {
+  props: {
+    sites: [],
+    companies: [],
+    hosts: [],
+    providers: [],
+    sslArr: [],
+    emails: [],
+    cms: []
+  },
+  data() {
+    return {
+      searchData: '',
+      companySort: '',
+      providerSort: '',
+      sslSort: '',
+      hostSort: '',
+      emailSort: '',
+      cmsSort: '',
+      sortCompany: false,
+      selectAll: false,
+      selectOnes: false,
+      showShareBlock: false,
+      siteLength: 0,
+      countAll: this.sites.length,
+      showUnshareBlock: false,
+      showDeleteBlock: false,
+      checkedSites: [],
+      data: [],
+      form: useForm({
+        sitesList: [],
+        share: ''
+      }),
+      arr: this.sites,
+      isFilterOpen: false
+    }
+  },
+  methods: {
+    hostDetail(id) {
+      window.location.href = 'hostDetail/' + id;
+    },
+    search() {
+      this.arr = Object.values(JSON.parse(JSON.stringify(this.arr)));
+      this.arr = this.arr.filter(item => {
+        return (
+            item.name
+                .toLowerCase()
+                .indexOf(this.searchData.toLowerCase()) != -1 ||
+            item.url
+                .toLowerCase()
+                .indexOf(this.searchData.toLowerCase()) != -1
+        );
+      });
+    },
+    showFilter() {
+      this.isFilterOpen = !this.isFilterOpen;
+    }
+  }
+}
+</script>

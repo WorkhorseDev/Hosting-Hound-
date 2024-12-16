@@ -347,12 +347,10 @@ export default {
                 .indexOf(this.searchData.toLowerCase()) != -1
         );
       });
-    }
-    ,
+    },
     siteDetail(id) {
       window.location.href = 'siteDetail/' + id;
-    }
-    ,
+    },
     sortedArray() {
       this.selectAll = false;
       this.arr = Object.values(JSON.parse(JSON.stringify(this.arr)));

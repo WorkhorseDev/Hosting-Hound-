@@ -30,20 +30,30 @@ class WebsiteController extends Controller
     {
         $sites = Websites::all()->where('user_id', '=', Auth::user()->_id);
         $hosts = [];
-        foreach ($sites as $key=>$site) {
+        $companies = [];
+        foreach ($sites as $site) {
+            if (!empty($site['company'])) {
+                array_push($companies, $site['company']);
+            }
             if (!empty($site->provider)) {
                 foreach ($site->provider as $host) {
-
+                    if(!empty($host['renewal_type']) && !empty($host['renewal_date'])) {
+                        $data = ['id' => $site->_id, 'icon' => $site->icon, 'provider' => $host, 'url' => $site->url, 'color' => $site->color, 'company' => $site->company];
+                        $hosts[] = $data;
+                    }
                 }
             }
             if (!empty($site->software)) {
-                foreach ($site->software as $host) {
-
+                foreach ($site->software as $soft) {
+                    if(!empty($soft['renewal_type']) && !empty($host['renewal_date'])) {
+                        $data = ['id' => $site->_id, 'icon' => $site->icon, 'provider' => $soft, 'url' => $site->url, 'color' => $site->color, 'company' => $site->company];
+                        $hosts[] = $data;
+                    }
                 }
             }
         }
 
-        return Inertia::render('Billing');
+        return Inertia::render('Billing', ['sites' => $hosts, 'companies' => array_unique($companies)]);
     }
 
     /**
