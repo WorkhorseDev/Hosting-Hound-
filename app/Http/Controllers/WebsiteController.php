@@ -38,15 +38,15 @@ class WebsiteController extends Controller
         $emails = [];
         $cms = [];
         foreach ($allSite as $site) {
-            if (!empty($site->company)) {
-                array_push($companies, $site->company);
-            }
             if (str_contains($site->shared_with, Auth::user()->email)) {
                 $site->readonly = true;
                 array_push($data, $site);
             }
         }
         foreach ($data as $site) {
+            if (!empty($site->company)) {
+                array_push($companies, $site->company);
+            }
             if (!empty($site->provider)) {
                 foreach ($site->provider as $host) {
                     if(isset($host['type'])) {
