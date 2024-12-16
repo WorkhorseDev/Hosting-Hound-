@@ -137,37 +137,42 @@ const route = inject("route");
                     </select>
                   </div>
 
-                  <div class="form-group">
-                    <label for="hosts">Hosts</label>
-                    <select id="hosts" v-model="hostSort">
-                      <option>View All</option>
-                      <option v-for="host in hosts">{{ host }}</option>
-                    </select>
+                  <div class="row flex flex-row gap-3">
+                      <div class="form-group w-1/2">
+                          <label for="hosts">Hosts</label>
+                          <select id="hosts" v-model="hostSort">
+                              <option>View All</option>
+                              <option v-for="host in hosts">{{ host }}</option>
+                          </select>
+                      </div>
+
+                      <div class="form-group w-1/2">
+                          <label for="domain-provider">Domain Provider</label>
+                          <select id="domain-provider" v-model="providerSort">
+                              <option>View All</option>
+                              <option v-for="provider in providers">{{ provider }}</option>
+                          </select>
+                      </div>
                   </div>
 
-                  <div class="form-group">
-                    <label for="domain-provider">Domain Provider</label>
-                    <select id="domain-provider" v-model="providerSort">
-                      <option>View All</option>
-                      <option v-for="provider in providers">{{ provider }}</option>
-                    </select>
+                  <div class="row flex flex-row gap-3">
+                      <div class="form-group w-1/2">
+                          <label for="ssl-provider">SSL Provider</label>
+                          <select id="ssl-provider" v-model="sslSort">
+                              <option>View All</option>
+                              <option v-for="provider in sslArr">{{ provider }}</option>
+                          </select>
+                      </div>
+
+                      <div class="form-group w-1/2">
+                          <label for="email-provider">Email Provider</label>
+                          <select id="email-provider" v-model="emailSort">
+                              <option>View All</option>
+                              <option v-for="provider in emails">{{ provider }}</option>
+                          </select>
+                      </div>
                   </div>
 
-                  <div class="form-group">
-                    <label for="ssl-provider">SSL Provider</label>
-                    <select id="ssl-provider" v-model="sslSort">
-                      <option>View All</option>
-                      <option v-for="provider in sslArr">{{ provider }}</option>
-                    </select>
-                  </div>
-
-                  <div class="form-group">
-                    <label for="email-provider">Email Provider</label>
-                    <select id="email-provider" v-model="emailSort">
-                      <option>View All</option>
-                      <option v-for="provider in emails">{{ provider }}</option>
-                    </select>
-                  </div>
 
                   <div class="form-group">
                     <label for="cms">Content Management System</label>
@@ -177,14 +182,14 @@ const route = inject("route");
                     </select>
                   </div>
 
-                  <div class="row flex justify-center">
+                  <div class="row flex justify-center mt-6">
                     <button type="button" @click="sortField" class="btn-md btn-inverted">Apply Filters</button>
                   </div>
                 </div> <!-- end .filter-inner -->
               </div>
             </div>
 
-            <div class="data card-list" v-if="arr && arr.length !== 0">
+            <div class="data card-list" v-if="arr && arr.length !== 0" :class="{ filter_active: isFilterOpen }">
               <div v-for="item in arr" class="card-item">
                 <label class="options">
                   <span class="readonly" v-if="item.readonly"></span>
