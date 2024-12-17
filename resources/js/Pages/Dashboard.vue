@@ -129,12 +129,43 @@ const route = inject("route");
                     </button>
                   </div>
 
-                  <div class="form-group">
-                    <label for="company">Company</label>
-                    <select id="company" v-model="companySort">
-                      <option>All Companies</option>
-                      <option v-for="company in companies">{{ company }}</option>
-                    </select>
+                  <div class="row flex flex-row gap-3">
+                    <div class="form-group flex-grow">
+                      <label for="company">Company</label>
+                      <select id="company" v-model="companySort">
+                        <option>All Companies</option>
+                        <option v-for="company in companies">{{ company }}</option>
+                      </select>
+                    </div>
+                    <div class="form-group ">
+                      <label for="color">Color</label>
+
+                      <div class="dropdown-color" :class="{ active: isDropdownColorOpen }">
+                        <div class="selected-color" @click="showDropdownColor">
+                          <div class="item-circle" style="background-color: #FF9500;"></div>
+                          <span class="dropdown-arrow">
+                              <i class="fa-solid fa-caret-down"></i>
+                          </span>
+                        </div>
+                        <div class="dropdown-list" v-if="isDropdownColorOpen">
+                          <div class="item">
+                            <div class="item-circle" style="background-color: #4A6A65;"></div>
+                          </div>
+                          <div class="item selected">
+                            <div class="item-circle" style="background-color: #FFA726;"></div>
+                          </div>
+                          <div class="item">
+                            <div class="item-circle" style="background-color: #B6C793;"></div>
+                          </div>
+                          <div class="item">
+                            <div class="item-circle multi-color">
+                              <div class="half" style="background-color: #FF9500;"></div>
+                              <div class="half" style="background-color: #2E4C42;"></div>
+                            </div>
+                          </div>
+                        </div>
+                      </div> <!-- end .dropdown-color -->
+                    </div>
                   </div>
 
                   <div class="row flex flex-row gap-3">
@@ -254,7 +285,8 @@ export default {
         share: ''
       }),
       arr: this.sites,
-      isFilterOpen: false
+      isFilterOpen: false,
+      isDropdownColorOpen: false
     }
   },
   computed: {
@@ -375,6 +407,11 @@ export default {
 
     showFilter() {
       this.isFilterOpen = !this.isFilterOpen;
+    }
+    ,
+
+    showDropdownColor() {
+      this.isDropdownColorOpen = !this.isDropdownColorOpen;
     }
     ,
 
