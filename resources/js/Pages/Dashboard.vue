@@ -161,6 +161,7 @@ const route = inject("route");
                             <div class="item-circle multi-color">
                               <div class="half" style="background-color: #FF9500;"></div>
                               <div class="half" style="background-color: #2E4C42;"></div>
+                              <div class="half" style="background-color: #B6C793;"></div>
                             </div>
                           </div>
                         </div>
