@@ -425,8 +425,8 @@ export default {
       this.arr = Object.values(JSON.parse(JSON.stringify(this.arr)));
       this.sortCompany = !this.sortCompany;
       return this.arr.sort((a, b) => (a.company > b.company ? 1 : -1));
-    }
-    ,
+    },
+
     getCheck(el) {
       this.selectOnes = true;
       if (!el.target.checked && this.selectAll) {
@@ -437,18 +437,15 @@ export default {
       } else if (el.target.checked && !this.selectAll) {
         this.siteLength++;
       }
-    }
-    ,
+    },
 
     showFilter() {
       this.isFilterOpen = !this.isFilterOpen;
-    }
-    ,
+    },
 
     showDropdownColor() {
       this.isDropdownColorOpen = !this.isDropdownColorOpen;
-    }
-    ,
+    },
 
     showShare() {
       this.showShareBlock = true;
