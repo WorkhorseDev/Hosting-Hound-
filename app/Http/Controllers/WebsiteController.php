@@ -30,30 +30,34 @@ class WebsiteController extends Controller
     {
         $sites = Websites::all()->where('user_id', '=', Auth::user()->_id);
         $hosts = [];
+        $hostName = [];
+        $hostType = [];
         $companies = [];
         foreach ($sites as $site) {
             if (!empty($site['company'])) {
                 array_push($companies, $site['company']);
             }
             if (!empty($site->provider)) {
-                foreach ($site->provider as $host) {
+                foreach ($site->provider as $key=>$host) {
+                    $hostType[] = $host['type'];
+                    $hostName[] = $host['name'];
                     if(!empty($host['renewal_type']) && !empty($host['renewal_date'])) {
-                        $data = ['id' => $site->_id, 'icon' => $site->icon, 'provider' => $host, 'url' => $site->url, 'color' => $site->color, 'company' => $site->company];
+                        $data = ['key' => $key, 'id' => $site->_id, 'icon' => $site->icon, 'provider' => $host, 'url' => $site->url, 'color' => $site->color, 'company' => $site->company];
                         $hosts[] = $data;
                     }
                 }
             }
             if (!empty($site->software)) {
-                foreach ($site->software as $soft) {
+                foreach ($site->software as $key => $soft) {
                     if(!empty($soft['renewal_type']) && !empty($host['renewal_date'])) {
-                        $data = ['id' => $site->_id, 'icon' => $site->icon, 'provider' => $soft, 'url' => $site->url, 'color' => $site->color, 'company' => $site->company];
+                        $data = ['key' => $key, 'id' => $site->_id, 'icon' => $site->icon, 'provider' => $soft, 'url' => $site->url, 'color' => $site->color, 'company' => $site->company];
                         $hosts[] = $data;
                     }
                 }
             }
         }
 
-        return Inertia::render('Billing', ['sites' => $hosts, 'companies' => array_unique($companies)]);
+        return Inertia::render('Billing', ['sites' => $hosts, 'companies' => array_unique($companies), 'hosts' => array_unique($hostType), 'hostName' => array_unique($hostName)] );
     }
 
     /**
@@ -153,6 +157,16 @@ class WebsiteController extends Controller
         }
         return Inertia::render('DetailSite', [
             'site' => $site,
+        ]);
+    }
+
+    public function showHostDetailPage()
+    {
+        $site = Websites::find(request('id'));
+
+        return Inertia::render('HostDetailSite', [
+            'site' => $site,
+            'key' => request('key')
         ]);
     }
 

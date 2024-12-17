@@ -1,6 +1,6 @@
 <script setup>
 
-import {Head, useForm} from "@inertiajs/vue3";
+import {Head, Link, useForm} from "@inertiajs/vue3";
 import TextInput from "@/Components/TextInput.vue";
 import {reactive} from "vue";
 import InputError from "@/Components/InputError.vue";
@@ -13,12 +13,12 @@ import InputError from "@/Components/InputError.vue";
     <div class="container dashboard">
       <header class="header">
         <div class="tabs">
-          <a href="#" class="tab-item is-active">
+          <Link :href="route('dashboard')" class="tab-item is-active">
             <span class="">Websites</span>
-          </a>
-          <a href="#" class="tab-item">
+          </Link>
+          <Link :href="route('billing')" href="#" class="tab-item">
             <span class="">Billings</span>
-          </a>
+          </Link>
         </div>
 
         <div class="links">

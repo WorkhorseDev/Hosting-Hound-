@@ -126,7 +126,7 @@ const route = inject("route");
 
                   <div class="row flex flex-row gap-3">
                     <div class="form-group w-1/2">
-                      <label for="hosts">Hosts</label>
+                      <label for="hosts">Source Type</label>
                       <select id="hosts" v-model="hostSort">
                         <option>View All</option>
                         <option v-for="host in hosts">{{ host }}</option>
@@ -134,10 +134,10 @@ const route = inject("route");
                     </div>
 
                     <div class="form-group w-1/2">
-                      <label for="domain-provider">Domain Provider</label>
-                      <select id="domain-provider" v-model="providerSort">
+                      <label for="domain-provider">Source Name</label>
+                      <select id="domain-provider" v-model="hostNameSort">
                         <option>View All</option>
-                        <option v-for="provider in providers">{{ provider }}</option>
+                        <option v-for="name in hostNames">{{ name }}</option>
                       </select>
                     </div>
                   </div>
@@ -178,7 +178,7 @@ const route = inject("route");
 
             <div class="data card-list" v-if="arr && arr.length !== 0" :class="{ filter_active: isFilterOpen }">
               <div v-for="item in arr" class="card-item">
-                <div class="card-content" @click="hostDetail(item._id)">
+                <div class="card-content" @click="hostDetail(item.id, item.key)">
                   <div class="info">
                     <p class="card-title">{{ item.provider.type }}</p>
                     <p class="card-link">$ {{ item.provider.cost }} - {{item.provider.renewal_date}}</p>
@@ -206,7 +206,7 @@ export default {
     sites: [],
     companies: [],
     hosts: [],
-    providers: [],
+    hostNames: [],
     sslArr: [],
     emails: [],
     cms: []
@@ -223,7 +223,7 @@ export default {
       multiColor: 'multi',
       searchData: '',
       companySort: '',
-      providerSort: '',
+      hostNameSort: '',
       sslSort: '',
       hostSort: '',
       emailSort: '',
@@ -254,8 +254,7 @@ export default {
           this.arr = this.sites;
         } else {
           this.arr = [];
-          this.sites.filter(item => {
-            console.log(item.company,this.companySort );
+          Object.values(this.sites).filter(item => {
             if (item.company) {
               if (this.companySort.toLowerCase() === item.company.toLowerCase()) {
                 this.arr.push(item);
@@ -269,9 +268,37 @@ export default {
           this.arr = this.sites;
         } else {
           this.arr = [];
-          this.sites.filter(item => {
+          Object.values(this.sites).filter(item => {
             if (item.color) {
               if (this.color.toLowerCase() === item.color.toLowerCase()) {
+                this.arr.push(item);
+              }
+            }
+          });
+        }
+      }
+      if (this.hostSort) {
+        if (this.hostSort === 'View All') {
+          this.arr = this.sites;
+        } else {
+          this.arr = [];
+          Object.values(this.sites).filter(item => {
+            if (item.provider.type) {
+              if (this.hostSort.toLowerCase() === item.provider.type.toLowerCase()) {
+                this.arr.push(item);
+              }
+            }
+          });
+        }
+      }
+      if (this.hostNameSort) {
+        if (this.hostSort === 'View All') {
+          this.arr = this.sites;
+        } else {
+          this.arr = [];
+          Object.values(this.sites).filter(item => {
+            if (item.provider.name) {
+              if (this.hostNameSort.toLowerCase() === item.provider.name.toLowerCase()) {
                 this.arr.push(item);
               }
             }
@@ -281,8 +308,8 @@ export default {
       return this.arr;
     },
 
-    hostDetail(id) {
-      window.location.href = 'hostDetail/' + id;
+    hostDetail(id, key) {
+      window.location.href = 'hostDetail/' + key+ '/' + id;
     },
 
     search() {
@@ -293,6 +320,18 @@ export default {
                 .toLowerCase()
                 .indexOf(this.searchData.toLowerCase()) != -1 ||
             item.url
+                .toLowerCase()
+                .indexOf(this.searchData.toLowerCase()) != -1 ||
+            item.provider.renewal_type
+                .toLowerCase()
+                .indexOf(this.searchData.toLowerCase()) != -1 ||
+            item.company
+                .toLowerCase()
+                .indexOf(this.searchData.toLowerCase()) != -1 ||
+            item.business_unit
+                .toLowerCase()
+                .indexOf(this.searchData.toLowerCase()) != -1 ||
+            item.tags
                 .toLowerCase()
                 .indexOf(this.searchData.toLowerCase()) != -1
         );

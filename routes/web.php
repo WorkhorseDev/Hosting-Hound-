@@ -33,7 +33,7 @@ Route::middleware('auth', 'twofactor')->group(function () {
     Route::get('/editSiteView/{id}', [App\Http\Controllers\WebsiteController::class, 'editSiteView'])->name('editSiteView');
     Route::post('/share', [App\Http\Controllers\WebsiteController::class, 'shareSites'])->name('share');
     Route::post('/unShareSites', [App\Http\Controllers\WebsiteController::class, 'unShareSites'])->name('unShareSites');
-    Route::get('/hostDetail/{id}', [App\Http\Controllers\WebsiteController::class, 'showHostDetailPage'])->name('hostDetail');
+    Route::get('/hostDetail/{key}/{id}', [App\Http\Controllers\WebsiteController::class, 'showHostDetailPage'])->name('hostDetail');
 });
 
 require __DIR__.'/auth.php';

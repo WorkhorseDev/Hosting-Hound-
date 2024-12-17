@@ -276,9 +276,9 @@ import InputError from "@/Components/InputError.vue";
                 <div class="service-form detail edit-provider" :id="'idEditSoft'+key">
                   <div class="form-container">
                     <div class="form-header">
-                    <span @click="hideSoft(key)" class="btn-back"><i class="fas fa-arrow-left detail"></i></span>
-                    <i @click="deleteSoft(key)" class="fa-solid fa-trash-can detail"></i>
-                  </div>
+                      <span @click="hideSoft(key)" class="btn-back"><i class="fas fa-arrow-left detail"></i></span>
+                      <i @click="deleteSoft(key)" class="fa-solid fa-trash-can detail"></i>
+                    </div>
 
                     <div class="form-group-wrap bg-grey p-6 pt-4 globe-div">
                       <div class="globe">
@@ -505,7 +505,7 @@ export default {
     },
     deleteProvider(key) {
       this.site.provider.splice(key, 1);
-     this.editSite();
+      this.editSite();
     },
     deleteSoft(key) {
       this.site.software.splice(key, 1);
