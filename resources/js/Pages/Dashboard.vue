@@ -328,7 +328,7 @@ export default {
           this.arr = this.sites;
         } else {
           this.arr = [];
-          this.sites.filter(item => {
+          Object.values(this.sites).filter(item => {
             if (item.company) {
               if (this.companySort.toLowerCase() === item.company.toLowerCase()) {
                 this.arr.push(item);
@@ -342,7 +342,7 @@ export default {
           this.arr = this.sites;
         } else {
           this.arr = [];
-          this.sites.filter(item => {
+          Object.values(this.sites).filter(item => {
             if (item.color) {
               if (this.color.toLowerCase() === item.color.toLowerCase()) {
                 this.arr.push(item);
