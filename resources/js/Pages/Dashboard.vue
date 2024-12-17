@@ -13,12 +13,12 @@ const route = inject("route");
     <div class="container dashboard">
       <header class="header">
         <div class="tabs">
-          <a href="#" class="tab-item is-active">
+          <Link :href="route('dashboard')" class="tab-item is-active">
             <span class="">Websites</span>
-          </a>
-          <a href="#" class="tab-item">
+          </Link>
+          <Link :href="route('billing')" href="#" class="tab-item">
             <span class="">Billings</span>
-          </a>
+          </Link>
         </div>
 
         <div class="links">
@@ -142,23 +142,28 @@ const route = inject("route");
 
                       <div class="dropdown-color" :class="{ active: isDropdownColorOpen }">
                         <div class="selected-color" @click="showDropdownColor">
-                          <div class="item-circle" style="background-color: #FF9500;"></div>
+                          <div class="item-circle multi-color" v-if="multi">
+                            <div class="half" style="background-color: #FF9500;"></div>
+                            <div class="half" style="background-color: #2E4C42;"></div>
+                            <div class="half" style="background-color: #B6C793;"></div>
+                          </div>
+                          <div class="item-circle" v-if="!multi" v-bind:style="{background: color}"></div>
                           <span class="dropdown-arrow">
                               <i class="fa-solid fa-caret-down"></i>
                           </span>
                         </div>
                         <div class="dropdown-list" v-if="isDropdownColorOpen">
                           <div class="item">
-                            <div class="item-circle" style="background-color: #4A6A65;"></div>
-                          </div>
-                          <div class="item selected">
-                            <div class="item-circle" style="background-color: #FFA726;"></div>
+                            <div class="item-circle" @click=setColor(dark_green) style="background-color: #4A6A65;"></div>
                           </div>
                           <div class="item">
-                            <div class="item-circle" style="background-color: #B6C793;"></div>
+                            <div class="item-circle" @click=setColor(orange) style="background-color: #FFA726;"></div>
                           </div>
                           <div class="item">
-                            <div class="item-circle multi-color">
+                            <div class="item-circle" @click=setColor(light_green) style="background-color: #B6C793;"></div>
+                          </div>
+                          <div class="item">
+                            <div class="item-circle multi-color" @click=setColor(multiColor)>
                               <div class="half" style="background-color: #FF9500;"></div>
                               <div class="half" style="background-color: #2E4C42;"></div>
                               <div class="half" style="background-color: #B6C793;"></div>
@@ -264,6 +269,10 @@ export default {
   },
   data() {
     return {
+      color: '#FF920A',
+      orange: '#FF920A',
+      dark_green: '#3D5F58',
+      light_green: '#A7B57C',
       searchData: '',
       companySort: '',
       providerSort: '',
@@ -287,7 +296,10 @@ export default {
       }),
       arr: this.sites,
       isFilterOpen: false,
-      isDropdownColorOpen: false
+      isDropdownColorOpen: false,
+      sortColor: false,
+      multi: false,
+      multiColor: 'multi'
     }
   },
   computed: {
@@ -299,6 +311,16 @@ export default {
     }
   },
   methods: {
+    setColor(color) {
+      if (color === 'multi') {
+        this.multi = true;
+      } else {
+        this.multi = false;
+        this.color = color;
+      }
+      this.sortColor = true;
+      this.isDropdownColorOpen = !this.isDropdownColorOpen;
+    },
     sortField() {
       this.arr = Object.values(JSON.parse(JSON.stringify(this.arr)));
       if (this.companySort)  {
@@ -309,6 +331,20 @@ export default {
           this.sites.filter(item => {
             if (item.company) {
               if (this.companySort.toLowerCase() === item.company.toLowerCase()) {
+                this.arr.push(item);
+              }
+            }
+          });
+        }
+      }
+      if (this.sortColor)  {
+        if (this.multi) {
+          this.arr = this.sites;
+        } else {
+          this.arr = [];
+          this.sites.filter(item => {
+            if (item.color) {
+              if (this.color.toLowerCase() === item.color.toLowerCase()) {
                 this.arr.push(item);
               }
             }
@@ -380,12 +416,10 @@ export default {
                 .indexOf(this.searchData.toLowerCase()) != -1
         );
       });
-    }
-    ,
+    },
     siteDetail(id) {
       window.location.href = 'siteDetail/' + id;
-    }
-    ,
+    },
     sortedArray() {
       this.selectAll = false;
       this.arr = Object.values(JSON.parse(JSON.stringify(this.arr)));

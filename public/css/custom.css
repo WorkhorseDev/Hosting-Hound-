@@ -1222,6 +1222,18 @@ em.gray-text {
     cursor: pointer;
 }
 
+.fa-solid.fa-calendar-days {
+    font-size: 45px;
+    color: #3D5F58;
+    padding-left: 25px;
+    padding-right: 25px;
+    cursor: pointer;
+}
+
+.billing .card-list {
+    padding: 20px 20px;
+}
+
 @media screen and (max-width: 768px) {
     .auth-layout {
         flex-direction: column;
