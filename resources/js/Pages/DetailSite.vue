@@ -44,11 +44,11 @@ import InputError from "@/Components/InputError.vue";
       </div>
       <main class="main-content">
         <div class="inner sited-detail">
-          <div class="data card-list">
+          <div class="data card-list grid">
             <div class="card-content">
               <div class="info">
-                <p class="card-title">{{ site.name }}</p>
-                <span class="card-link">{{ site.url }}</span>
+                <p class="card-title text-lg">{{ site.name }}</p>
+                <span class="card-link text-lg">{{ site.url }}</span>
               </div>
               <div class="card-logo">
                 <img v-if="site.icon" :src="site.icon" :alt="site.name"/>
@@ -102,8 +102,8 @@ import InputError from "@/Components/InputError.vue";
               <div v-for="(item, key, index) in site.provider" :key="key">
                 <div class="card-content detail" @click="showDetail(item, key)">
                   <div class="info">
-                    <p class="card-title">{{ item.name }}</p>
-                    <span class="card-link">{{ item.url }}</span>
+                    <p class="card-title text-lg">{{ item.name }}</p>
+                    <span class="card-link text-lg">{{ item.url }}</span>
                   </div>
                   <i v-if="!item.show" class="fa-solid fa-sort-up"></i>
                   <i v-if="item.show" class="fa-solid fa-sort-down"></i>
@@ -130,18 +130,18 @@ import InputError from "@/Components/InputError.vue";
                       </div>
 
                       <div class="form-group right-side">
-                        <input type="text" v-model="element.name" placeholder="Name" v-bind:value="element.name">
+                        <input type="text" v-model="element.name" placeholder="Name" >
                       </div>
 
                       <div class="form-group right-side">
-                        <input type="text" v-model="element.url" placeholder="Web URL" v-bind:value="element.url">
+                        <input type="text" v-model="element.url" placeholder="Web URL" >
                       </div>
                     </div>
 
                     <div class="form-group-wrap p-6 pt-4">
                       <div class="form-group">
                         <label>Renewal Type</label>
-                        <select class="bg-grey" v-model="element.renewal_type" v-bind:value="element.renewal_type">
+                        <select class="bg-grey" v-model="element.renewal_type" >
                           <option>Annual</option>
                           <option>Monthly</option>
                           <option>Weekly</option>
@@ -151,12 +151,12 @@ import InputError from "@/Components/InputError.vue";
                       <div class="form-row">
                         <div class="form-group">
                           <label>Cost</label>
-                          <input class="bg-grey" type="text" placeholder="$ 00.00" v-model="element.cost" v-bind:value="element.cost">
+                          <input class="bg-grey" type="text" placeholder="$ 00.00" v-model="element.cost" >
                         </div>
                         <div class="form-group m-0">
                           <label>Renewal Date</label>
                           <div class="form-group form-group-icon">
-                            <input class="bg-grey" type="text" v-model="element.renewal_date" v-bind:value="element.renewal_date"
+                            <input class="bg-grey" type="text" v-model="element.renewal_date"
                                    placeholder="00 / 00 / 00">
                             <i class="fa-solid fa-calendar"></i>
                           </div>
@@ -166,24 +166,24 @@ import InputError from "@/Components/InputError.vue";
                       <div class="form-row">
                         <div class="form-group">
                           <label>Bills to CC ending in</label>
-                          <input class="bg-grey cc" type="text" placeholder="####" v-model="element.cc" v-bind:value="element.cc">
+                          <input class="bg-grey cc" type="text" placeholder="####" v-model="element.cc" >
                         </div>
                       </div>
                     </div>
 
                     <div class="form-group-wrap bg-grey p-6 pt-4 security-group">
                       <div class="form-group form-group-icon">
-                        <input type="text" placeholder="UserName" v-model="element.user_mame" v-bind:value="element.user_mame">
+                        <input type="text" placeholder="UserName" v-model="element.user_mame" >
                         <i class="fa-regular fa-user"></i>
                       </div>
 
                       <div class="form-group form-group-icon">
-                        <input type="password" placeholder="••••••••" v-model="element.password" v-bind:value="element.password">
+                        <input type="password" placeholder="••••••••" v-model="element.password" >
                         <i class="fa-solid fa-lock"></i>
                       </div>
 
                       <div class="form-group form-group-icon m-0">
-                        <input type="text" placeholder="PIN" v-model="element.pin" v-bind:value="element.pin">
+                        <input type="text" placeholder="PIN" v-model="element.pin" >
                         <i class="fa-solid fa-fingerprint"></i>
                       </div>
                     </div>
@@ -295,11 +295,11 @@ import InputError from "@/Components/InputError.vue";
                       </div>
 
                       <div class="form-group right-side">
-                        <input type="text" placeholder="Name" v-model="elementSoft.name" v-bind:value="elementSoft.name">
+                        <input type="text" placeholder="Name" v-model="elementSoft.name" >
                       </div>
 
                       <div class="form-group right-side">
-                        <input type="text" placeholder="Web URL" v-model="elementSoft.url" v-bind:value="elementSoft.url">
+                        <input type="text" placeholder="Web URL" v-model="elementSoft.url" >
                       </div>
                     </div>
 
@@ -316,12 +316,12 @@ import InputError from "@/Components/InputError.vue";
                       <div class="form-row">
                         <div class="form-group">
                           <label>Cost</label>
-                          <input class="bg-grey" type="text" placeholder="$ 00.00" v-model="elementSoft.cost" v-bind:value="elementSoft.cost">
+                          <input class="bg-grey" type="text" placeholder="$ 00.00" v-model="elementSoft.cost" >
                         </div>
                         <div class="form-group m-0">
                           <label>Renewal Date</label>
                           <div class="form-group form-group-icon">
-                            <input class="bg-grey" type="text" placeholder="00 / 00 / 00" v-model="elementSoft.renewal_date" v-bind:value="elementSoft.renewal_date">
+                            <input class="bg-grey" type="text" placeholder="00 / 00 / 00" v-model="elementSoft.renewal_date" >
                             <i class="fa-solid fa-calendar"></i>
                           </div>
                         </div>
@@ -330,24 +330,24 @@ import InputError from "@/Components/InputError.vue";
                       <div class="form-row">
                         <div class="form-group">
                           <label>Bills to CC ending in</label>
-                          <input class="bg-grey cc" type="text" placeholder="####" v-model="elementSoft.cc" v-bind:value="elementSoft.cc">
+                          <input class="bg-grey cc" type="text" placeholder="####" v-model="elementSoft.cc" >
                         </div>
                       </div>
                     </div>
 
                     <div class="form-group-wrap bg-grey p-6 pt-4 security-group">
                       <div class="form-group form-group-icon">
-                        <input type="text" placeholder="UserName" v-model="elementSoft.user_mame" v-bind:value="elementSoft.user_mame">
+                        <input type="text" placeholder="UserName" v-model="elementSoft.user_mame" >
                         <i class="fa-regular fa-user"></i>
                       </div>
 
                       <div class="form-group form-group-icon">
-                        <input type="password" placeholder="••••••••" v-model="elementSoft.password" v-bind:value="elementSoft.password">
+                        <input type="password" placeholder="••••••••" v-model="elementSoft.password" >
                         <i class="fa-solid fa-lock"></i>
                       </div>
 
                       <div class="form-group form-group-icon m-0">
-                        <input type="text" placeholder="PIN" v-model="elementSoft.pin" v-bind:value="elementSoft.pin">
+                        <input type="text" placeholder="PIN" v-model="elementSoft.pin" >
                         <i class="fa-solid fa-fingerprint"></i>
                       </div>
                     </div>
