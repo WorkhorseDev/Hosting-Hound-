@@ -99,7 +99,7 @@ import InputError from "@/Components/InputError.vue";
                 <div class="circle"></div>
                 <em class="gray-text">Service Providers</em>
               </div>
-              <div v-for="(item, key, index) in site.provider" :key="key">
+              <div v-for="(item, key, index) in arrSite.providerNew" :key="key">
                 <div class="card-content detail" @click="showDetail(item, key)">
                   <div class="info">
                     <p class="card-title text-lg">{{ item.name }}</p>
@@ -263,7 +263,7 @@ import InputError from "@/Components/InputError.vue";
                 <div class="circle"></div>
                 <em class="gray-text">Software & Add-ons</em>
               </div>
-              <div v-for="(item, key, index) in site.software" :key="key">
+              <div v-for="(item, key, index) in site.softwareNew" :key="key">
                 <div class="card-content detail"  @click="showDetailSoft(item, key)">
                   <div class="info">
                     <p class="card-title">{{ item.name }}</p>
@@ -450,6 +450,7 @@ export default {
       showPin: false,
       showPasswordSoft: false,
       showPinSoft: false,
+      arrSite: this.site,
       form: useForm({
         id: '',
         url: '',
@@ -466,7 +467,27 @@ export default {
       })
     }
   },
+  created: function(){
+    this.setFalse();
+  },
   methods: {
+    setFalse() {
+      if(this.site.provider.length !== 0) {
+        const result = this.site.provider.map((name) => {
+          name["show"] = false;
+          return name;
+        });
+        this.site.providerNew = result;
+      }
+      if(this.site.software.length !== 0) {
+        const resultSost = this.site.software.map((name) => {
+          name["showSoft"] = false;
+          return name;
+        });
+        this.site.softwareNew = resultSost;
+      }
+
+    },
     showTextPass(typeEl) {
       if (typeEl === 'showPasswordSoft') {
         this.showPasswordSoft = !this.showPasswordSoft;
