@@ -149,7 +149,8 @@ class WebsiteController extends Controller
         if (str_contains($site->shared_with, Auth::user()->email)) {
             $site->readonly = true;
         }
-        return Inertia::render('DetailSite', ['site' => $site,]);
+
+        return Inertia::render('DetailSite', ['site' => $site]);
     }
 
     public function shareSites(Request $request)
