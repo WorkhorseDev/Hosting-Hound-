@@ -236,7 +236,8 @@ export default {
       }),
       arr: this.sites,
       isFilterOpen: false,
-      sortArr: []
+      sortArr: [],
+      date: ''
     }
   },
   methods: {
@@ -257,6 +258,17 @@ export default {
         }
       }
       this.sortArr = this.arr;
+      if (this.date) {
+        console.log(this.date);
+        this.arr = [];
+        Object.values(this.sortArr).filter(item => {
+          if (item.renewal_date) {
+            if (this.date === item.renewal_date) {
+              this.arr.push(item);
+            }
+          }
+        });
+      }
       if (this.sortColor) {
         if (this.multi) {
           this.arr = this.sites;
