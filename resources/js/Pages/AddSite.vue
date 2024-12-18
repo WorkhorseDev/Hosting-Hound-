@@ -441,6 +441,12 @@ export default {
         this.form.errors.name = "Field Name is required";
         return false;
       }
+      if(this.form.providers.length === 0) {
+        this.form.providers.push(this.form.provider);
+      }
+      if(this.form.softwares.length === 0) {
+        this.form.softwares.push(this.form.software);
+      }
       this.form.file = ['file', this.formFile.file, this.formFile.filename];
       if (this !== undefined && this.color) {
         this.form.color = this.color;

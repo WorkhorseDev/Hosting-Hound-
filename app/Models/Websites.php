@@ -63,12 +63,18 @@ class Websites extends Eloquent
             $providers = $site->providers;
             foreach ($site->providers as $key => $host) {
                 $providers[$key]['show'] = false;
+                if(!empty($host['renewal_date'])) {
+                    $providers[$key]['renewal_date'] = date("Y/m/d", strtotime($host['renewal_date']));
+                }
             }
         }
         if (!empty($site->softwares)) {
             $software = $site->softwares;
             foreach ($site->softwares as $key => $host) {
                 $software[$key]['showSoft'] = false;
+                if(!empty($host['renewal_date'])) {
+                    $providers[$key]['renewal_date'] = date("Y/m/d", strtotime($host['renewal_date']));
+                }
             }
         }
         $site->url = $data->url;
@@ -80,8 +86,8 @@ class Websites extends Eloquent
         $site->tags = $data->tags;
         $site->shared_with = $data->shared_with;
         $site->notes = $data->notes;
-        $site->provider = $data->providers;
-        $site->software = $data->softwares;
+        $site->provider = $providers;
+        $site->software = $software;
         $site->save();
 
         return 'success';
@@ -107,12 +113,18 @@ class Websites extends Eloquent
             $providers = $site->providers;
             foreach ($site->providers as $key => $host) {
                 $providers[$key]['show'] = false;
+                if(!empty($host['renewal_date'])) {
+                    $providers[$key]['renewal_date'] = date("Y/m/d", strtotime($host['renewal_date']));
+                }
             }
         }
         if (!empty($site->softwares)) {
             $software = $site->softwares;
             foreach ($site->softwares as $key => $host) {
                 $software[$key]['showSoft'] = false;
+                if(!empty($host['renewal_date'])) {
+                    $providers[$key]['renewal_date'] = date("Y/m/d", strtotime($host['renewal_date']));
+                }
             }
         }
          Websites::create([
