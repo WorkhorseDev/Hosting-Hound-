@@ -59,18 +59,18 @@ class Websites extends Eloquent
         }
         $providers = [];
         $software = [];
-        if (!empty($site->providers)) {
-            $providers = $site->providers;
-            foreach ($site->providers as $key => $host) {
+        if (!empty($data->providers)) {
+            $providers = $data->providers;
+            foreach ($data->providers as $key => $host) {
                 $providers[$key]['show'] = false;
                 if(!empty($host['renewal_date'])) {
                     $providers[$key]['renewal_date'] = date("d/m/Y", strtotime($host['renewal_date']));
                 }
             }
         }
-        if (!empty($site->softwares)) {
-            $software = $site->softwares;
-            foreach ($site->softwares as $key => $host) {
+        if (!empty($data->softwares)) {
+            $software = $data->softwares;
+            foreach ($data->softwares as $key => $host) {
                 $software[$key]['showSoft'] = false;
                 if(!empty($host['renewal_date'])) {
                     $providers[$key]['renewal_date'] = date("d/m/Y", strtotime($host['renewal_date']));

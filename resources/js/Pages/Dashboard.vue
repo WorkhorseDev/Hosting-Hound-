@@ -234,7 +234,7 @@ const route = inject("route");
                          @change="getCheck($event)" :checked="selectAll" :id=item._id
                          class="card-selection selected sites">
                 </label>
-                <div class="card-content" @click="siteDetail(item._id)">
+                <div class="card-content" @click="siteDetail(item._id)" :id=item._id>
                   <div class="info">
                     <p class="card-title">{{ item.name }}</p>
                     <span class="card-link">{{ item.url }}</span>
