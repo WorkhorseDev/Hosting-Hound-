@@ -437,7 +437,7 @@ import '@vuepic/vue-datepicker/dist/main.css'
 
 export default {
   props: {
-    site: Array
+    site: Array,
   },
   data() {
     return {

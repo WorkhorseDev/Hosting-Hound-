@@ -149,7 +149,8 @@ class WebsiteController extends Controller
 
     public function showSiteDetailPage()
     {
-        $site = Websites::find(request('id'))->first();
+
+        $site = Websites::find(request('id'));
         if (str_contains($site->shared_with, Auth::user()->email)) {
             $site->readonly = true;
         }
