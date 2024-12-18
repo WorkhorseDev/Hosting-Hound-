@@ -583,7 +583,6 @@ export default {
     },
     showDetail(item, key) {
       var el = document.getElementById('id' + key);
-      console.log(el,item.show);
       el.style.display = "block";
       if (item.show) {
         el.style.display = "none";
