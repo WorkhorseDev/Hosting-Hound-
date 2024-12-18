@@ -146,7 +146,7 @@ const route = inject("route");
 
                   <div class="form-group">
                     <label>Deadline Time Frame</label>
-                    <VueDatePicker format="yyyy/MM/dd" v-model="date"></VueDatePicker>
+                    <VueDatePicker value-type="format" format="dd/MM/yyyy" v-model="date"></VueDatePicker>
                   </div>
 
                   <div class="form-group">
@@ -188,11 +188,10 @@ const route = inject("route");
 </template>
 <script>
 import {useForm} from "@inertiajs/vue3";
-import {ref} from 'vue';
 import VueDatePicker from '@vuepic/vue-datepicker';
 import '@vuepic/vue-datepicker/dist/main.css'
+import moment from 'moment';
 
-const date = ref();
 export default {
   props: {
     sites: [],
@@ -259,16 +258,25 @@ export default {
       }
       this.sortArr = this.arr;
       if (this.date) {
-        console.log(this.date);
         this.arr = [];
+        let dateFormat = moment(this.date).format('DD/MM/yyyy');
         Object.values(this.sortArr).filter(item => {
-          if (item.renewal_date) {
-            if (this.date === item.renewal_date) {
+          if (item.provider.renewal_date) {
+            if (dateFormat === item.provider.renewal_date) {
+              this.arr.push(item);
+            }
+          }
+        });
+        this.sortArr = this.arr;
+        Object.values(this.sortArr).filter(item => {
+          if (item.software.renewal_date) {
+            if (dateFormat === item.software.renewal_date) {
               this.arr.push(item);
             }
           }
         });
       }
+      this.sortArr = this.arr;
       if (this.sortColor) {
         if (this.multi) {
           this.arr = this.sites;
@@ -348,6 +356,13 @@ export default {
 
     showFilter() {
       this.isFilterOpen = !this.isFilterOpen;
+      this.searchData= '';
+      this.companySort= '';
+      this.date= '';
+      this.hostSort= '';
+      this.hostNameSort= '';
+      this.arr = this.sites;
+      this.color = 'multi';
     },
 
     showDropdownColor() {

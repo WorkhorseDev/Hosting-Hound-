@@ -64,7 +64,7 @@ class Websites extends Eloquent
             foreach ($site->providers as $key => $host) {
                 $providers[$key]['show'] = false;
                 if(!empty($host['renewal_date'])) {
-                    $providers[$key]['renewal_date'] = date("Y/m/d", strtotime($host['renewal_date']));
+                    $providers[$key]['renewal_date'] = date("d/m/Y", strtotime($host['renewal_date']));
                 }
             }
         }
@@ -73,7 +73,7 @@ class Websites extends Eloquent
             foreach ($site->softwares as $key => $host) {
                 $software[$key]['showSoft'] = false;
                 if(!empty($host['renewal_date'])) {
-                    $providers[$key]['renewal_date'] = date("Y/m/d", strtotime($host['renewal_date']));
+                    $providers[$key]['renewal_date'] = date("d/m/Y", strtotime($host['renewal_date']));
                 }
             }
         }
@@ -114,7 +114,7 @@ class Websites extends Eloquent
             foreach ($site->providers as $key => $host) {
                 $providers[$key]['show'] = false;
                 if(!empty($host['renewal_date'])) {
-                    $providers[$key]['renewal_date'] = date("Y/m/d", strtotime($host['renewal_date']));
+                    $providers[$key]['renewal_date'] = date("d/m/Y", strtotime($host['renewal_date']));
                 }
             }
         }
@@ -123,7 +123,7 @@ class Websites extends Eloquent
             foreach ($site->softwares as $key => $host) {
                 $software[$key]['showSoft'] = false;
                 if(!empty($host['renewal_date'])) {
-                    $providers[$key]['renewal_date'] = date("Y/m/d", strtotime($host['renewal_date']));
+                    $providers[$key]['renewal_date'] = date("d/m/Y", strtotime($host['renewal_date']));
                 }
             }
         }
