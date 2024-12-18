@@ -149,12 +149,15 @@ const route = inject("route");
                     <VueDatePicker value-type="format" format="dd/MM/yyyy" v-model="date"></VueDatePicker>
                   </div>
 
-                  <div class="form-group">
-                    <label for="cms">Content Management System</label>
-                    <select id="cms" v-model="cmsSort">
-                      <option>All CMS</option>
-                      <option v-for="provider in cms">{{ provider }}</option>
-                    </select>
+                  <div class="row flex flex-row gap-3">
+                    <div class="form-group w-1/2">
+                      <label>Cost Range</label>
+                      <input class="billing-filter" type="text" v-model="big"><span class="in-input">$</span>
+                    </div>
+                    <hr>
+                    <div class="form-group w-1/2">
+                      <input class="billing-filter second" type="text" v-model="small"><span class="in-input">$</span>
+                    </div>
                   </div>
 
                   <div class="row flex justify-center mt-6">
@@ -236,7 +239,9 @@ export default {
       arr: this.sites,
       isFilterOpen: false,
       sortArr: [],
-      date: ''
+      date: '',
+      big: '',
+      small: ''
     }
   },
   methods: {
@@ -321,6 +326,27 @@ export default {
           });
         }
       }
+      this.sortArr = this.arr;
+      if (this.big || this.small) {
+        this.arr = [];
+        Object.values(this.sortArr).filter(item => {
+          if (item.provider.cost) {
+            if (this.big && this.small) {
+              if (this.big >= item.provider.cost && item.provider.cost <= this.small) {
+                this.arr.push(item);
+              }
+            } else if (this.big && !this.small) {
+              if (this.big >= item.provider.cost) {
+                this.arr.push(item);
+              }
+            } else {
+              if (this.small <= item.provider.cost) {
+                this.arr.push(item);
+              }
+            }
+          }
+        });
+      }
       return this.arr;
     },
 
@@ -356,11 +382,11 @@ export default {
 
     showFilter() {
       this.isFilterOpen = !this.isFilterOpen;
-      this.searchData= '';
-      this.companySort= '';
-      this.date= '';
-      this.hostSort= '';
-      this.hostNameSort= '';
+      this.searchData = '';
+      this.companySort = '';
+      this.date = '';
+      this.hostSort = '';
+      this.hostNameSort = '';
       this.arr = this.sites;
       this.color = 'multi';
     },

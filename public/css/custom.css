@@ -1244,8 +1244,30 @@ em.gray-text {
     padding: 20px 20px;
 }
 
+.form-group input.billing-filter {
+    padding-left: 20px;
+    width: 135px;
+}
+
+.form-group input.billing-filter.second {
+    margin-top: 34px;
+}
+
 .dp--tp-wrap {
     display: none;
+}
+
+.in-input {
+    position: relative;
+    left: 5px;
+    top: -35px;
+    color: #7a8088;
+}
+
+.row.flex.flex-row.gap-3 hr {
+    width: 40px;
+    margin-top: 55px;
+    border-color: #D8D8D8;
 }
 
 @media screen and (max-width: 768px) {
