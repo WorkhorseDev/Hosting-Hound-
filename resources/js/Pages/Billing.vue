@@ -2,8 +2,12 @@
 import {Head, useForm} from '@inertiajs/vue3';
 import {Link} from '@inertiajs/vue3';
 import {inject, reactive} from "vue";
+import { Calendar } from "v-calendar";
+import 'v-calendar/style.css';
+import { ref } from 'vue';
 
 const route = inject("route");
+
 </script>
 
 <template>
@@ -176,6 +180,10 @@ const route = inject("route");
               </div>
             </div>
 
+              <div class="calendar-container">
+                  <Calendar :attributes='calendarAttributes' />
+              </div>
+
             <div class="data card-list" v-if="arr && arr.length !== 0" :class="{ filter_active: isFilterOpen }">
               <div v-for="item in arr" class="card-item">
                 <div class="card-content" @click="hostDetail(item._id)">
@@ -211,6 +219,11 @@ export default {
     emails: [],
     cms: []
   },
+
+    components: {
+        Calendar,
+    },
+
   data() {
     return {
       color: '#FF920A',
@@ -243,9 +256,37 @@ export default {
         share: ''
       }),
       arr: this.sites,
-      isFilterOpen: false
+      isFilterOpen: false,
+
+        // Calendar attributes
+        baseCalendarAttributes: [
+            {
+                key: 'today',
+                highlight: true,
+                dates: new Date(),
+            }
+        ]
     }
   },
+
+    computed: {
+        dynamicCalendarAttributes() {
+            return this.arr.map((service) => {
+                const [day, month, year] = service.provider.renewal_date.split("/").map(Number);
+                return {
+                    dates: new Date(year, month - 1, day),
+                    dot: 'red',
+                    popover: {
+                        label: `${service.provider.type} (${service.url}) expires ${service.provider.renewal_date}`,
+                    },
+                };
+            });
+        },
+        calendarAttributes() {
+            return [...this.baseCalendarAttributes, ...this.dynamicCalendarAttributes];
+        },
+    },
+
   methods: {
     sortField() {
       this.arr = Object.values(JSON.parse(JSON.stringify(this.arr)));
