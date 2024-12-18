@@ -57,6 +57,16 @@ class Websites extends Eloquent
             $data->file('file')[1]->move(public_path() . '/icon/', $fileName);
             $uploadfile = "/icon/" . $fileName;
         }
+        if (!empty($site->provider)) {
+            foreach ($site->provider as $key => $host) {
+                $site->provider[$key]['show'] = false;
+            }
+        }
+        if (!empty($site->software)) {
+            foreach ($site->software as $key => $host) {
+                $site->software[$key]['showSoft'] = false;
+            }
+        }
         $site->url = $data->url;
         $site->name = $data->name;
         $site->color = $data->color;
@@ -86,6 +96,16 @@ class Websites extends Eloquent
             $fileName = time() . "_" . basename($_FILES["file"]["name"][1]);
             $site->file('file')[1]->move(public_path() . '/icon/', $fileName);
             $uploadfile = "/icon/" . $fileName;
+        }
+        if (!empty($site->provider)) {
+            foreach ($site->provider as $key => $host) {
+                $site->provider[$key]['show'] = false;
+            }
+        }
+        if (!empty($site->software)) {
+            foreach ($site->software as $key => $host) {
+                $site->software[$key]['showSoft'] = false;
+            }
         }
          Websites::create([
             'user_id' => Auth::user()->_id,

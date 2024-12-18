@@ -269,7 +269,7 @@ export default {
   },
   data() {
     return {
-      color: '#FF920A',
+      color: 'multi',
       orange: '#FF920A',
       dark_green: '#3D5F58',
       light_green: '#A7B57C',
@@ -298,8 +298,9 @@ export default {
       isFilterOpen: false,
       isDropdownColorOpen: false,
       sortColor: false,
-      multi: false,
-      multiColor: 'multi'
+      multi: true,
+      multiColor: 'multi',
+      sortArr: []
     }
   },
   computed: {
@@ -337,12 +338,13 @@ export default {
           });
         }
       }
+     this.sortArr = this.arr;
       if (this.sortColor)  {
         if (this.multi) {
-          this.arr = this.sites;
+          this.arr = this.sortArr;
         } else {
           this.arr = [];
-          Object.values(this.sites).filter(item => {
+          Object.values(this.sortArr).filter(item => {
             if (item.color) {
               if (this.color.toLowerCase() === item.color.toLowerCase()) {
                 this.arr.push(item);
@@ -351,20 +353,25 @@ export default {
           });
         }
       }
+      this.sortArr = this.arr;
       if (this.hostSort && this.hostSort !== '') {
-         this.arr = this.sortProviders('Host', this.hostSort, this.arr)
+         this.arr = this.sortProviders('Host', this.hostSort, this.sortArr)
       }
+      this.sortArr = this.arr;
       if (this.providerSort && this.providerSort !== '') {
-        this.arr = this.sortProviders('Domain Register', this.providerSort, this.arr)
+        this.arr = this.sortProviders('Domain Register', this.providerSort, this.sortArr)
       }
+      this.sortArr = this.arr;
       if (this.sslSort && this.sslSort !== '') {
-        this.arr = this.sortProviders('SSL Provider', this.sslSort, this.arr)
+        this.arr = this.sortProviders('SSL Provider', this.sslSort, this.sortArr)
       }
+      this.sortArr = this.arr;
       if (this.emailSort && this.emailSort !== '') {
-        this.arr = this.sortProviders('Email Plan Provider', this.emailSort, this.arr)
+        this.arr = this.sortProviders('Email Plan Provider', this.emailSort, this.sortArr)
       }
+      this.sortArr = this.arr;
       if (this.cmsSort && this.cmsSort !== '') {
-        this.arr = this.sortSoftware('CMS', this.cmsSort, this.arr)
+        this.arr = this.sortSoftware('CMS', this.cmsSort, this.sortArr)
       }
       return this.arr;
     },
@@ -387,8 +394,8 @@ export default {
       return this.data;
     },
     sortProviders(filed, value, arr) {
-      if ((this.hostSort === 'View All' && this.providerSort === 'View All' && this.sslSort === 'View All' && this.emailSort === 'View All')) {
-        this.arr = this.sites;
+      if (value === 'View All') {
+        this.arr = arr;
         return this.arr;
       }
       arr.filter(item => {
@@ -441,6 +448,15 @@ export default {
 
     showFilter() {
       this.isFilterOpen = !this.isFilterOpen;
+      this.searchData= '';
+      this.companySort= '';
+      this.providerSort= '';
+      this.sslSort= '';
+      this.hostSort= '';
+      this.emailSort= '';
+      this.cmsSort= '';
+      this.arr = this.sites;
+      this.color = 'multi';
     },
 
     showDropdownColor() {

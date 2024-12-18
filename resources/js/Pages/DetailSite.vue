@@ -584,7 +584,7 @@ export default {
     showDetail(item, key) {
       var el = document.getElementById('id' + key);
       el.style.display = "block";
-      if (!item.show) {
+      if (item.show) {
         el.style.display = "none";
       }
       item.show = !item.show;
@@ -603,7 +603,7 @@ export default {
     showDetailSoft(item, key) {
       var el = document.getElementById('idSoft' + key);
       el.style.display = "block";
-      if (!item.showSoft) {
+      if (item.showSoft) {
         el.style.display = "none";
       }
       item.showSoft = !item.showSoft;
