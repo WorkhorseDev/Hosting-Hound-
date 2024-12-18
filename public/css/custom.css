@@ -725,6 +725,15 @@ select option {
     background-color: #d8d8d8;
 }
 
+.form-group input.dp__pointer {
+    padding-left: 30px;
+    font-size: 16px;
+}
+
+.dp--clear-btn {
+    right: -10px;
+}
+
 .form-group-icon {
     display: flex;
     align-items: center;
@@ -1233,6 +1242,10 @@ em.gray-text {
 
 .billing .card-list {
     padding: 20px 20px;
+}
+
+.dp--tp-wrap {
+    display: none;
 }
 
 @media screen and (max-width: 768px) {

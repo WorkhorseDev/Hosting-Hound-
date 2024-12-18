@@ -104,13 +104,15 @@ const route = inject("route");
                         </div>
                         <div class="dropdown-list" v-if="isDropdownColorOpen">
                           <div class="item">
-                            <div class="item-circle" @click=setColor(dark_green) style="background-color: #4A6A65;"></div>
+                            <div class="item-circle" @click=setColor(dark_green)
+                                 style="background-color: #4A6A65;"></div>
                           </div>
                           <div class="item">
                             <div class="item-circle" @click=setColor(orange) style="background-color: #FFA726;"></div>
                           </div>
                           <div class="item">
-                            <div class="item-circle" @click=setColor(light_green) style="background-color: #B6C793;"></div>
+                            <div class="item-circle" @click=setColor(light_green)
+                                 style="background-color: #B6C793;"></div>
                           </div>
                           <div class="item">
                             <div class="item-circle multi-color" @click=setColor(multiColor)>
@@ -142,24 +144,10 @@ const route = inject("route");
                     </div>
                   </div>
 
-                  <div class="row flex flex-row gap-3">
-                    <div class="form-group w-1/2">
-                      <label for="ssl-provider">SSL Provider</label>
-                      <select id="ssl-provider" v-model="sslSort">
-                        <option>View All</option>
-                        <option v-for="provider in sslArr">{{ provider }}</option>
-                      </select>
-                    </div>
-
-                    <div class="form-group w-1/2">
-                      <label for="email-provider">Email Provider</label>
-                      <select id="email-provider" v-model="emailSort">
-                        <option>View All</option>
-                        <option v-for="provider in emails">{{ provider }}</option>
-                      </select>
-                    </div>
+                  <div class="form-group">
+                    <label>Deadline Time Frame</label>
+                    <VueDatePicker format="yyyy/MM/dd" v-model="date"></VueDatePicker>
                   </div>
-
 
                   <div class="form-group">
                     <label for="cms">Content Management System</label>
@@ -181,7 +169,7 @@ const route = inject("route");
                 <div class="card-content" @click="hostDetail(item.id, item.key)">
                   <div class="info">
                     <p class="card-title">{{ item.provider.type }}</p>
-                    <p class="card-link">$ {{ item.provider.cost }} - {{item.provider.renewal_date}}</p>
+                    <p class="card-link">$ {{ item.provider.cost }} - {{ item.provider.renewal_date }}</p>
                     <span class="card-link">{{ item.url }}</span>
                   </div>
                   <div class="card-logo">
@@ -200,7 +188,11 @@ const route = inject("route");
 </template>
 <script>
 import {useForm} from "@inertiajs/vue3";
+import {ref} from 'vue';
+import VueDatePicker from '@vuepic/vue-datepicker';
+import '@vuepic/vue-datepicker/dist/main.css'
 
+const date = ref();
 export default {
   props: {
     sites: [],
@@ -213,13 +205,13 @@ export default {
   },
   data() {
     return {
-      color: '#FF920A',
+      color: 'multi',
       orange: '#FF920A',
       dark_green: '#3D5F58',
       light_green: '#A7B57C',
       isDropdownColorOpen: false,
       sortColor: false,
-      multi: false,
+      multi: true,
       multiColor: 'multi',
       searchData: '',
       companySort: '',
@@ -243,7 +235,8 @@ export default {
         share: ''
       }),
       arr: this.sites,
-      isFilterOpen: false
+      isFilterOpen: false,
+      sortArr: []
     }
   },
   methods: {
@@ -263,12 +256,13 @@ export default {
           });
         }
       }
+      this.sortArr = this.arr;
       if (this.sortColor) {
         if (this.multi) {
           this.arr = this.sites;
         } else {
           this.arr = [];
-          Object.values(this.sites).filter(item => {
+          Object.values(this.sortArr).filter(item => {
             if (item.color) {
               if (this.color.toLowerCase() === item.color.toLowerCase()) {
                 this.arr.push(item);
@@ -277,12 +271,13 @@ export default {
           });
         }
       }
+      this.sortArr = this.arr;
       if (this.hostSort) {
         if (this.hostSort === 'View All') {
           this.arr = this.sites;
         } else {
           this.arr = [];
-          Object.values(this.sites).filter(item => {
+          Object.values(this.sortArr).filter(item => {
             if (item.provider.type) {
               if (this.hostSort.toLowerCase() === item.provider.type.toLowerCase()) {
                 this.arr.push(item);
@@ -291,12 +286,13 @@ export default {
           });
         }
       }
+      this.sortArr = this.arr;
       if (this.hostNameSort) {
         if (this.hostSort === 'View All') {
           this.arr = this.sites;
         } else {
           this.arr = [];
-          Object.values(this.sites).filter(item => {
+          Object.values(this.sortArr).filter(item => {
             if (item.provider.name) {
               if (this.hostNameSort.toLowerCase() === item.provider.name.toLowerCase()) {
                 this.arr.push(item);
@@ -309,7 +305,7 @@ export default {
     },
 
     hostDetail(id, key) {
-      window.location.href = 'hostDetail/' + key+ '/' + id;
+      window.location.href = 'hostDetail/' + key + '/' + id;
     },
 
     search() {

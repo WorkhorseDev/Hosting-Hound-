@@ -197,7 +197,7 @@ import InputError from "@/Components/InputError.vue";
                         <div class="form-group m-0">
                           <label>Renewal Date</label>
                           <div class="form-group form-group-icon">
-                            <input class="bg-grey" type="text" v-model="form.provider.renewal_date" placeholder="00 / 00 / 00">
+                            <VueDatePicker format="yyyy/MM/dd" v-model="form.provider.renewal_date"></VueDatePicker>
                             <i class="fa-solid fa-calendar"></i>
                           </div>
                         </div>
@@ -307,7 +307,7 @@ import InputError from "@/Components/InputError.vue";
                         <div class="form-group m-0">
                           <label>Renewal Date</label>
                           <div class="form-group form-group-icon">
-                            <input class="bg-grey" type="text" placeholder="00 / 00 / 00" v-model="form.software.renewal_date">
+                            <VueDatePicker format="yyyy/MM/dd" v-model="form.software.renewal_date"></VueDatePicker>
                             <i class="fa-solid fa-calendar"></i>
                           </div>
                         </div>
@@ -373,6 +373,8 @@ import InputError from "@/Components/InputError.vue";
 <script>
 import {reactive, toRaw} from "vue";
 import {useForm} from "@inertiajs/vue3";
+import VueDatePicker from '@vuepic/vue-datepicker';
+import '@vuepic/vue-datepicker/dist/main.css'
 
 export default {
   props: {

@@ -57,14 +57,18 @@ class Websites extends Eloquent
             $data->file('file')[1]->move(public_path() . '/icon/', $fileName);
             $uploadfile = "/icon/" . $fileName;
         }
-        if (!empty($site->provider)) {
-            foreach ($site->provider as $key => $host) {
-                $site->provider[$key]['show'] = false;
+        $providers = [];
+        $software = [];
+        if (!empty($site->providers)) {
+            $providers = $site->providers;
+            foreach ($site->providers as $key => $host) {
+                $providers[$key]['show'] = false;
             }
         }
-        if (!empty($site->software)) {
-            foreach ($site->software as $key => $host) {
-                $site->software[$key]['showSoft'] = false;
+        if (!empty($site->softwares)) {
+            $software = $site->softwares;
+            foreach ($site->softwares as $key => $host) {
+                $software[$key]['showSoft'] = false;
             }
         }
         $site->url = $data->url;
@@ -97,14 +101,18 @@ class Websites extends Eloquent
             $site->file('file')[1]->move(public_path() . '/icon/', $fileName);
             $uploadfile = "/icon/" . $fileName;
         }
-        if (!empty($site->provider)) {
-            foreach ($site->provider as $key => $host) {
-                $site->provider[$key]['show'] = false;
+        $providers = [];
+        $software = [];
+        if (!empty($site->providers)) {
+            $providers = $site->providers;
+            foreach ($site->providers as $key => $host) {
+                $providers[$key]['show'] = false;
             }
         }
-        if (!empty($site->software)) {
-            foreach ($site->software as $key => $host) {
-                $site->software[$key]['showSoft'] = false;
+        if (!empty($site->softwares)) {
+            $software = $site->softwares;
+            foreach ($site->softwares as $key => $host) {
+                $software[$key]['showSoft'] = false;
             }
         }
          Websites::create([
@@ -118,8 +126,8 @@ class Websites extends Eloquent
             'tags' => $site->tags,
             'shared_with' => $site->shared_with,
             'notes' => $site->notes,
-            'provider' => isset($site->providers) ? $site->providers : '',
-            'software' => isset($site->softwares) ? $site->softwares : '',
+            'provider' => $providers,
+            'software' =>$software,
         ]);
 
         if(!empty($site->shared_with)) {
