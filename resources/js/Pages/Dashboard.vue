@@ -323,6 +323,7 @@ export default {
       this.isDropdownColorOpen = !this.isDropdownColorOpen;
     },
     sortField() {
+      this.arr = this.sites;
       this.arr = Object.values(JSON.parse(JSON.stringify(this.arr)));
       if (this.companySort)  {
         if (this.companySort === 'All Companies') {

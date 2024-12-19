@@ -152,11 +152,11 @@ const route = inject("route");
                   <div class="row flex flex-row gap-3">
                     <div class="form-group w-1/2">
                       <label>Cost Range</label>
-                      <input class="billing-filter" type="text" v-model="big"><span class="in-input">$</span>
+                      <input class="billing-filter" type="text" v-model="small"><span class="in-input">$</span>
                     </div>
                     <hr>
                     <div class="form-group w-1/2">
-                      <input class="billing-filter second" type="text" v-model="small"><span class="in-input">$</span>
+                      <input class="billing-filter second" type="text" v-model="big"><span class="in-input">$</span>
                     </div>
                   </div>
 
@@ -246,6 +246,7 @@ export default {
   },
   methods: {
     sortField() {
+      this.arr = this.sites;
       this.arr = Object.values(JSON.parse(JSON.stringify(this.arr)));
       if (this.companySort) {
         if (this.companySort === 'All Companies') {
@@ -332,9 +333,10 @@ export default {
         Object.values(this.sortArr).filter(item => {
           if (item.provider.cost) {
             if (this.big && this.small) {
-              if (this.big >= item.provider.cost && item.provider.cost <= this.small) {
+              if (this.small <= item.provider.cost && item.provider.cost <= this.big) {
                 this.arr.push(item);
               }
+              return false;
             } else if (this.big && !this.small) {
               if (this.big >= item.provider.cost) {
                 this.arr.push(item);
