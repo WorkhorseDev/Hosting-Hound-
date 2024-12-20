@@ -227,7 +227,7 @@ const route = inject("route");
             </div>
 
             <div class="data card-list" v-if="arr && arr.length !== 0" :class="{ filter_active: isFilterOpen }">
-              <div v-for="item in arr" class="card-item">
+              <div v-for="item in arr" :key="item.id" class="card-item">
                 <label class="options">
                   <span class="readonly" v-if="item.readonly"></span>
                   <input v-if="!item.readonly" v-model="checkedSites[item._id]" type="checkbox" name="sites"
@@ -323,13 +323,12 @@ export default {
       this.isDropdownColorOpen = !this.isDropdownColorOpen;
     },
     sortField() {
-      this.arr = this.sites;
-      this.arr = Object.values(JSON.parse(JSON.stringify(this.arr)));
+      this.sortArr = [];
+      this.arr = [];
       if (this.companySort)  {
         if (this.companySort === 'All Companies') {
           this.arr = this.sites;
         } else {
-          this.arr = [];
           Object.values(this.sites).filter(item => {
             if (item.company) {
               if (this.companySort.toLowerCase() === item.company.toLowerCase()) {
@@ -344,7 +343,6 @@ export default {
         if (this.multi) {
           this.arr = this.sortArr;
         } else {
-          this.arr = [];
           Object.values(this.sortArr).filter(item => {
             if (item.color) {
               if (this.color.toLowerCase() === item.color.toLowerCase()) {
@@ -374,8 +372,10 @@ export default {
       if (this.cmsSort && this.cmsSort !== '') {
         this.arr = this.sortSoftware('CMS', this.cmsSort, this.sortArr)
       }
-      return this.arr;
+      this.arr  =
+          [...new Set(this.arr.map(JSON.stringify))].map(JSON.parse);
     },
+
     sortSoftware (filed, value, arr) {
       if (this.cmsSort === 'View All') {
         this.arr = this.sites;
