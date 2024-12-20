@@ -1309,6 +1309,7 @@ em.gray-text {
 
 .text-block.host em.gray-text {
     vertical-align: super;
+    cursor: pointer;
 }
 
 .text-block.host  .fa-solid.fa-sort-up, .text-block.host .fa-solid.fa-sort-down  {
@@ -1318,6 +1319,10 @@ em.gray-text {
     position: relative;
     left: 20px;
     top: 15px;
+}
+
+.text-block.host .fa-solid.fa-sort-down {
+    top: 0px;
 }
 
 .host-detail .inner.sited-detail {

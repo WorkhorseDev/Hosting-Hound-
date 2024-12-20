@@ -1,9 +1,7 @@
 <script setup>
 
 import {Head, Link, useForm} from "@inertiajs/vue3";
-import TextInput from "@/Components/TextInput.vue";
 import {reactive} from "vue";
-import InputError from "@/Components/InputError.vue";
 </script>
 
 <template>
@@ -39,40 +37,76 @@ import InputError from "@/Components/InputError.vue";
       <main class="main-content host-detail">
         <div class="inner sited-detail">
           <div class="grid grid-cols-3 gap-4">
-             <div class="mb-5">
-                <p class="provider-text">{{provider.type}} Renewal Details</p>
-               <div class="form-group-wrap p-6 pt-4">
-                 <i class="fa-solid fa-sack-dollar"></i> <span class="card-title"> $ {{ provider.cost }}</span>
-                 <div class="dark-line host-detail"></div>
-               </div>
-               <div class="form-group-wrap bg-grey p-6 pt-4 subscribe">
-                 <div class="globe">
-                   <i class="fas fa-hourglass-half host"></i>
-                 </div>
-                 <div class="form-group right-side host">
-                   <em>Next Deadline:</em> <span>{{ provider.renewal_date }}</span>
-                 </div>
-                 <div class="form-group right-side host">
-                   <em>Suggested Deadline:</em> <span></span>
-                 </div>
-                 <div class="form-group right-side host">
-                   <em>Renewal Type:</em> <span>{{ provider.renewal_type }}</span>
-                 </div>
-               </div>
-               <div class="text-block host">
-                 <div class="circle"></div>
-                 <em class="gray-text">Service Providers</em>
-                 <i v-if="!showProvider" class="fa-solid fa-sort-up"></i>
-                 <i v-if="showProvider" class="fa-solid fa-sort-down"></i>
-               </div>
-               <div class="left-line on-host"></div>
-               <div class="text-block host second">
-                 <div class="circle"></div>
-                 <em class="gray-text">Software & Add-ons</em>
-                 <i v-if="!showProvider" class="fa-solid fa-sort-up"></i>
-                 <i v-if="showProvider" class="fa-solid fa-sort-down"></i>
-               </div>
-             </div>
+            <div class="mb-5">
+              <p class="provider-text">{{ provider.type }} Renewal Details</p>
+              <div class="form-group-wrap p-6 pt-4">
+                <i class="fa-solid fa-sack-dollar"></i> <span class="card-title"> $ {{ provider.cost }}</span>
+                <div class="dark-line host-detail"></div>
+              </div>
+              <div class="form-group-wrap bg-grey p-6 pt-4 subscribe">
+                <div class="globe">
+                  <i class="fas fa-hourglass-half host"></i>
+                </div>
+                <div class="form-group right-side host">
+                  <em>Next Deadline:</em> <span>{{ provider.renewal_date }}</span>
+                </div>
+                <div class="form-group right-side host">
+                  <em>Suggested Deadline:</em> <span></span>
+                </div>
+                <div class="form-group right-side host">
+                  <em>Renewal Type:</em> <span>{{ provider.renewal_type }}</span>
+                </div>
+              </div>
+              <div class="text-block host">
+                <div class="circle"></div>
+                <em class="gray-text" @click="showProvider()">Service Providers</em>
+                <i v-if="!serviceShow" class="fa-solid fa-sort-up"></i>
+                <i v-if="serviceShow" class="fa-solid fa-sort-down"></i>
+              </div>
+              <div class="provider-list" v-if="serviceShow">
+                <div class="provider-item" v-for="(item, key, index) in site.provider" :key="key">
+                  <div class="inner">
+                    <div class="row">
+                      <span>{{ item.name }}</span>
+                      <i class="fas fa-edit"></i>
+                      <i class="icon fa-solid fa-lock"></i>
+                    </div>
+                  </div>
+                  <div class="inner">
+                    <div class="row">
+                      <span>{{ item.url }}</span>
+                      <i class="icon fa-solid fa-lock"></i>
+                    </div>
+                  </div>
+                </div>
+                <!-- end .provider-list -->
+              </div>
+              <div class="left-line on-host"></div>
+              <div class="text-block host second">
+                <div class="circle"></div>
+                <em class="gray-text" @click="showSoftware()">Software & Add-ons</em>
+                <i v-if="!showSoft" class="fa-solid fa-sort-up"></i>
+                <i v-if="showSoft" class="fa-solid fa-sort-down"></i>
+              </div>
+              <div class="provider-list" v-if="showSoft">
+                <div class="provider-item" v-for="(item, key, index) in site.software" :key="key">
+                  <div class="inner">
+                    <div class="row">
+                      <span>{{ item.name }}</span>
+                      <i class="fas fa-edit"></i>
+                      <i class="icon fa-solid fa-lock"></i>
+                    </div>
+                  </div>
+                  <div class="inner">
+                    <div class="row">
+                      <span>{{ item.url }}</span>
+                      <i class="icon fa-solid fa-lock"></i>
+                    </div>
+                  </div>
+                </div>
+                <!-- end .provider-list -->
+              </div>
+            </div>
             <div class="mb-5">
               <div class="text-block">
                 <em class="gray-text">Billing Source:</em>
@@ -125,82 +159,82 @@ import InputError from "@/Components/InputError.vue";
               </div>
             </div>
             <div class="mb-5 last-host">
-                <div class="card-content">
-                  <div class="info">
-                    <p class="card-title">{{ provider.name }}</p>
-                    <span class="card-link">{{ provider.url }}</span>
-                  </div>
-                  <div class="card-logo">
-                    <img v-if="site.icon" :src="site.icon"/>
-                    <span v-else>Logo</span>
-                  </div>
-                  <span class="card-color" :style="{ backgroundColor: site.color }"></span>
+              <div class="card-content">
+                <div class="info">
+                  <p class="card-title">{{ provider.name }}</p>
+                  <span class="card-link">{{ provider.url }}</span>
                 </div>
-                <div class="service-form detail host">
-                  <div class="form-container">
-                    <div class="left-line"></div>
-                    <div class="form-group-wrap bg-grey p-6 pt-4 globe-div">
-                      <div class="globe">
-                        <i class="fa-solid fa-globe"></i>
-                      </div>
-                      <div class="form-group right-side">
-                        <b>{{ provider.name }}</b>
-                      </div>
-                      <div class="form-group right-side">
-                        <em>{{ provider.url }}</em>
-                      </div>
+                <div class="card-logo">
+                  <img v-if="site.icon" :src="site.icon"/>
+                  <span v-else>Logo</span>
+                </div>
+                <span class="card-color" :style="{ backgroundColor: site.color }"></span>
+              </div>
+              <div class="service-form detail host">
+                <div class="form-container">
+                  <div class="left-line"></div>
+                  <div class="form-group-wrap bg-grey p-6 pt-4 globe-div">
+                    <div class="globe">
+                      <i class="fa-solid fa-globe"></i>
                     </div>
-                    <div class="form-group-wrap p-6 pt-4">
-                      <i class="fa-solid fa-sack-dollar"></i> <span class="card-title"> $ {{ provider.cost }}</span>
-                      <div class="dark-line"></div>
+                    <div class="form-group right-side">
+                      <b>{{ provider.name }}</b>
                     </div>
-                    <div class="form-group-wrap bg-grey p-6 pt-4 subscribe">
-                      <div class="globe">
-                        <i class="fas fa-hourglass-half"></i>
-                      </div>
-                      <div class="form-group right-side">
-                        <em>Next Deadline:</em> <span>{{ provider.renewal_date }}</span>
-                      </div>
-                      <div class="form-group right-side">
-                        <em>Renewal Type:</em> <span>{{ provider.renewal_type }}</span>
-                      </div>
-                      <div class="form-group right-side">
-                        <em>Last 4 digits of CC:</em> <span>{{ provider.cc }}</span>
-                      </div>
+                    <div class="form-group right-side">
+                      <em>{{ provider.url }}</em>
                     </div>
-                    <div class="form-group-wrap p-6 pt-4">
-                      <i class="fa-solid fa-key"></i> <span class="text"> Login Information</span>
-                      <div class="dark-line"></div>
+                  </div>
+                  <div class="form-group-wrap p-6 pt-4">
+                    <i class="fa-solid fa-sack-dollar"></i> <span class="card-title"> $ {{ provider.cost }}</span>
+                    <div class="dark-line"></div>
+                  </div>
+                  <div class="form-group-wrap bg-grey p-6 pt-4 subscribe">
+                    <div class="globe">
+                      <i class="fas fa-hourglass-half"></i>
                     </div>
-                    <div class="form-group-wrap p-6 pt-4 user-detail">
-                      <div class="form-group form-group-icon">
-                        <input readonly type="text" id="userName" :value="userName"
-                               :placeholder="provider.user_mame">
-                        <i class="fa-regular fa-user"></i>
-                        <i class="fa-regular fa-copy" @click="copy('#userName')"></i>
-                      </div>
-                      <div class="form-group form-group-icon">
-                        <input readonly v-bind:type="[showPasswordSoft ? 'text' : 'password']" id="password"
-                               :value="password" :placeholder="provider.password">
-                        <i class="fa-solid fa-lock"></i>
-                        <i class="fa-solid fa-eye-slash" @click="showTextPass('showPasswordSoft')"
-                           v-if="!showPasswordSoft"></i>
-                        <i class="fa-solid fa-eye" @click="showTextPass('showPasswordSoft')"
-                           v-if="showPasswordSoft"></i>
-                        <i class="fa-regular fa-copy" @click="copy('#password')"></i>
-                      </div>
-                      <div class="form-group form-group-icon m-0">
-                        <input readonly v-bind:type="[showPinSoft ? 'text' : 'password']" id="pin" :value="pin"
-                               :placeholder="provider.pin">
-                        <i class="fa-solid fa-fingerprint"></i>
-                        <i class="fa-solid fa-eye-slash" @click="showTextPin('showPinSoft')" v-if="!showPinSoft"></i>
-                        <i class="fa-solid fa-eye" @click="showTextPin('showPinSoft')" v-if="showPinSoft"></i>
-                        <i class="fa-regular fa-copy" @click="copy('#pin')"></i>
-                      </div>
+                    <div class="form-group right-side">
+                      <em>Next Deadline:</em> <span>{{ provider.renewal_date }}</span>
+                    </div>
+                    <div class="form-group right-side">
+                      <em>Renewal Type:</em> <span>{{ provider.renewal_type }}</span>
+                    </div>
+                    <div class="form-group right-side">
+                      <em>Last 4 digits of CC:</em> <span>{{ provider.cc }}</span>
+                    </div>
+                  </div>
+                  <div class="form-group-wrap p-6 pt-4">
+                    <i class="fa-solid fa-key"></i> <span class="text"> Login Information</span>
+                    <div class="dark-line"></div>
+                  </div>
+                  <div class="form-group-wrap p-6 pt-4 user-detail">
+                    <div class="form-group form-group-icon">
+                      <input readonly type="text" id="userName" :value="userName"
+                             :placeholder="provider.user_mame">
+                      <i class="fa-regular fa-user"></i>
+                      <i class="fa-regular fa-copy" @click="copy('#userName')"></i>
+                    </div>
+                    <div class="form-group form-group-icon">
+                      <input readonly v-bind:type="[showPasswordSoft ? 'text' : 'password']" id="password"
+                             :value="password" :placeholder="provider.password">
+                      <i class="fa-solid fa-lock"></i>
+                      <i class="fa-solid fa-eye-slash" @click="showTextPass('showPasswordSoft')"
+                         v-if="!showPasswordSoft"></i>
+                      <i class="fa-solid fa-eye" @click="showTextPass('showPasswordSoft')"
+                         v-if="showPasswordSoft"></i>
+                      <i class="fa-regular fa-copy" @click="copy('#password')"></i>
+                    </div>
+                    <div class="form-group form-group-icon m-0">
+                      <input readonly v-bind:type="[showPinSoft ? 'text' : 'password']" id="pin" :value="pin"
+                             :placeholder="provider.pin">
+                      <i class="fa-solid fa-fingerprint"></i>
+                      <i class="fa-solid fa-eye-slash" @click="showTextPin('showPinSoft')" v-if="!showPinSoft"></i>
+                      <i class="fa-solid fa-eye" @click="showTextPin('showPinSoft')" v-if="showPinSoft"></i>
+                      <i class="fa-regular fa-copy" @click="copy('#pin')"></i>
                     </div>
                   </div>
                 </div>
               </div>
+            </div>
           </div>
         </div>
       </main>
@@ -218,7 +252,8 @@ export default {
   },
   data() {
     return {
-      showProvider: false,
+      serviceShow: false,
+      showSoft: false,
       element: {},
       elementSoft: {},
       userName: '',
@@ -245,6 +280,12 @@ export default {
     }
   },
   methods: {
+    showProvider() {
+      this.serviceShow = !this.serviceShow;
+    },
+    showSoftware() {
+      this.showSoft = !this.showSoft;
+    },
     showTextPass(typeEl) {
       if (typeEl === 'showPasswordSoft') {
         this.showPasswordSoft = !this.showPasswordSoft;
@@ -281,121 +322,7 @@ export default {
     goBack() {
       window.history.back();
     },
-    deleteProvider(key) {
-      this.site.provider.splice(key, 1);
-      this.editSite();
-    },
-    deleteSoft(key) {
-      this.site.software.splice(key, 1);
-      this.editSite();
-    },
-    editSiteSoft(key, data)
-    {
-      this.site.software[key].name = data.name;
-      this.site.software[key].url = data.url;
-      this.site.software[key].type = data.type;
-      this.site.software[key].renewal_type = data.renewal_type;
-      this.site.software[key].cost = data.cost;
-      this.site.software[key].renewal_date = data.renewal_date;
-      this.site.software[key].user_mame = data.user_mame;
-      this.site.software[key].password = data.password;
-      this.site.software[key].pin = data.pin;
-      this.site.software[key].cc = data.cc;
-      this.editSite();
-    },
-    editSiteProvider(key, data)
-    {
-      this.site.provider[key].name = data.name;
-      this.site.provider[key].url = data.url;
-      this.site.provider[key].type = data.type;
-      this.site.provider[key].renewal_type = data.renewal_type;
-      this.site.provider[key].cost = data.cost;
-      this.site.provider[key].renewal_date = data.renewal_date;
-      this.site.provider[key].user_mame = data.user_mame;
-      this.site.provider[key].password = data.password;
-      this.site.provider[key].pin = data.pin;
-      this.site.provider[key].cc = data.cc;
-      this.editSite();
-    },
-    editSite() {
-      this.form.id = this.site._id;
-      this.form.name = this.site.name;
-      this.form.url = this.site.url;
-      this.form.color = this.site.color;
-      this.form.icon = this.site.icon;
-      this.form.company = this.site.company;
-      this.form.business_unit = this.site.business_unit;
-      this.form.tags = this.site.tags;
-      this.form.shared_with = this.site.shared_with;
-      this.form.notes = this.site.notes;
-      this.form.providers = this.site.provider;
-      this.form.softwares = this.site.software;
-      this.form.post(route('editSite'), {});
-    },
-    goEdit () {
-      window.location.href = window.location.protocol + '//' + window.location.host+'/editSiteView/'+this.site._id;
-    },
-    editProvider(el, key) {
-      var block = document.getElementById('id' + key);
-      block.style.display = "none";
-      var editBlock = document.getElementById('idEditProvider' + key);
-      editBlock.style.display = "block";
-    },
-    hideProvider(key) {
-      var block = document.getElementById('id' + key);
-      block.style.display = "block";
-      var editBlock = document.getElementById('idEditProvider' + key);
-      editBlock.style.display = "none";
-    },
-    editSoft(el, key) {
-      var block = document.getElementById('idSoft' + key);
-      block.style.display = "none";
-      var editBlock = document.getElementById('idEditSoft' + key);
-      editBlock.style.display = "block";
-    },
-    hideSoft(key) {
-      var block = document.getElementById('idSoft' + key);
-      block.style.display = "block";
-      var editBlock = document.getElementById('idEditSoft' + key);
-      editBlock.style.display = "none";
-    },
-    showDetail(item, key) {
-      var el = document.getElementById('id' + key);
-      el.style.display = "block";
-      if (!item.show) {
-        el.style.display = "none";
-      }
-      item.show = !item.show;
-      this.element.type = item.type;
-      this.userName = this.element.name = item.name;
-      this.element.url = item.url;
-      this.element.renewal_type = item.renewal_type;
-      this.element.cost = item.cost;
-      this.element.renewal_date = item.renewal_date;
-      this.element.user_mame = item.user_mame;
-      this.password = this.element.password = item.password;
-      this.pin = this.element.pin = item.pin;
-      this.cc = this.element.cc = item.cc;
-    },
 
-    showDetailSoft(item, key) {
-      var el = document.getElementById('idSoft' + key);
-      el.style.display = "block";
-      if (!item.showSoft) {
-        el.style.display = "none";
-      }
-      item.showSoft = !item.showSoft;
-      this.elementSoft.type = item.type;
-      this.userName = this.elementSoft.name = item.name;
-      this.elementSoft.url = item.url;
-      this.elementSoft.renewal_type = item.renewal_type;
-      this.elementSoft.cost = item.cost;
-      this.elementSoft.renewal_date = item.renewal_date;
-      this.elementSoft.user_mame = item.user_mame;
-      this.password = this.elementSoft.password = item.password;
-      this.pin = this.elementSoft.pin = item.pin;
-      this.elementSoft.cc = item.cc;
-    }
   }
 }
 </script>
