@@ -35,181 +35,123 @@ import InputError from "@/Components/InputError.vue";
           </div>
           <div class="panel-title">Site Details</div>
         </div>
-        <div class="panel-controls flex flex-row justify-end items-center">
-          <button class="btn-edit" v-if="!site.readonly">
-            <i class="fa-solid fa-pencil" @click="goEdit" v-if="path !== '/addSite'"></i>
-            <i class="fa-solid fa-pencil" style="color: #979797" v-if="path == '/addSite'"></i>
-          </button>
-        </div>
       </div>
-      <main class="main-content">
+      <main class="main-content host-detail">
         <div class="inner sited-detail">
-          <div class="data card-list grid">
-            <div class="card-content">
-              <div class="info">
-                <p class="card-title text-lg">{{ site.name }}</p>
-                <span class="card-link text-lg">{{ site.url }}</span>
-              </div>
-              <div class="card-logo">
-                <img v-if="site.icon" :src="site.icon" :alt="site.name"/>
-                <span v-else>Logo</span>
-              </div>
-              <span class="card-color" :style="{ backgroundColor: site.color }"></span>
-            </div>
-          </div>
           <div class="grid grid-cols-3 gap-4">
-            <div>
-              <div class="left-line"></div>
+             <div class="mb-5">
+                <p class="provider-text">{{provider.type}} Renewal Details</p>
+               <div class="form-group-wrap p-6 pt-4">
+                 <i class="fa-solid fa-sack-dollar"></i> <span class="card-title"> $ {{ provider.cost }}</span>
+                 <div class="dark-line host-detail"></div>
+               </div>
+               <div class="form-group-wrap bg-grey p-6 pt-4 subscribe">
+                 <div class="globe">
+                   <i class="fas fa-hourglass-half host"></i>
+                 </div>
+                 <div class="form-group right-side host">
+                   <em>Next Deadline:</em> <span>{{ provider.renewal_date }}</span>
+                 </div>
+                 <div class="form-group right-side host">
+                   <em>Suggested Deadline:</em> <span></span>
+                 </div>
+                 <div class="form-group right-side host">
+                   <em>Renewal Type:</em> <span>{{ provider.renewal_type }}</span>
+                 </div>
+               </div>
+               <div class="text-block host">
+                 <div class="circle"></div>
+                 <em class="gray-text">Service Providers</em>
+                 <i v-if="!showProvider" class="fa-solid fa-sort-up"></i>
+                 <i v-if="showProvider" class="fa-solid fa-sort-down"></i>
+               </div>
+               <div class="left-line on-host"></div>
+               <div class="text-block host second">
+                 <div class="circle"></div>
+                 <em class="gray-text">Software & Add-ons</em>
+                 <i v-if="!showProvider" class="fa-solid fa-sort-up"></i>
+                 <i v-if="showProvider" class="fa-solid fa-sort-down"></i>
+               </div>
+             </div>
+            <div class="mb-5">
               <div class="text-block">
-                <div class="circle"></div>
-                <em class="gray-text">Company Information</em>
+                <em class="gray-text">Billing Source:</em>
               </div>
-              <div class="left-line second">
-                <p class="info">{{ site.name }}</p>
-                <p class="info">{{ site.business_unit }}</p>
-              </div>
-              <div class="text-block">
-                <div class="circle"></div>
-                <em class="gray-text">Notes</em>
-              </div>
-              <div class="left-line second third">
-                <p class="info">{{ site.notes }}</p>
-              </div>
-              <div class="text-block">
-                <div class="circle"></div>
-                <em class="gray-text">Tags</em>
-              </div>
-              <div class="left-line second" v-if="site.tags">
-                <div class="tags" v-for="tag in (site.tags.split(','))">
-                  <p class="info">{{ tag }}</p>
-                  <div class="arrow-right"></div>
+              <div class="card-content">
+                <div class="info">
+                  <p class="card-title">{{ site.name }}</p>
+                  <span class="card-link">{{ site.url }}</span>
                 </div>
+                <div class="card-logo">
+                  <img v-if="site.icon" :src="site.icon"/>
+                  <span v-else>Logo</span>
+                </div>
+                <span class="card-color" :style="{ backgroundColor: site.color }"></span>
               </div>
-              <div class="text-block">
-                <div class="circle"></div>
-                <em class="gray-text">Shared With:</em>
-              </div>
-              <div class="left-line second">
-                <p class="info">{{ site.shared_with }}</p>
+              <div class="host-site-detail">
+                <div class="left-line"></div>
+                <div class="text-block">
+                  <div class="circle"></div>
+                  <em class="gray-text">Company Information</em>
+                </div>
+                <div class="left-line second">
+                  <p class="info">{{ site.name }}</p>
+                  <p class="info">{{ site.business_unit }}</p>
+                </div>
+                <div class="text-block">
+                  <div class="circle"></div>
+                  <em class="gray-text">Notes</em>
+                </div>
+                <div class="left-line second third">
+                  <p class="info">{{ site.notes }}</p>
+                </div>
+                <div class="text-block">
+                  <div class="circle"></div>
+                  <em class="gray-text">Tags</em>
+                </div>
+                <div class="left-line second" v-if="site.tags">
+                  <div class="tags" v-for="tag in (site.tags.split(','))">
+                    <p class="info">{{ tag }}</p>
+                    <div class="arrow-right"></div>
+                  </div>
+                </div>
+                <div class="text-block">
+                  <div class="circle"></div>
+                  <em class="gray-text">Shared With:</em>
+                </div>
+                <div class="left-line second">
+                  <p class="info">{{ site.shared_with }}</p>
+                </div>
               </div>
             </div>
-            <div class="mb-5 block-serv">
-              <div class="left-line"></div>
-              <div class="text-block">
-                <div class="circle"></div>
-                <em class="gray-text">Service Providers</em>
-              </div>
-              <div v-for="(item, key, index) in site.provider" :key="key">
-                <div class="card-content detail" @click="showDetail(item, key)">
+            <div class="mb-5 last-host">
+                <div class="card-content">
                   <div class="info">
-                    <p class="card-title text-lg">{{ item.name }}</p>
-                    <span class="card-link text-lg">{{ item.url }}</span>
+                    <p class="card-title">{{ provider.name }}</p>
+                    <span class="card-link">{{ provider.url }}</span>
                   </div>
-                  <i v-if="!item.show" class="fa-solid fa-sort-up"></i>
-                  <i v-if="item.show" class="fa-solid fa-sort-down"></i>
-                  <span class="card-color" style="backgroundColor: #000"></span>
+                  <div class="card-logo">
+                    <img v-if="site.icon" :src="site.icon"/>
+                    <span v-else>Logo</span>
+                  </div>
+                  <span class="card-color" :style="{ backgroundColor: site.color }"></span>
                 </div>
-                <div class="service-form detail edit-provider" :id="'idEditProvider'+key">
+                <div class="service-form detail host">
                   <div class="form-container">
-                    <div class="form-header">
-                      <span @click="hideProvider(key)" class="btn-back"><i class="fas fa-arrow-left detail"></i></span>
-                      <i @click="deleteProvider(key)" class="fa-solid fa-trash-can detail"></i>
-                    </div>
-
+                    <div class="left-line"></div>
                     <div class="form-group-wrap bg-grey p-6 pt-4 globe-div">
                       <div class="globe">
                         <i class="fa-solid fa-globe"></i>
                       </div>
                       <div class="form-group right-side">
-                        <select v-model="element.type" v-bind:value="element.type">
-                          <option>Host</option>
-                          <option>Domain Register</option>
-                          <option>Email Plan Provider</option>
-                          <option>SSL Provider</option>
-                        </select>
-                      </div>
-
-                      <div class="form-group right-side">
-                        <input type="text" v-model="element.name" placeholder="Name" >
-                      </div>
-
-                      <div class="form-group right-side">
-                        <input type="text" v-model="element.url" placeholder="Web URL" >
-                      </div>
-                    </div>
-
-                    <div class="form-group-wrap p-6 pt-4">
-                      <div class="form-group">
-                        <label>Renewal Type</label>
-                        <select class="bg-grey" v-model="element.renewal_type" >
-                          <option>Annual</option>
-                          <option>Monthly</option>
-                          <option>Weekly</option>
-                        </select>
-                      </div>
-
-                      <div class="form-row">
-                        <div class="form-group">
-                          <label>Cost</label>
-                          <input class="bg-grey" type="text" placeholder="$ 00.00" v-model="element.cost" >
-                        </div>
-                        <div class="form-group m-0">
-                          <label>Renewal Date</label>
-                          <div class="form-group form-group-icon">
-                            <input class="bg-grey" type="text" v-model="element.renewal_date"
-                                   placeholder="00 / 00 / 00">
-                            <i class="fa-solid fa-calendar"></i>
-                          </div>
-                        </div>
-                      </div>
-
-                      <div class="form-row">
-                        <div class="form-group">
-                          <label>Bills to CC ending in</label>
-                          <input class="bg-grey cc" type="text" placeholder="####" v-model="element.cc" >
-                        </div>
-                      </div>
-                    </div>
-
-                    <div class="form-group-wrap bg-grey p-6 pt-4 security-group">
-                      <div class="form-group form-group-icon">
-                        <input type="text" placeholder="UserName" v-model="element.user_mame" >
-                        <i class="fa-regular fa-user"></i>
-                      </div>
-
-                      <div class="form-group form-group-icon">
-                        <input type="password" placeholder="••••••••" v-model="element.password" >
-                        <i class="fa-solid fa-lock"></i>
-                      </div>
-
-                      <div class="form-group form-group-icon m-0">
-                        <input type="text" placeholder="PIN" v-model="element.pin" >
-                        <i class="fa-solid fa-fingerprint"></i>
-                      </div>
-                    </div>
-
-                    <div class="form-footer p-5">
-                      <button type="button" class="btn" @click="editSiteProvider(key, element)">Save Changes</button>
-                    </div>
-                  </div>
-                </div>
-                <div class="service-form detail" :id="'id'+key">
-                  <div class="form-container">
-                    <div class="form-header"><span class="serv-detail">{{ element.type }}</span><i
-                        class="fa-solid fa-pen" @click="editProvider(element, key)"></i></div>
-                    <div class="form-group-wrap bg-grey p-6 pt-4 globe-div">
-                      <div class="globe">
-                        <i class="fa-solid fa-globe"></i>
+                        <b>{{ provider.name }}</b>
                       </div>
                       <div class="form-group right-side">
-                        <b>{{ element.name }}</b>
-                      </div>
-                      <div class="form-group right-side">
-                        <em>{{ element.url }}</em>
+                        <em>{{ provider.url }}</em>
                       </div>
                     </div>
                     <div class="form-group-wrap p-6 pt-4">
-                      <i class="fa-solid fa-sack-dollar"></i> <span class="card-title"> $ {{ element.cost }}</span>
+                      <i class="fa-solid fa-sack-dollar"></i> <span class="card-title"> $ {{ provider.cost }}</span>
                       <div class="dark-line"></div>
                     </div>
                     <div class="form-group-wrap bg-grey p-6 pt-4 subscribe">
@@ -217,177 +159,13 @@ import InputError from "@/Components/InputError.vue";
                         <i class="fas fa-hourglass-half"></i>
                       </div>
                       <div class="form-group right-side">
-                        <em>Next Deadline:</em> <span>{{ element.renewal_date }}</span>
+                        <em>Next Deadline:</em> <span>{{ provider.renewal_date }}</span>
                       </div>
                       <div class="form-group right-side">
-                        <em>Renewal Type:</em> <span>{{ element.renewal_type }}</span>
+                        <em>Renewal Type:</em> <span>{{ provider.renewal_type }}</span>
                       </div>
                       <div class="form-group right-side">
-                        <em>Last 4 digits of CC:</em> <span>{{ element.cc }}</span>
-                      </div>
-                    </div>
-                    <div class="form-group-wrap p-6 pt-4">
-                      <i class="fa-solid fa-key"></i> <span class="text"> Login Information</span>
-                      <div class="dark-line"></div>
-                    </div>
-                    <div class="form-group-wrap p-6 pt-4 user-detail">
-                      <div class="form-group form-group-icon">
-                        <input readonly type="text" id="userName" :value="userName" :placeholder="element.user_mame">
-                        <i class="fa-regular fa-user"></i>
-                        <i class="fa-regular fa-copy" @click="copy('#userName')"></i>
-                      </div>
-                      <div class="form-group form-group-icon">
-                        <input readonly v-bind:type="[showPassword ? 'text' : 'password']" id="password"
-                               :value="password" :placeholder="element.password">
-                        <i class="fa-solid fa-lock"></i>
-                        <i class="fa-solid fa-eye-slash" @click="showTextPass('showPassword')" v-if="!showPassword"></i>
-                        <i class="fa-solid fa-eye" @click="showTextPass('showPassword')" v-if="showPassword"></i>
-                        <i class="fa-regular fa-copy" @click="copy('#password')"></i>
-                      </div>
-                      <div class="form-group form-group-icon m-0">
-                        <input readonly v-bind:type="[showPin ? 'text' : 'password']" id="pin" :value="pin"
-                               :placeholder="element.pin">
-                        <i class="fa-solid fa-fingerprint"></i>
-                        <i class="fa-solid fa-eye-slash" @click="showTextPin('showPin')" v-if="!showPin"></i>
-                        <i class="fa-solid fa-eye" @click="showTextPin('showPin')" v-if="showPin"></i>
-                        <i class="fa-regular fa-copy" @click="copy('#pin')"></i>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="mb-5 block-serv">
-              <div class="left-line"></div>
-              <div class="text-block">
-                <div class="circle"></div>
-                <em class="gray-text">Software & Add-ons</em>
-              </div>
-              <div v-for="(item, key, index) in site.software" :key="key">
-                <div class="card-content detail"  @click="showDetailSoft(item, key)">
-                  <div class="info">
-                    <p class="card-title">{{ item.name }}</p>
-                    <span class="card-link">{{ item.url }}</span>
-                  </div>
-                  <i v-if="!item.showSoft" class="fa-solid fa-sort-up"></i>
-                  <i v-if="item.showSoft" class="fa-solid fa-sort-down"></i>
-                  <span class="card-color" style="backgroundColor: #000"></span>
-                </div>
-                <div class="service-form detail edit-provider" :id="'idEditSoft'+key">
-                  <div class="form-container">
-                    <div class="form-header">
-                      <span @click="hideSoft(key)" class="btn-back"><i class="fas fa-arrow-left detail"></i></span>
-                      <i @click="deleteSoft(key)" class="fa-solid fa-trash-can detail"></i>
-                    </div>
-
-                    <div class="form-group-wrap bg-grey p-6 pt-4 globe-div">
-                      <div class="globe">
-                        <i class="fa-solid fa-globe"></i>
-                      </div>
-                      <div class="form-group right-side">
-                        <select v-bind:value="elementSoft.type" v-model="elementSoft.type">
-                          <option>Software</option>
-                          <option>CMS</option>
-                          <option>Theme</option>
-                          <option>Plugin</option>
-                          <option>Other</option>
-                        </select>
-                      </div>
-
-                      <div class="form-group right-side">
-                        <input type="text" placeholder="Name" v-model="elementSoft.name" >
-                      </div>
-
-                      <div class="form-group right-side">
-                        <input type="text" placeholder="Web URL" v-model="elementSoft.url" >
-                      </div>
-                    </div>
-
-                    <div class="form-group-wrap p-6 pt-4">
-                      <div class="form-group">
-                        <label>Renewal Type</label>
-                        <select class="bg-grey" v-bind:value="elementSoft.renewal_type" v-model="elementSoft.renewal_type">
-                          <option>Annual</option>
-                          <option>Monthly</option>
-                          <option>Weekly</option>
-                        </select>
-                      </div>
-
-                      <div class="form-row">
-                        <div class="form-group">
-                          <label>Cost</label>
-                          <input class="bg-grey" type="text" placeholder="$ 00.00" v-model="elementSoft.cost" >
-                        </div>
-                        <div class="form-group m-0">
-                          <label>Renewal Date</label>
-                          <div class="form-group form-group-icon">
-                            <input class="bg-grey" type="text" placeholder="00 / 00 / 00" v-model="elementSoft.renewal_date" >
-                            <i class="fa-solid fa-calendar"></i>
-                          </div>
-                        </div>
-                      </div>
-
-                      <div class="form-row">
-                        <div class="form-group">
-                          <label>Bills to CC ending in</label>
-                          <input class="bg-grey cc" type="text" placeholder="####" v-model="elementSoft.cc" >
-                        </div>
-                      </div>
-                    </div>
-
-                    <div class="form-group-wrap bg-grey p-6 pt-4 security-group">
-                      <div class="form-group form-group-icon">
-                        <input type="text" placeholder="UserName" v-model="elementSoft.user_mame" >
-                        <i class="fa-regular fa-user"></i>
-                      </div>
-
-                      <div class="form-group form-group-icon">
-                        <input type="password" placeholder="••••••••" v-model="elementSoft.password" >
-                        <i class="fa-solid fa-lock"></i>
-                      </div>
-
-                      <div class="form-group form-group-icon m-0">
-                        <input type="text" placeholder="PIN" v-model="elementSoft.pin" >
-                        <i class="fa-solid fa-fingerprint"></i>
-                      </div>
-                    </div>
-
-                    <div class="form-footer p-5">
-                      <button type="button" class="btn" @click="editSiteSoft(key, elementSoft)">Save Provider</button>
-                    </div>
-                  </div>
-                </div>
-                <div class="service-form detail" :id="'idSoft'+key">
-                  <div class="form-container">
-                    <div class="form-header"><span class="serv-detail">{{ elementSoft.type }}</span><i
-                        class="fa-solid fa-pen" @click="editSoft(elementSoft, key)"></i></div>
-                    <div class="form-group-wrap bg-grey p-6 pt-4 globe-div">
-                      <div class="globe">
-                        <i class="fa-solid fa-globe"></i>
-                      </div>
-                      <div class="form-group right-side">
-                        <b>{{ elementSoft.name }}</b>
-                      </div>
-                      <div class="form-group right-side">
-                        <em>{{ elementSoft.url }}</em>
-                      </div>
-                    </div>
-                    <div class="form-group-wrap p-6 pt-4">
-                      <i class="fa-solid fa-sack-dollar"></i> <span class="card-title"> $ {{ elementSoft.cost }}</span>
-                      <div class="dark-line"></div>
-                    </div>
-                    <div class="form-group-wrap bg-grey p-6 pt-4 subscribe">
-                      <div class="globe">
-                        <i class="fas fa-hourglass-half"></i>
-                      </div>
-                      <div class="form-group right-side">
-                        <em>Next Deadline:</em> <span>{{ elementSoft.renewal_date }}</span>
-                      </div>
-                      <div class="form-group right-side">
-                        <em>Renewal Type:</em> <span>{{ elementSoft.renewal_type }}</span>
-                      </div>
-                      <div class="form-group right-side">
-                        <em>Last 4 digits of CC:</em> <span>{{ elementSoft.cc }}</span>
+                        <em>Last 4 digits of CC:</em> <span>{{ provider.cc }}</span>
                       </div>
                     </div>
                     <div class="form-group-wrap p-6 pt-4">
@@ -397,13 +175,13 @@ import InputError from "@/Components/InputError.vue";
                     <div class="form-group-wrap p-6 pt-4 user-detail">
                       <div class="form-group form-group-icon">
                         <input readonly type="text" id="userName" :value="userName"
-                               :placeholder="elementSoft.user_mame">
+                               :placeholder="provider.user_mame">
                         <i class="fa-regular fa-user"></i>
                         <i class="fa-regular fa-copy" @click="copy('#userName')"></i>
                       </div>
                       <div class="form-group form-group-icon">
                         <input readonly v-bind:type="[showPasswordSoft ? 'text' : 'password']" id="password"
-                               :value="password" :placeholder="elementSoft.password">
+                               :value="password" :placeholder="provider.password">
                         <i class="fa-solid fa-lock"></i>
                         <i class="fa-solid fa-eye-slash" @click="showTextPass('showPasswordSoft')"
                            v-if="!showPasswordSoft"></i>
@@ -413,7 +191,7 @@ import InputError from "@/Components/InputError.vue";
                       </div>
                       <div class="form-group form-group-icon m-0">
                         <input readonly v-bind:type="[showPinSoft ? 'text' : 'password']" id="pin" :value="pin"
-                               :placeholder="elementSoft.pin">
+                               :placeholder="provider.pin">
                         <i class="fa-solid fa-fingerprint"></i>
                         <i class="fa-solid fa-eye-slash" @click="showTextPin('showPinSoft')" v-if="!showPinSoft"></i>
                         <i class="fa-solid fa-eye" @click="showTextPin('showPinSoft')" v-if="showPinSoft"></i>
@@ -423,7 +201,6 @@ import InputError from "@/Components/InputError.vue";
                   </div>
                 </div>
               </div>
-            </div>
           </div>
         </div>
       </main>
@@ -436,7 +213,8 @@ import {useForm} from "@inertiajs/vue3";
 
 export default {
   props: {
-    site: Array
+    site: Array,
+    provider: Array,
   },
   data() {
     return {

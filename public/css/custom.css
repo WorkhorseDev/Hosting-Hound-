@@ -1270,6 +1270,100 @@ em.gray-text {
     border-color: #D8D8D8;
 }
 
+.provider-text {
+    font-size: 25px;
+    font-weight: 600;
+    text-decoration: underline;
+    font-family: Lato;
+}
+
+.main-content.host-detail {
+    box-shadow: 0 3px 5px 0 rgba(112, 112, 112, 0.5);
+    border-radius: 22px;
+}
+
+.dark-line.host-detail {
+    height: 20px;
+    margin-top: -5px;
+    margin-bottom: 10px;
+}
+
+.fas.fa-hourglass-half.host {
+    font-size: 40px;
+    margin-top: 26px;
+}
+
+.form-group.right-side.host {
+    margin-right: 3px;
+    width: 270px;
+}
+
+.form-group.right-side.host em {
+    width: 175px;
+}
+
+.text-block.host {
+    margin-top: 20px;
+    margin-left: 75px;
+}
+
+.text-block.host em.gray-text {
+    vertical-align: super;
+}
+
+.text-block.host  .fa-solid.fa-sort-up, .text-block.host .fa-solid.fa-sort-down  {
+    color: #15202E;
+    opacity: 0.8;
+    display: inline-block;
+    position: relative;
+    left: 20px;
+    top: 15px;
+}
+
+.host-detail .inner.sited-detail {
+    width: 100%;
+}
+
+.host-detail .inner.sited-detail .mb-5 {
+    width: 380px;
+}
+
+.host-detail .text-block.host em.gray-text {
+    display: inline-block;
+    width: 175px;
+}
+
+.left-line.on-host {
+    margin-left: 75px;
+}
+
+.text-block.host.second {
+    margin-top: 0px;
+}
+
+.host-site-detail {
+    margin-left: 35px;
+}
+
+.mb-5.last-host {
+    margin-top: 38px;
+}
+
+.service-form.detail.host {
+    display: block;
+    margin-top: 0px;
+}
+
+.host.detail .form-container {
+    border: none;
+    box-shadow: none;
+    background: transparent;
+}
+
+.service-form.detail.host .left-line {
+    margin-left: 38px;
+}
+
 @media screen and (max-width: 768px) {
     .auth-layout {
         flex-direction: column;
