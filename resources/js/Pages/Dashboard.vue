@@ -337,10 +337,13 @@ export default {
             }
           });
         }
+        this.sortArr = this.arr;
+      } else {
+        this.sortArr = this.sites;
       }
-     this.sortArr = this.arr;
       if (this.sortColor)  {
-        if (this.multi) {
+        this.arr = [];
+        if (this.color === 'multi') {
           this.arr = this.sortArr;
         } else {
           Object.values(this.sortArr).filter(item => {
