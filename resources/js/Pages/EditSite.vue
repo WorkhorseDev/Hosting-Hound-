@@ -446,7 +446,7 @@ export default {
       if(this.form.providers && this.form.providers.length === 0) {
         this.form.providers.push(this.form.provider);
       }
-      if(this.form.softwares.length === 0) {
+      if(this.form.softwares.length && this.form.softwares.length === 0) {
         this.form.softwares.push(this.form.software);
       }
       this.form.file = ['file', this.formFile.file, this.formFile.filename];
