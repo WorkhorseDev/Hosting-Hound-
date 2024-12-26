@@ -450,12 +450,13 @@ export default {
         this.form.softwares.push(this.form.software);
       }
       this.form.file = ['file', this.formFile.file, this.formFile.filename];
-      if (this !== undefined && this.color) {
+      if (this.color) {
         this.form.color = this.color;
+      } else {
+        this.form.color = this.site.color;
       }
       this.form.url = this.site.url;
       this.form.name = this.site.name;
-      this.form.color = this.site.color;
       this.form.company = this.site.company;
       this.form.tags = this.site.tags;
       this.form.shared_with = this.site.shared_with;
