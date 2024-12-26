@@ -50,7 +50,7 @@ class WebsiteController extends Controller
             }
             if (!empty($site->software)) {
                 foreach ($site->software as $key => $soft) {
-                    if(!empty($soft['renewal_type']) && !empty($host['renewal_date'])) {
+                    if(!empty($soft['renewal_type']) && !empty($soft['renewal_date'])) {
                         $data = ['key' => $key, 'id' => $site->_id, 'icon' => $site->icon, 'provider' => $soft, 'url' => $site->url, 'color' => $site->color, 'company' => $site->company];
                         $hosts[] = $data;
                     }
@@ -161,10 +161,15 @@ class WebsiteController extends Controller
     public function showHostDetailPage()
     {
         $site = Websites::find(request('id'));
-
+        $data = [];
+        if($site->provider[request('key')]) {
+            $data = $site->provider[request('key')];
+        } else {
+            $data = $site->software[request('key')];
+        }
         return Inertia::render('HostDetailSite', [
             'site' => $site,
-            'key' => request('key')
+            'provider' => $site->provider[request('key')]
         ]);
     }
 
