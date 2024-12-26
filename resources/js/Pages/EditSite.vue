@@ -443,7 +443,7 @@ export default {
         this.form.errors.name = "Field Name is required";
         return false;
       }
-      if(this.form.providers.length === 0) {
+      if(this.form.providers && this.form.providers.length === 0) {
         this.form.providers.push(this.form.provider);
       }
       if(this.form.softwares.length === 0) {
