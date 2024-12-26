@@ -26,16 +26,9 @@ import {reactive} from "vue";
                     </span>
         </div>
       </header>
-      <div class="main-panel main-panel_edit">
-        <div class="flex flex-row items-center">
-          <div class="pr-6">
-            <span @click="goBack" class="btn-back"><i class="fas fa-arrow-left"></i></span>
-          </div>
-          <div class="panel-title">Site Details</div>
-        </div>
-      </div>
       <main class="main-content host-detail">
         <div class="inner sited-detail">
+          <i class="fa-solid fa-x" @click="goBack"></i>
           <div class="grid grid-cols-3 gap-4">
             <div class="mb-5">
               <p class="provider-text">{{ provider.type }} Renewal Details</p>
