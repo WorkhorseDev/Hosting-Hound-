@@ -50,9 +50,9 @@ import {reactive} from "vue";
                   <em>Renewal Type:</em> <span>{{ provider.renewal_type }}</span>
                 </div>
               </div>
-              <div class="text-block host">
+              <div class="text-block host"  @click="showProvider()">
                 <div class="circle"></div>
-                <em class="gray-text" @click="showProvider()">Service Providers</em>
+                <em class="gray-text">Service Providers</em>
                 <i v-if="!serviceShow" class="fa-solid fa-sort-up"></i>
                 <i v-if="serviceShow" class="fa-solid fa-sort-down"></i>
               </div>
