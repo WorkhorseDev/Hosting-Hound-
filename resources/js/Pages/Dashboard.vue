@@ -315,6 +315,7 @@ export default {
     setColor(color) {
       if (color === 'multi') {
         this.multi = true;
+        this.color = 'multi';
       } else {
         this.multi = false;
         this.color = color;
@@ -344,7 +345,11 @@ export default {
       if (this.sortColor)  {
         this.arr = [];
         if (this.color === 'multi') {
-          this.arr = this.sortArr;
+          if(this.sortArr.length === 0) {
+            this.arr = this.sites;
+          } else {
+            this.arr = this.sortArr;
+          }
         } else {
           Object.values(this.sortArr).filter(item => {
             if (item.color) {
@@ -380,6 +385,8 @@ export default {
     },
 
     sortSoftware (filed, value, arr) {
+      this.data = [];
+      this.arr = [];
       if (this.cmsSort === 'View All') {
         this.arr = this.sites;
         return this.arr;
@@ -398,6 +405,8 @@ export default {
       return this.data;
     },
     sortProviders(filed, value, arr) {
+      this.data = [];
+      this.arr = [];
       if (value === 'View All') {
         this.arr = arr;
         return this.arr;
