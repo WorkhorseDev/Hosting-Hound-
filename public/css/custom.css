@@ -1376,6 +1376,15 @@ em.gray-text {
     cursor: pointer;
 }
 
+@media screen and (max-width: 1160px) {
+    .card-list {
+        margin: 0;
+    }
+    .card-item {
+        width: calc(50% - 20px);
+    }
+}
+
 @media screen and (max-width: 768px) {
     .auth-layout {
         flex-direction: column;
@@ -1414,5 +1423,74 @@ em.gray-text {
     }
     #terms {
         margin-left: 20px;
+    }
+
+
+    .card-list {
+        flex-direction: column;
+        margin: 0;
+        align-items: center;
+    }
+    .card-item {
+        width: 100%;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .header {
+        flex-direction: column-reverse;
+        padding-top: 0;
+        margin-bottom: 20px;
+    }
+    .header .links {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        padding: 25px 0;
+    }
+    .header .link-item {
+        font-size: 34px;
+    }
+    .header .tab-item {
+        font-size: 22px;
+        padding-top: 9px;
+        padding-bottom: 8px;
+    }
+
+    .main-panel {
+        padding: 17px 25px 60px;
+        border-radius: 25px;
+        margin-left: -20px;
+        margin-right: -20px;
+        width: auto;
+    }
+    .search-section {
+        width: 100%;
+    }
+    .search-bar {
+        width: 100%;
+        margin-right: 0;
+    }
+    .search-bar .search-form {
+        flex-grow: 1;
+    }
+    .search-bar .search-input {
+        width: 100%;
+        margin-right: 0;
+        font-size: 18px;
+        padding: 15px 25px 15px 60px;
+        height: auto;
+    }
+    .search-bar .search-btn {
+        left: 5px;
+        height: 50px;
+        width: 50px;
+        font-size: 24px;
+    }
+    .search-bar .filter-btn {
+        font-size: 24px;
+        padding-right: 25px;
+        padding-left: 40px;
+        margin-left: -20px;
     }
 }
