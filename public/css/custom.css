@@ -1493,4 +1493,25 @@ em.gray-text {
         padding-left: 40px;
         margin-left: -20px;
     }
+
+    .card-content {
+        padding: 20px 20px 30px 30px;
+        -webkit-border-radius: 30px;
+        -moz-border-radius: 30px;
+        border-radius: 30px;
+    }
+    .card-title {
+        font-size: 18px;
+    }
+    .card-link {
+        font-size: 18px;
+    }
+    .card-logo {
+        flex: 57px 0 0;
+        height: 57px;
+    }
+
+    .select-text {
+        font-size: 18px;
+    }
 }
