@@ -359,26 +359,26 @@ export default {
             }
           });
         }
+        this.sortArr = this.arr;
       }
-      this.sortArr = this.arr;
       if (this.hostSort && this.hostSort !== '') {
-         this.arr = this.sortProviders('Host', this.hostSort, this.sortArr)
+         this.arr = this.sortProviders('Host', this.hostSort, this.sortArr);
+         this.sortArr = this.arr;
       }
-      this.sortArr = this.arr;
       if (this.providerSort && this.providerSort !== '') {
-        this.arr = this.sortProviders('Domain Register', this.providerSort, this.sortArr)
+        this.arr = this.sortProviders('Domain Register', this.providerSort, this.sortArr);
+        this.sortArr = this.arr;
       }
-      this.sortArr = this.arr;
       if (this.sslSort && this.sslSort !== '') {
-        this.arr = this.sortProviders('SSL Provider', this.sslSort, this.sortArr)
+        this.arr = this.sortProviders('SSL Provider', this.sslSort, this.sortArr);
+        this.sortArr = this.arr;
       }
-      this.sortArr = this.arr;
       if (this.emailSort && this.emailSort !== '') {
-        this.arr = this.sortProviders('Email Plan Provider', this.emailSort, this.sortArr)
+        this.arr = this.sortProviders('Email Plan Provider', this.emailSort, this.sortArr);
+        this.sortArr = this.arr;
       }
-      this.sortArr = this.arr;
       if (this.cmsSort && this.cmsSort !== '') {
-        this.arr = this.sortSoftware('CMS', this.cmsSort, this.sortArr)
+        this.arr = this.sortSoftware('CMS', this.cmsSort, this.sortArr);
       }
       this.arr  =
           [...new Set(this.arr.map(JSON.stringify))].map(JSON.parse);
@@ -387,8 +387,8 @@ export default {
     sortSoftware (filed, value, arr) {
       this.data = [];
       this.arr = [];
-      if (this.cmsSort === 'View All') {
-        this.arr = this.sites;
+      if (this.cmsSort === 'All CMS') {
+        this.arr = arr;
         return this.arr;
       }
       arr.filter(item => {

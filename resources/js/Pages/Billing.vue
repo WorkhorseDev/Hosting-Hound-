@@ -246,8 +246,8 @@ export default {
   },
   methods: {
     sortField() {
-      this.arr = this.sites;
-      this.arr = Object.values(JSON.parse(JSON.stringify(this.arr)));
+      this.sortArr = [];
+      this.arr = [];
       if (this.companySort) {
         if (this.companySort === 'All Companies') {
           this.arr = this.sites;
@@ -261,8 +261,10 @@ export default {
             }
           });
         }
+        this.sortArr = this.arr;
+      } else {
+        this.sortArr = this.sites;
       }
-      this.sortArr = this.arr;
       if (this.date) {
         this.arr = [];
         let dateFormat = moment(this.date).format('DD/MM/yyyy');
@@ -281,8 +283,11 @@ export default {
             }
           }
         });
+        this.sortArr = this.arr;
+      } else {
+        this.sortArr = this.sites;
+        this.arr = this.sites;
       }
-      this.sortArr = this.arr;
       if (this.sortColor) {
         if (this.multi) {
           this.arr = this.sites;
@@ -296,8 +301,8 @@ export default {
             }
           });
         }
+        this.sortArr = this.arr;
       }
-      this.sortArr = this.arr;
       if (this.hostSort) {
         if (this.hostSort === 'View All') {
           this.arr = this.sites;
@@ -311,11 +316,11 @@ export default {
             }
           });
         }
+        this.sortArr = this.arr;
       }
-      this.sortArr = this.arr;
       if (this.hostNameSort) {
-        if (this.hostSort === 'View All') {
-          this.arr = this.sites;
+        if (this.hostNameSort === 'View All') {
+          this.arr = this.sortArr;
         } else {
           this.arr = [];
           Object.values(this.sortArr).filter(item => {
@@ -326,8 +331,8 @@ export default {
             }
           });
         }
+        this.sortArr = this.arr;
       }
-      this.sortArr = this.arr;
       if (this.big || this.small) {
         this.arr = [];
         Object.values(this.sortArr).filter(item => {
