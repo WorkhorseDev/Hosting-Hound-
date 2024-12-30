@@ -1514,4 +1514,14 @@ em.gray-text {
     .select-text {
         font-size: 18px;
     }
+
+    .sited-detail .card-list {
+        display: block;
+    }
+    .sited-detail .grid-cols-3 {
+        display: block;
+    }
+    .sited-detail .block-serv {
+        margin: 0;
+    }
 }
