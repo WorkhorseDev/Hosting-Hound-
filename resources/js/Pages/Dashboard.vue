@@ -354,7 +354,7 @@ export default {
       this.closeChips();
     },
     sortNoColor() {
-      this.color = 'multi';
+      this.sortColor = '';
       this.colorText = '';
       this.closeChips();
     },
@@ -409,7 +409,7 @@ export default {
         this.arr = this.sites;
         this.sortArr = this.arr;
       }
-      if (this.sortColor)  {
+      if (this.sortColor && this.sortColor !== '')  {
         this.colorText = this.color;
         this.arr = [];
         if (this.color === 'multi') {
@@ -430,6 +430,7 @@ export default {
         this.sortArr = this.arr;
       } else {
         this.colorText = '';
+        this.arr = this.sites;
       }
       if (this.hostSort && this.hostSort !== '') {
         this.hostText = this.hostSort;
