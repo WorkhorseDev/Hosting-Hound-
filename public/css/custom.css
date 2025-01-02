@@ -1376,6 +1376,39 @@ em.gray-text {
     cursor: pointer;
 }
 
+.gray-border {
+    display: inline-block;
+    padding: 5px;
+    width: 180px;
+    border: 2px solid #979797;
+    border-radius: 25px;
+    margin-right: 20px;
+    margin-top: 20px;
+}
+
+.gray-border .fa-solid.fa-x {
+    float: left;
+    margin-left: 6px;
+    margin-top: 3px;
+    color: #979797;
+    margin-right: 10px;
+}
+
+.gray-border span {
+    color: rgb(21, 32, 46, 0.6);
+}
+
+.item-circle.small {
+    width: 25px;
+    height: 25px;
+    display: inline-block;
+    float: right;
+}
+
+.item-circle.small.multi-color {
+    display: flex;
+}
+
 @media screen and (max-width: 768px) {
     .auth-layout {
         flex-direction: column;

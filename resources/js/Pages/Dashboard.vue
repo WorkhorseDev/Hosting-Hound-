@@ -97,6 +97,24 @@ const route = inject("route");
               class="fas fa-exclamation-triangle"></i></span>
         </div>
       </div>
+      <div class="sort-panel">
+            <div v-if="companyText" class="gray-border"> <i class="fa-solid fa-x" @click="sortNoCompany"></i> <span>{{companyText}}</span></div>
+            <div v-if="colorText" class="gray-border">
+              <i class="fa-solid fa-x" @click="sortNoColor"></i>
+              <span>Color</span>
+              <div  v-if="colorText !== 'multi'" class="item-circle small"v-bind:style="{background: colorText}"></div>
+              <div class="item-circle small multi-color" v-if="colorText === 'multi'">
+                <div class="half" style="background-color: #FF9500;"></div>
+                <div class="half" style="background-color: #2E4C42;"></div>
+                <div class="half" style="background-color: #B6C793;"></div>
+              </div>
+            </div>
+            <div v-if="hostText" class="gray-border"> <i class="fa-solid fa-x" @click="sortNoHost"></i> <span>{{hostText}}</span></div>
+            <div v-if="domainText" class="gray-border"> <i class="fa-solid fa-x" @click="sortNoDomain"></i> <span>{{domainText}}</span></div>
+            <div v-if="sslText" class="gray-border"> <i class="fa-solid fa-x" @click="sortNoSSl"></i> <span>{{sslText}}</span></div>
+            <div v-if="emailText" class="gray-border"> <i class="fa-solid fa-x" @click="sortNoEmail"></i> <span>{{emailText}}</span></div>
+            <div v-if="cmsText" class="gray-border"> <i class="fa-solid fa-x" @click="sortNoCMS"></i> <span>{{cmsText}}</span></div>
+      </div>
 
       <main class="main-content">
         <div class="inner">
@@ -269,6 +287,13 @@ export default {
   },
   data() {
     return {
+      cmsText: '',
+      emailText:'',
+      companyText: '',
+      colorText: '',
+      hostText: '',
+      domainText: '',
+      sslText: '',
       color: 'multi',
       orange: '#FF920A',
       dark_green: '#3D5F58',
@@ -323,10 +348,50 @@ export default {
       this.sortColor = true;
       this.isDropdownColorOpen = !this.isDropdownColorOpen;
     },
+    sortNoCompany() {
+      this.companySort = '';
+      this.companyText = '';
+      this.closeChips();
+    },
+    sortNoColor() {
+      this.color = 'multi';
+      this.colorText = '';
+      this.closeChips();
+    },
+    sortNoHost() {
+      this.hostSort = '';
+      this.hostText = '';
+      this.closeChips();
+    },
+    sortNoEmail() {
+      this.emailSort = '';
+      this.emailText = '';
+      this.closeChips();
+    },
+    sortNoDomain() {
+      this.domainText = '';
+      this.providerSort = '';
+      this.closeChips();
+    },
+    sortNoSSl() {
+      this.sslText = '';
+      this.sslSort = '';
+      this.closeChips();
+    },
+    sortNoCMS() {
+      this.cmsText = '';
+      this.cmsSort = '';
+      this.closeChips();
+    },
+    closeChips() {
+      this.sortField();
+      this.isFilterOpen = !this.isFilterOpen;
+    },
     sortField() {
       this.sortArr = [];
       this.arr = [];
-      if (this.companySort)  {
+      if (this.companySort && this.companySort !== '')  {
+        this.companyText = this.companySort;
         if (this.companySort === 'All Companies') {
           this.arr = this.sites;
         } else {
@@ -340,9 +405,12 @@ export default {
         }
         this.sortArr = this.arr;
       } else {
-        this.sortArr = this.sites;
+        this.companyText = '';
+        this.arr = this.sites;
+        this.sortArr = this.arr;
       }
       if (this.sortColor)  {
+        this.colorText = this.color;
         this.arr = [];
         if (this.color === 'multi') {
           if(this.sortArr.length === 0) {
@@ -360,28 +428,46 @@ export default {
           });
         }
         this.sortArr = this.arr;
+      } else {
+        this.colorText = '';
       }
       if (this.hostSort && this.hostSort !== '') {
+        this.hostText = this.hostSort;
          this.arr = this.sortProviders('Host', this.hostSort, this.sortArr);
          this.sortArr = this.arr;
+      } else {
+        this.hostText = '';
       }
       if (this.providerSort && this.providerSort !== '') {
+        this.domainText = this.providerSort;
         this.arr = this.sortProviders('Domain Register', this.providerSort, this.sortArr);
         this.sortArr = this.arr;
+      } else {
+        this.domainText = '';
       }
       if (this.sslSort && this.sslSort !== '') {
+        this.sslText = this.sslSort;
         this.arr = this.sortProviders('SSL Provider', this.sslSort, this.sortArr);
         this.sortArr = this.arr;
+      } else {
+        this.sslText = '';
       }
       if (this.emailSort && this.emailSort !== '') {
+        this.emailText = this.emailSort;
         this.arr = this.sortProviders('Email Plan Provider', this.emailSort, this.sortArr);
         this.sortArr = this.arr;
+      } else {
+        this.emailText = '';
       }
       if (this.cmsSort && this.cmsSort !== '') {
+        this.cmsText = this.cmsSort;
         this.arr = this.sortSoftware('CMS', this.cmsSort, this.sortArr);
+      } else {
+        this.cmsText = '';
       }
       this.arr  =
           [...new Set(this.arr.map(JSON.stringify))].map(JSON.parse);
+      this.isFilterOpen = !this.isFilterOpen;
     },
 
     sortSoftware (filed, value, arr) {
@@ -461,15 +547,15 @@ export default {
 
     showFilter() {
       this.isFilterOpen = !this.isFilterOpen;
-      this.searchData= '';
-      this.companySort= '';
-      this.providerSort= '';
-      this.sslSort= '';
-      this.hostSort= '';
-      this.emailSort= '';
-      this.cmsSort= '';
-      this.arr = this.sites;
-      this.color = 'multi';
+      // this.searchData= '';
+      // this.companySort= '';
+      // this.providerSort= '';
+      // this.sslSort= '';
+      // this.hostSort= '';
+      // this.emailSort= '';
+      // this.cmsSort= '';
+      // this.arr = this.sites;
+      // this.color = 'multi';
     },
 
     showDropdownColor() {
