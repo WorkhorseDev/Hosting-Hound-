@@ -477,7 +477,7 @@ export default {
         this.arr = arr;
         return this.arr;
       }
-      arr.filter(item => {
+      Object.values(arr).filter(item => {
         if (item.software && item.software.length !== 0) {
           for (var host in item.software) {
             if (item.software[host].type === filed) {
@@ -497,7 +497,7 @@ export default {
         this.arr = arr;
         return this.arr;
       }
-      arr.filter(item => {
+      Object.values(arr).filter(item => {
         if (item.provider && item.provider.length !== 0) {
           for (var host in item.provider) {
             if (item.provider[host].type === filed) {
