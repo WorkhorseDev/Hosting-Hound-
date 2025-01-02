@@ -430,7 +430,7 @@ export default {
         this.sortArr = this.arr;
       } else {
         this.colorText = '';
-        this.arr = this.sites;
+        this.arr = this.sortArr;
       }
       if (this.hostSort && this.hostSort !== '') {
         this.hostText = this.hostSort;
