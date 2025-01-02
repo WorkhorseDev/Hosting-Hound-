@@ -467,7 +467,7 @@ export default {
         this.cmsText = '';
       }
       this.arr  =
-          [...new Set(this.arr.map(JSON.stringify))].map(JSON.parse);
+          [...new Set(Object.values(this.arr).map(JSON.stringify))].map(JSON.parse);
       this.isFilterOpen = !this.isFilterOpen;
     },
 
