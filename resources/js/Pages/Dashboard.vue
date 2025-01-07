@@ -548,15 +548,6 @@ export default {
 
     showFilter() {
       this.isFilterOpen = !this.isFilterOpen;
-      // this.searchData= '';
-      // this.companySort= '';
-      // this.providerSort= '';
-      // this.sslSort= '';
-      // this.hostSort= '';
-      // this.emailSort= '';
-      // this.cmsSort= '';
-      // this.arr = this.sites;
-      // this.color = 'multi';
     },
 
     showDropdownColor() {
