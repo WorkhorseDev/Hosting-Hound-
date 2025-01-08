@@ -1533,6 +1533,16 @@ em.gray-text {
         -moz-border-radius: 30px;
         border-radius: 30px;
     }
+
+    .data-container {
+        display: block;
+    }
+    .card-content .info {
+        flex-grow: 0;
+        margin-right: 0;
+        max-width: calc(100% - 70px);
+        word-wrap: break-word;
+    }
     .card-title {
         font-size: 18px;
     }
@@ -1542,6 +1552,15 @@ em.gray-text {
     .card-logo {
         flex: 57px 0 0;
         height: 57px;
+    }
+    .card-item .options input {
+        border-width: 2px;
+        width: 24px;
+        height: 24px;
+        display: block;
+    }
+    .card-item .options input:checked {
+        margin-right: 15px;
     }
 
     .select-text {
@@ -1556,5 +1575,30 @@ em.gray-text {
     }
     .sited-detail .block-serv {
         margin: 0;
+    }
+
+    .sort-panel.sorting {
+        margin-top: -70px;
+        display: flex;
+        justify-content: center;
+    }
+    .sort-panel.sorting .options {
+        display: flex;
+        justify-content: flex-start;
+        gap: 40px;
+    }
+    .sort-panel.sorting .option-item input {
+        width: 24px;
+        height: 24px;
+        border-width: 2px;
+    }
+    .sort-panel.sorting .option-item {
+        display: flex;
+        align-items: center;
+    }
+    .sort-panel.sorting .select-text {
+        display: inline;
+        width: auto;
+        font-style: italic;
     }
 }

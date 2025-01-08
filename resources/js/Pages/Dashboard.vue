@@ -83,7 +83,7 @@ const route = inject("route");
         </div>
       </div>
 
-      <div class="sort-panel">
+      <div class="sort-panel sorting">
         <div class="options">
           <label for="select_all" class="option-item">
             <input type="checkbox" :checked="selectAll" @click="selectAll = !selectAll" id="select_all">
