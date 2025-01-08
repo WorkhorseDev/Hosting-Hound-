@@ -85,7 +85,10 @@ const route = inject("route");
           <div class="data-container">
             <div class="filter-block" v-if="isFilterOpen">
               <div class="filter-form">
-                <div class="heading row flex justify-center text-2xl mb-5">Filter items below</div>
+                <div class="heading row flex justify-center text-2xl mb-5">
+                    <span class="filter-close md:hidden" @click="showFilter"><i class="fa-solid fa-xmark"></i></span>
+                    Filter <span class="hidden md:inline-flex">&nbsp;items below</span>
+                </div>
                 <div class="filter-inner">
                   <div class="filter-search mb-5">
                     <input type="text" @change="search" v-model="searchData" class="filter-search-input"
