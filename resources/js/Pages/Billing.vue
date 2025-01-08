@@ -29,7 +29,6 @@ const route = inject("route");
                     </span>
         </div>
       </header>
-
       <div class="main-panel">
         <div class="search-section">
           <i class="fa-solid fa-calendar-days"></i>
@@ -47,6 +46,23 @@ const route = inject("route");
                         </span>
           </div>
         </div>
+      </div>
+      <div class="sort-panel">
+        <div v-if="companyText" class="gray-border"> <i class="fa-solid fa-x" @click="sortNoCompany"></i> <span>{{companyText}}</span></div>
+        <div v-if="colorText" class="gray-border">
+          <i class="fa-solid fa-x" @click="sortNoColor"></i>
+          <span>Color</span>
+          <div  v-if="colorText !== 'multi'" class="item-circle small"v-bind:style="{background: colorText}"></div>
+          <div class="item-circle small multi-color" v-if="colorText === 'multi'">
+            <div class="half" style="background-color: #FF9500;"></div>
+            <div class="half" style="background-color: #2E4C42;"></div>
+            <div class="half" style="background-color: #B6C793;"></div>
+          </div>
+        </div>
+        <div v-if="sourceText" class="gray-border"> <i class="fa-solid fa-x" @click="sortNoSource"></i> <span>{{sourceText}}</span></div>
+        <div v-if="sourceName" class="gray-border"> <i class="fa-solid fa-x" @click="sortNoSourceName"></i> <span>{{sourceName}}</span></div>
+        <div v-if="deadline" class="gray-border"> <i class="fa-solid fa-x" @click="sortNoDeadline"></i> <span>{{deadline}}</span></div>
+        <div v-if="cost" class="gray-border"> <i class="fa-solid fa-x" @click="sortNoCost"></i> <span>{{cost}}</span></div>
       </div>
       <main class="main-content">
         <div class="inner">
@@ -207,6 +223,12 @@ export default {
   },
   data() {
     return {
+      sourceText: '',
+      sourceName:'',
+      companyText: '',
+      colorText: '',
+      deadline: '',
+      cost: '',
       color: 'multi',
       orange: '#FF920A',
       dark_green: '#3D5F58',
@@ -245,10 +267,46 @@ export default {
     }
   },
   methods: {
+    sortNoCompany() {
+      this.companySort = '';
+      this.companyText = '';
+      this.closeChips();
+    },
+    sortNoColor() {
+      this.sortColor = '';
+      this.colorText = '';
+      this.closeChips();
+    },
+    sortNoSource() {
+      this.hostSort = '';
+      this.sourceText = '';
+      this.closeChips();
+    },
+    sortNoSourceName() {
+      this.hostNameSort = '';
+      this.sourceName = '';
+      this.closeChips();
+    },
+    sortNoDeadline() {
+      this.date = '';
+      this.deadline = '';
+      this.closeChips();
+    },
+    sortNoCost() {
+      this.big = '';
+      this.small = '';
+      this.cost = '';
+      this.closeChips();
+    },
+    closeChips() {
+      this.sortField();
+      this.isFilterOpen = !this.isFilterOpen;
+    },
     sortField() {
-      this.arr = this.sites;
-      this.arr = Object.values(JSON.parse(JSON.stringify(this.arr)));
-      if (this.companySort) {
+      this.sortArr = [];
+      this.arr = [];
+      if (this.companySort && this.companySort !== '')  {
+        this.companyText = this.companySort;
         if (this.companySort === 'All Companies') {
           this.arr = this.sites;
         } else {
@@ -261,11 +319,16 @@ export default {
             }
           });
         }
+        this.sortArr = this.arr;
+      } else {
+        this.companyText = '';
+        this.arr = this.sites;
+        this.sortArr = this.arr;
       }
-      this.sortArr = this.arr;
       if (this.date) {
         this.arr = [];
         let dateFormat = moment(this.date).format('DD/MM/yyyy');
+        this.deadline = dateFormat;
         Object.values(this.sortArr).filter(item => {
           if (item.provider.renewal_date) {
             if (dateFormat === item.provider.renewal_date) {
@@ -281,9 +344,14 @@ export default {
             }
           }
         });
+        this.sortArr = this.arr;
+      } else {
+        this.deadline = '';
+        this.sortArr = this.sites;
+        this.arr = this.sites;
       }
-      this.sortArr = this.arr;
       if (this.sortColor) {
+        this.colorText = this.color;
         if (this.multi) {
           this.arr = this.sites;
         } else {
@@ -296,9 +364,12 @@ export default {
             }
           });
         }
+        this.sortArr = this.arr;
+      } else {
+        this.colorText = '';
       }
-      this.sortArr = this.arr;
       if (this.hostSort) {
+        this.sourceText = this.hostSort;
         if (this.hostSort === 'View All') {
           this.arr = this.sites;
         } else {
@@ -311,11 +382,14 @@ export default {
             }
           });
         }
+        this.sortArr = this.arr;
+      } else {
+        this.sourceText = '';
       }
-      this.sortArr = this.arr;
       if (this.hostNameSort) {
-        if (this.hostSort === 'View All') {
-          this.arr = this.sites;
+        this.sourceName = this.hostNameSort;
+        if (this.hostNameSort === 'View All') {
+          this.arr = this.sortArr;
         } else {
           this.arr = [];
           Object.values(this.sortArr).filter(item => {
@@ -326,29 +400,37 @@ export default {
             }
           });
         }
+        this.sortArr = this.arr;
+      } else {
+        this.sourceName = '';
       }
-      this.sortArr = this.arr;
       if (this.big || this.small) {
         this.arr = [];
         Object.values(this.sortArr).filter(item => {
           if (item.provider.cost) {
             if (this.big && this.small) {
+              this.cost = this.small+' - '+this.big;
               if (this.small <= item.provider.cost && item.provider.cost <= this.big) {
                 this.arr.push(item);
               }
               return false;
             } else if (this.big && !this.small) {
+              this.cost = '<= '+ this.big;
               if (this.big >= item.provider.cost) {
                 this.arr.push(item);
               }
             } else {
+              this.cost = '>= '+ this.small;
               if (this.small <= item.provider.cost) {
                 this.arr.push(item);
               }
             }
           }
         });
+      } else {
+        this.cost = '';
       }
+      this.isFilterOpen = !this.isFilterOpen;
       return this.arr;
     },
 
@@ -384,13 +466,13 @@ export default {
 
     showFilter() {
       this.isFilterOpen = !this.isFilterOpen;
-      this.searchData = '';
-      this.companySort = '';
-      this.date = '';
-      this.hostSort = '';
-      this.hostNameSort = '';
-      this.arr = this.sites;
-      this.color = 'multi';
+      // this.searchData = '';
+      // this.companySort = '';
+      // this.date = '';
+      // this.hostSort = '';
+      // this.hostNameSort = '';
+      // this.arr = this.sites;
+      // this.color = 'multi';
     },
 
     showDropdownColor() {
