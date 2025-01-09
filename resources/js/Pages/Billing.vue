@@ -158,7 +158,7 @@ const route = inject("route");
                       <label for="domain-provider">Source Name</label>
                       <select id="domain-provider" v-model="hostNameSort">
                         <option>View All</option>
-                        <option v-for="name in hostNames">{{ name }}</option>
+                        <option v-for="name in hostName">{{ name }}</option>
                       </select>
                     </div>
                   </div>
@@ -219,7 +219,7 @@ export default {
     sites: [],
     companies: [],
     hosts: [],
-    hostNames: [],
+    hostName: [],
     sslArr: [],
     emails: [],
     cms: []
@@ -350,8 +350,7 @@ export default {
         this.sortArr = this.arr;
       } else {
         this.deadline = '';
-        this.sortArr = this.sites;
-        this.arr = this.sites;
+        this.arr = this.sortArr;
       }
       if (this.sortColor) {
         this.colorText = this.color;
@@ -412,19 +411,20 @@ export default {
         Object.values(this.sortArr).filter(item => {
           if (item.provider.cost) {
             if (this.big && this.small) {
+              console.log(this.small,this.big,item.provider.cost);
               this.cost = this.small+' - '+this.big;
-              if (this.small <= item.provider.cost && item.provider.cost <= this.big) {
+              if ( Number(item.provider.cost) >= Number(this.small) && Number(item.provider.cost) <= Number(this.big)) {
                 this.arr.push(item);
               }
               return false;
             } else if (this.big && !this.small) {
               this.cost = '<= '+ this.big;
-              if (this.big >= item.provider.cost) {
+              if (Number(this.big) >= Number(item.provider.cost)) {
                 this.arr.push(item);
               }
-            } else {
+            } else if (!this.big && this.small) {
               this.cost = '>= '+ this.small;
-              if (this.small <= item.provider.cost) {
+              if (Number(this.small) <= Number(item.provider.cost)) {
                 this.arr.push(item);
               }
             }
