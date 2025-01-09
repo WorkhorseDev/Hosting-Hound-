@@ -22,7 +22,7 @@ import {reactive} from "vue";
                        <Link :href="route('addSite')"><i class="fas fa-add"></i></Link>
                     </span>
           <span class="link-item link-item_user">
-                        <i class="fas fa-user"></i>
+                        <Link :href="route('profile')"> <i class="fas fa-user"></i></Link>
                     </span>
         </div>
       </header>

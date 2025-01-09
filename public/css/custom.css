@@ -1409,6 +1409,85 @@ em.gray-text {
     display: flex;
 }
 
+.link-item.link-item_user.account {
+    font-size: 55px;
+    color: #3d5f58;
+    vertical-align: text-bottom;
+}
+
+span.account {
+    font-size: 34px;
+    color: #15202E;
+}
+
+.account-data {
+    display: inline-block;
+    margin-left: 20px;
+    margin-bottom: 30px;
+}
+
+.account-gray {
+    display: block;
+    color: #15202E;
+    font-size: 22px;
+    opacity: 0.8;
+}
+
+button.account {
+    width: 415px;
+    background: #D8D8D8;
+    padding: 10px;
+    border-radius: 15px;
+    font-size: 22px;
+    color: #15202E;
+    opacity: 0.8;
+    margin-bottom: 20px;
+    box-shadow: 0px 3px 5px 0px rgba(112, 112, 112, 0.5);
+}
+
+.fa-solid.fa-caret-right {
+    font-size: 35px;
+    float: right;
+    margin-right: 10px;
+    opacity: unset;
+}
+
+.logout {
+    width: 275px;
+    display: block;
+    background: #000;
+    color: #fff;
+    padding: 10px;
+    border-radius: 37px;
+    text-align: center;
+    margin: auto;
+    font-size: 23px;
+    margin-top: 20px;
+}
+
+.form-group-icon.account i {
+    left: 66px;
+    color: rgba(21, 32, 46, 1);
+    top: 15px;
+}
+
+.form-group-icon.account i.fa-pencil {
+    left: 366px;
+    cursor: pointer;
+}
+
+.form-group-icon.account input {
+    width: 375px;
+    border-radius: 35px;
+    margin-left: 55px;
+    box-shadow: 0px 3px 5px 0px rgba(112, 112, 112, 0.5);
+    margin-bottom: 20px;
+}
+
+.account .fa-solid.fa-eye-slash {
+    margin-left: 270px;
+}
+
 @media screen and (max-width: 768px) {
     .auth-layout {
         flex-direction: column;

@@ -26,7 +26,7 @@ import InputError from "@/Components/InputError.vue";
                        <button type="submit"><i class="fas fa-add"></i></button>
                     </span>
           <span class="link-item link-item_user">
-                        <i class="fas fa-user"></i>
+                        <Link :href="route('profile')"> <i class="fas fa-user"></i></Link>
                     </span>
         </div>
       </header>
