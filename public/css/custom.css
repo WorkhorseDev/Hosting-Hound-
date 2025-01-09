@@ -205,14 +205,26 @@
 
 .filter-block {
     width: 100%;
-    box-shadow: 0px 3px 5px 0px rgba(112, 112, 112, 0.5);
-    border-radius: 40px;
-    overflow: hidden;
     flex: 380px 1 0;
     max-width: 380px;
 }
 
+.filter-close {
+    position: absolute;
+    left: 30px;
+}
+.filter-close .fa-solid {
+    color: #ffffff;
+    font-size: 35px;
+}
+.filter-form {
+    box-shadow: 0 3px 5px 0 rgba(112, 112, 112, 0.5);
+    border-radius: 40px;
+    overflow: hidden;
+}
+
 .filter-form .heading {
+    position: relative;
     font-size: 1.55rem;
     color: #fff;
     font-family: "Lato", sans-serif;
@@ -228,6 +240,7 @@
 }
 
 .filter-inner {
+    position: relative;
     padding: 20px 25px 30px;
     background: #F3F3F3;
     border-top-right-radius: 35px;
@@ -1409,6 +1422,15 @@ em.gray-text {
     display: flex;
 }
 
+@media screen and (max-width: 1160px) {
+    .card-list {
+        margin: 0;
+    }
+    .card-item {
+        width: calc(50% - 20px);
+    }
+}
+
 .link-item.link-item_user.account {
     font-size: 55px;
     color: #3d5f58;
@@ -1526,5 +1548,173 @@ button.account {
     }
     #terms {
         margin-left: 20px;
+    }
+
+
+    .card-list {
+        flex-direction: column;
+        margin: 0;
+        align-items: center;
+    }
+    .card-item {
+        width: 100%;
+    }
+    .card-list.filter_active .card-item {
+        width: 100%;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .header {
+        flex-direction: column-reverse;
+        padding-top: 0;
+        margin-bottom: 20px;
+    }
+    .header .links {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        padding: 25px 0;
+    }
+    .header .link-item {
+        font-size: 34px;
+    }
+    .header .tab-item {
+        font-size: 22px;
+        padding-top: 9px;
+        padding-bottom: 8px;
+    }
+
+    .main-panel {
+        padding: 17px 25px 60px;
+        border-radius: 25px;
+        margin-left: -20px;
+        margin-right: -20px;
+        width: auto;
+    }
+    .search-section {
+        width: 100%;
+    }
+    .search-bar {
+        width: 100%;
+        margin-right: 0;
+    }
+    .search-bar .search-form {
+        flex-grow: 1;
+    }
+    .search-bar .search-input {
+        width: 100%;
+        margin-right: 0;
+        font-size: 18px;
+        padding: 15px 25px 15px 60px;
+        height: auto;
+    }
+    .search-bar .search-btn {
+        left: 5px;
+        height: 50px;
+        width: 50px;
+        font-size: 24px;
+    }
+    .search-bar .filter-btn {
+        font-size: 24px;
+        padding-right: 25px;
+        padding-left: 40px;
+        margin-left: -20px;
+    }
+
+    .card-content {
+        padding: 20px 20px 30px 30px;
+        -webkit-border-radius: 30px;
+        -moz-border-radius: 30px;
+        border-radius: 30px;
+    }
+
+    .data-container {
+        display: block;
+    }
+    .card-content .info {
+        flex-grow: 0;
+        margin-right: 0;
+        max-width: calc(100% - 70px);
+        word-wrap: break-word;
+    }
+    .card-title {
+        font-size: 18px;
+    }
+    .card-link {
+        font-size: 18px;
+    }
+    .card-logo {
+        flex: 57px 0 0;
+        height: 57px;
+    }
+    .card-item .options input {
+        border-width: 2px;
+        width: 24px;
+        height: 24px;
+        display: block;
+    }
+    .card-item .options input:checked {
+        margin-right: 15px;
+    }
+
+    .select-text {
+        font-size: 18px;
+    }
+
+    .sited-detail .card-list {
+        display: block;
+    }
+    .sited-detail .grid-cols-3 {
+        display: block;
+    }
+    .sited-detail .block-serv {
+        margin: 0;
+    }
+
+    .sort-panel.sorting {
+        margin-top: -70px;
+        display: flex;
+        justify-content: center;
+    }
+    .sort-panel.sorting .options {
+        display: flex;
+        justify-content: flex-start;
+        gap: 40px;
+    }
+    .sort-panel.sorting .option-item input {
+        width: 24px;
+        height: 24px;
+        border-width: 2px;
+    }
+    .sort-panel.sorting .option-item {
+        display: flex;
+        align-items: center;
+    }
+    .sort-panel.sorting .select-text {
+        display: inline;
+        width: auto;
+        font-style: italic;
+    }
+
+    .filter-block {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        max-width: inherit;
+        z-index: 5;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: rgba(255, 255, 255, 0.8);
+    }
+    .filter-form {
+        position: relative;
+        max-width: 90%;
+    }
+    .filter-inner {
+        padding: 15px 20px 30px;
     }
 }
