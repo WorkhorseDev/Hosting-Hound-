@@ -228,11 +228,12 @@ export default {
     hostName: [],
     sslArr: [],
     emails: [],
-    cms: []
+    cms: [],
+    namesHost: []
   },
   data() {
     return {
-      names: [],
+      names: this.namesHost,
       sourceText: '',
       sourceName:'',
       companyText: '',
@@ -280,7 +281,7 @@ export default {
   methods: {
     setName(host) {
       if(host === 'View All') {
-       return  this.names = [];
+       return  this.names = [...new Set(this.namesHost)];
       } else {
         return this.names = [...new Set(this.hostName[host])];
       }
