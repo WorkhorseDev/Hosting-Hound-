@@ -1272,13 +1272,12 @@ em.gray-text {
 
 .in-input {
     position: relative;
-    left: 5px;
-    top: -35px;
+    left: -20px;
     color: #7a8088;
 }
 
 .row.flex.flex-row.gap-3 hr {
-    width: 40px;
+    width: 20px;
     margin-top: 55px;
     border-color: #D8D8D8;
 }
@@ -1420,6 +1419,35 @@ em.gray-text {
 
 .item-circle.small.multi-color {
     display: flex;
+}
+
+.top-space {
+    margin-top: 27px;
+}
+
+.billing-filter-date .form-group {
+    width: 135px;
+}
+
+.filter-date {
+    width: 180px;
+}
+
+.billing-filter-date .dp__main {
+    margin-top: 10px;
+    width: 145px;
+}
+
+.billing-filter-date hr {
+    margin-left: 10px;
+}
+
+billing-filter  {
+    width: 200px;
+}
+
+.dp__action_row {
+    margin-top: -20px;
 }
 
 @media screen and (max-width: 1160px) {

@@ -145,10 +145,21 @@ const route = inject("route");
                     </div>
                   </div>
 
+                  <div class="row flex flex-row gap-3 billing-filter-date">
+                    <div class="form-group w-1/2">
+                      <label class="filter-date">Deadline Time Frame</label>
+                      <VueDatePicker  position="left" class="billing-filter" value-type="format" format="dd/MM/yyyy" v-model="dateStart"></VueDatePicker>
+                    </div>
+                    <hr>
+                    <div class="form-group w-1/2 top-space">
+                      <VueDatePicker  position="right" class="billing-filter second" value-type="format" format="dd/MM/yyyy" v-model="dateEnd"></VueDatePicker>
+                    </div>
+                  </div>
+
                   <div class="row flex flex-row gap-3">
                     <div class="form-group w-1/2">
                       <label for="hosts">Source Type</label>
-                      <select id="hosts" v-model="hostSort">
+                      <select id="hosts" @change="setName(hostSort)" v-model="hostSort">
                         <option>View All</option>
                         <option v-for="host in hosts">{{ host }}</option>
                       </select>
@@ -158,14 +169,9 @@ const route = inject("route");
                       <label for="domain-provider">Source Name</label>
                       <select id="domain-provider" v-model="hostNameSort">
                         <option>View All</option>
-                        <option v-for="name in hostName">{{ name }}</option>
+                        <option v-for="name in names">{{ name }}</option>
                       </select>
                     </div>
-                  </div>
-
-                  <div class="form-group">
-                    <label>Deadline Time Frame</label>
-                    <VueDatePicker value-type="format" format="dd/MM/yyyy" v-model="date"></VueDatePicker>
                   </div>
 
                   <div class="row flex flex-row gap-3">
@@ -226,6 +232,7 @@ export default {
   },
   data() {
     return {
+      names: [],
       sourceText: '',
       sourceName:'',
       companyText: '',
@@ -264,12 +271,20 @@ export default {
       arr: this.sites,
       isFilterOpen: false,
       sortArr: [],
-      date: '',
+      dateStart: '',
+      dateEnd: '',
       big: '',
       small: ''
     }
   },
   methods: {
+    setName(host) {
+      if(host === 'View All') {
+       return  this.names = [];
+      } else {
+        return this.names = [...new Set(this.hostName[host])];
+      }
+    },
     sortNoCompany() {
       this.companySort = '';
       this.companyText = '';
@@ -291,7 +306,8 @@ export default {
       this.closeChips();
     },
     sortNoDeadline() {
-      this.date = '';
+      this.dateStart = '';
+      this.dateEnd = '';
       this.deadline = '';
       this.closeChips();
     },
@@ -328,22 +344,42 @@ export default {
         this.arr = this.sites;
         this.sortArr = this.arr;
       }
-      if (this.date) {
+      if (this.dateStart || this.dateEnd) {
         this.arr = [];
-        let dateFormat = moment(this.date).format('DD/MM/yyyy');
-        this.deadline = dateFormat;
+        let dateFormatStart = moment(this.dateStart).format('MM/DD/yyyy');
+        let dateFormatEnd = moment(this.dateEnd).format('MM/DD/yyyy');
+        this.deadline = dateFormatStart +' - '+ dateFormatEnd;
         Object.values(this.sortArr).filter(item => {
           if (item.provider.renewal_date) {
-            if (dateFormat === item.provider.renewal_date) {
-              this.arr.push(item);
+            if(this.dateStart && this.dateEnd) {
+              if ( new Date(item.provider.renewal_date).getTime() >= new Date(this.dateStart).getTime() && new Date(item.provider.renewal_date).getTime() <= new Date(this.dateEnd).getTime()) {
+                this.arr.push(item);
+              }
+            } else if (this.dateStart && !this.dateEnd) {
+              if ( new Date(item.provider.renewal_date).getTime() >= new Date(this.dateStart).getTime()) {
+                this.arr.push(item);
+              }
+            } else if (!this.dateStart && this.dateEnd) {
+              if ( new Date(item.provider.renewal_date).getTime() <= new Date(this.dateEnd).getTime()) {
+                this.arr.push(item);
+              }
             }
           }
         });
-        this.sortArr = this.arr;
         Object.values(this.sortArr).filter(item => {
-          if (item.software.renewal_date) {
-            if (dateFormat === item.software.renewal_date) {
-              this.arr.push(item);
+          if (item.software && item.software.renewal_date) {
+            if(this.dateStart && this.dateEnd) {
+              if ( new Date(item.software.renewal_date).getTime() >= new Date(this.dateStart).getTime() && new Date(item.software.renewal_date).getTime() <= new Date(this.dateEnd).getTime()) {
+                this.arr.push(item);
+              }
+            } else if (this.dateStart && !this.dateEnd) {
+              if ( new Date(item.software.renewal_date).getTime() >= new Date(this.dateStart).getTime()) {
+                this.arr.push(item);
+              }
+            } else if (!this.dateStart && this.dateEnd) {
+              if ( new Date(item.software.renewal_date).getTime() <= new Date(this.dateEnd).getTime()) {
+                this.arr.push(item);
+              }
             }
           }
         });
