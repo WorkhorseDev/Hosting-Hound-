@@ -1633,9 +1633,40 @@ em.gray-text {
     }
     .filter-form {
         position: relative;
-        max-width: 90%;
+        max-width: 95%;
+    }
+    .filter-form .heading {
+        padding: 15px 25px 55px 25px;
+        font-size: 22px;
     }
     .filter-inner {
         padding: 15px 20px 30px;
+        border-top-left-radius: 33px;
+        border-top-right-radius: 33px;
     }
+    .filter-search input {
+        font-size: 1.125rem;
+        padding-top: 10px;
+        padding-bottom: 10px;
+        padding-left: 50px;
+    }
+    .filter-search .search-btn {
+        font-size: 20px;
+    }
+    .filter-inner .form-group select {
+        padding-top: 10px;
+        padding-bottom: 10px;
+    }
+    .filter-inner .btn-md {
+        padding-top: 5px;
+        padding-bottom: 5px;
+    }
+    .dropdown-list .item {
+        padding: 10px 0;
+    }
+    .item-circle {
+        width: 32px;
+        height: 32px;
+    }
+
 }
