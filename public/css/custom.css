@@ -1709,7 +1709,38 @@ em.gray-text {
         margin-left: -20px;
         margin-right: -20px;
     }
-    .block-serv .serv-item .fa-solid {
-        display: none;
+
+    .service-form.detail {
+        margin: 0;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(255, 255, 255, 0.75);
+        z-index: 10;
+        overflow-y: auto;
+    }
+    .detail .form-container {
+        width: 90%;
+        max-width: 380px;
+        margin: 50px auto 0;
+    }
+    .form-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        font-size: 28px;
+    }
+    .form-header .serv-close {
+        font-size: 38px;
+        padding-left: 10px;
+        padding-right: 10px;
+        line-height: 1;
+    }
+
+    .form-header .fa-solid.fa-pen {
+        padding: 10px;
+        font-size: 26px;
     }
 }
