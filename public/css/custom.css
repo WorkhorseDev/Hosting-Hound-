@@ -1588,6 +1588,8 @@ em.gray-text {
     }
     .sited-detail .grid-cols-3 {
         display: block;
+        padding-left: 20px;
+        padding-right: 20px;
     }
     .sited-detail .block-serv {
         margin: 0;
@@ -1668,5 +1670,31 @@ em.gray-text {
         width: 32px;
         height: 32px;
     }
-
+    .main-panel_edit {
+        -webkit-border-radius: 0;
+        -moz-border-radius: 0;
+        border-radius: 0;
+        margin-bottom: 0;
+        padding-top: 25px;
+    }
+    .panel-title {
+        font-size: 25px;
+    }
+    .panel-controls .btn-remove i,
+    .panel-controls .btn-edit i {
+        font-size: 32px;
+    }
+    .main-content_details {
+        margin-left: -20px;
+        margin-right: -20px;
+        padding-left: 40px;
+        padding-right: 40px;
+        border-top-right-radius: 40px;
+        border-top-left-radius: 40px;
+        margin-top: -35px;
+        background: #F7F7F7;
+    }
+    .inner.sited-detail {
+        width: auto;
+    }
 }

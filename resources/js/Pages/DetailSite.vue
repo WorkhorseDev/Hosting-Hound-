@@ -10,7 +10,7 @@ import InputError from "@/Components/InputError.vue";
   <Head title="Add Site"/>
   <div class="wrapper">
     <div class="container dashboard">
-      <header class="header">
+      <header class="header hidden md:flex">
         <div class="tabs">
           <Link :href="route('dashboard')" class="tab-item is-active">
             <span class="">Websites</span>
@@ -42,7 +42,7 @@ import InputError from "@/Components/InputError.vue";
           </button>
         </div>
       </div>
-      <main class="main-content">
+      <main class="main-content main-content_details">
         <div class="inner sited-detail">
           <div class="data card-list grid">
             <div class="card-content">
