@@ -1506,7 +1506,7 @@ button.account {
     margin-bottom: 20px;
 }
 
-.account .fa-solid.fa-eye-slash {
+.account .fa-solid.fa-eye-slash, .fa-solid.fa-eye {
     margin-left: 270px;
 }
 

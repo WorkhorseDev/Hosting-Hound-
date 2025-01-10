@@ -66,7 +66,7 @@ const route = inject("route");
                 <div class="form-group form-group-icon account">
                   <input readonly type="text" placeholder="First Name" v-model="user.name">
                   <i class="fa-regular fa-user"></i>
-                  <i class="fa-solid fa-pencil"></i>
+                  <i class="fa-solid fa-pencil" @click="showEdit"></i>
                 </div>
                 <div class="form-group form-group-icon account">
                   <input readonly type="text" placeholder="Last Name" v-model="user.last_name">
@@ -84,14 +84,33 @@ const route = inject("route");
                   <i class="fa-solid fa-pencil"></i>
                 </div>
                 <div class="form-group form-group-icon account">
-                  <input readonly v-bind:type="[showPasswordSoft ? 'text' : 'password']" id="password"
+                  <input readonly v-bind:type="[showPassword ? 'text' : 'password']" id="password"
                          :value="user.password" >
                   <i class="fa-solid fa-lock"></i>
-                  <i class="fa-solid fa-eye-slash" @click="showTextPass('showPasswordSoft')"
-                     v-if="!showPasswordSoft"></i>
-                  <i class="fa-solid fa-eye" @click="showTextPass('showPasswordSoft')"
-                     v-if="showPasswordSoft"></i>
+                  <i class="fa-solid fa-eye-slash" @click="showTextPass"
+                     v-if="!showPassword"></i>
+                  <i class="fa-solid fa-eye" @click="showTextPass"
+                     v-if="showPassword"></i>
                   <i class="fa-solid fa-pencil"></i>
+                </div>
+              </div>
+              <div class="mb-5">
+                <div class="filter-block" v-if="isEdit">
+                  <div class="filter-form">
+                    <div class="heading row flex justify-center text-2xl mb-5">
+                      <span class="filter-close md:hidden"><i class="fa-solid fa-xmark"></i></span>
+                      Filter <span class="hidden md:inline-flex">&nbsp;items below</span>
+                    </div>
+                    <div class="filter-inner">
+                      <div class="filter-search mb-5">
+                        <input type="text" @change="search" v-model="searchData" class="filter-search-input"
+                               id="filter-search" placeholder="Search term...">
+                        <button type="button" class="search-btn">
+                          <i class="fa-solid fa-magnifying-glass"></i>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -109,9 +128,21 @@ export default {
   props: {
     user: Array
   },
+  data() {
+    return {
+      showPassword: false,
+      isEdit: false,
+    }
+  },
   methods: {
     goBack() {
       window.history.back();
+    },
+    showTextPass () {
+      this.showPassword = !this.showPassword;
+    },
+    showEdit() {
+      this.isEdit = !this.isEdit;
     },
     submit() {}
   }
