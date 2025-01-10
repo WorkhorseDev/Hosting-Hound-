@@ -359,10 +359,12 @@ export default {
               if ( new Date(item.provider.renewal_date).getTime() >= new Date(this.dateStart).getTime()) {
                 this.arr.push(item);
               }
+              this.deadline = dateFormatStart;
             } else if (!this.dateStart && this.dateEnd) {
               if ( new Date(item.provider.renewal_date).getTime() <= new Date(this.dateEnd).getTime()) {
                 this.arr.push(item);
               }
+              this.deadline = dateFormatEnd;
             }
           }
         });
