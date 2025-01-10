@@ -99,7 +99,7 @@ import InputError from "@/Components/InputError.vue";
                 <div class="circle"></div>
                 <em class="gray-text">Service Providers</em>
               </div>
-              <div v-for="(item, key, index) in site.provider" :key="key">
+              <div v-for="(item, key, index) in site.provider" :key="key" class="serv-item">
                 <div class="card-content detail" @click="showDetail(item, key)">
                   <div class="info">
                     <p class="card-title text-lg">{{ item.name }}</p>
@@ -262,7 +262,7 @@ import InputError from "@/Components/InputError.vue";
                 <div class="circle"></div>
                 <em class="gray-text">Software & Add-ons</em>
               </div>
-              <div v-for="(item, key, index) in site.software" :key="key">
+              <div v-for="(item, key, index) in site.software" :key="key" class="serv-item">
                 <div class="card-content detail"  @click="showDetailSoft(item, key)">
                   <div class="info">
                     <p class="card-title">{{ item.name }}</p>

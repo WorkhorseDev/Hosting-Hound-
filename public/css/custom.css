@@ -1697,4 +1697,19 @@ em.gray-text {
     .inner.sited-detail {
         width: auto;
     }
+    .left-line.second.third {
+        min-height: 100px;
+        height: auto;
+    }
+    .left-line.second {
+        min-height: 60px;
+        height: auto;
+    }
+    .block-serv .serv-item {
+        margin-left: -20px;
+        margin-right: -20px;
+    }
+    .block-serv .serv-item .fa-solid {
+        display: none;
+    }
 }
