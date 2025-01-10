@@ -1588,6 +1588,8 @@ em.gray-text {
     }
     .sited-detail .grid-cols-3 {
         display: block;
+        padding-left: 20px;
+        padding-right: 20px;
     }
     .sited-detail .block-serv {
         margin: 0;
@@ -1633,9 +1635,112 @@ em.gray-text {
     }
     .filter-form {
         position: relative;
-        max-width: 90%;
+        max-width: 95%;
+    }
+    .filter-form .heading {
+        padding: 15px 25px 55px 25px;
+        font-size: 22px;
     }
     .filter-inner {
         padding: 15px 20px 30px;
+        border-top-left-radius: 33px;
+        border-top-right-radius: 33px;
+    }
+    .filter-search input {
+        font-size: 1.125rem;
+        padding-top: 10px;
+        padding-bottom: 10px;
+        padding-left: 50px;
+    }
+    .filter-search .search-btn {
+        font-size: 20px;
+    }
+    .filter-inner .form-group select {
+        padding-top: 10px;
+        padding-bottom: 10px;
+    }
+    .filter-inner .btn-md {
+        padding-top: 5px;
+        padding-bottom: 5px;
+    }
+    .dropdown-list .item {
+        padding: 10px 0;
+    }
+    .item-circle {
+        width: 32px;
+        height: 32px;
+    }
+    .main-panel_edit {
+        -webkit-border-radius: 0;
+        -moz-border-radius: 0;
+        border-radius: 0;
+        margin-bottom: 0;
+        padding-top: 25px;
+    }
+    .panel-title {
+        font-size: 25px;
+    }
+    .panel-controls .btn-remove i,
+    .panel-controls .btn-edit i {
+        font-size: 32px;
+    }
+    .main-content_details {
+        margin-left: -20px;
+        margin-right: -20px;
+        padding-left: 40px;
+        padding-right: 40px;
+        border-top-right-radius: 40px;
+        border-top-left-radius: 40px;
+        margin-top: -35px;
+        background: #F7F7F7;
+    }
+    .inner.sited-detail {
+        width: auto;
+    }
+    .left-line.second.third {
+        min-height: 100px;
+        height: auto;
+    }
+    .left-line.second {
+        min-height: 60px;
+        height: auto;
+    }
+    .block-serv .serv-item {
+        margin-left: -20px;
+        margin-right: -20px;
+    }
+
+    .service-form.detail {
+        margin: 0;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(255, 255, 255, 0.75);
+        z-index: 10;
+        overflow-y: auto;
+    }
+    .detail .form-container {
+        width: 90%;
+        max-width: 380px;
+        margin: 50px auto 0;
+    }
+    .form-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        font-size: 28px;
+    }
+    .form-header .serv-close {
+        font-size: 38px;
+        padding-left: 10px;
+        padding-right: 10px;
+        line-height: 1;
+    }
+
+    .form-header .fa-solid.fa-pen {
+        padding: 10px;
+        font-size: 26px;
     }
 }
