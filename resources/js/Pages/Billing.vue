@@ -110,6 +110,17 @@ const route = inject("route");
                   </div>
 
                   <div class="row flex flex-row gap-3">
+                    <div class="form-group w-1/2">
+                      <label>Cost Range</label>
+                      <input class="billing-filter" type="text" v-model="small"><span class="in-input">$</span>
+                    </div>
+                    <hr>
+                    <div class="form-group w-1/2">
+                      <input class="billing-filter second" type="text" v-model="big"><span class="in-input">$</span>
+                    </div>
+                  </div>
+
+                  <div class="row flex flex-row gap-3">
                     <div class="form-group flex-grow">
                       <label for="company">Company</label>
                       <select id="company" v-model="companySort">
@@ -171,17 +182,6 @@ const route = inject("route");
                         <option>View All</option>
                         <option v-for="name in names">{{ name }}</option>
                       </select>
-                    </div>
-                  </div>
-
-                  <div class="row flex flex-row gap-3">
-                    <div class="form-group w-1/2">
-                      <label>Cost Range</label>
-                      <input class="billing-filter" type="text" v-model="small"><span class="in-input">$</span>
-                    </div>
-                    <hr>
-                    <div class="form-group w-1/2">
-                      <input class="billing-filter second" type="text" v-model="big"><span class="in-input">$</span>
                     </div>
                   </div>
 
