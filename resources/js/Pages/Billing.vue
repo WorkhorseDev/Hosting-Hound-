@@ -98,6 +98,17 @@ const route = inject("route");
                     </button>
                   </div>
 
+                  <div class="row flex flex-row gap-3 billing-filter-date">
+                    <div class="form-group w-1/2">
+                      <label class="filter-date">Deadline Time Frame</label>
+                      <VueDatePicker  position="left" class="billing-filter" value-type="format" format="dd/MM/yyyy" v-model="dateStart"></VueDatePicker>
+                    </div>
+                    <hr>
+                    <div class="form-group w-1/2 top-space">
+                      <VueDatePicker  position="right" class="billing-filter second" value-type="format" format="dd/MM/yyyy" v-model="dateEnd"></VueDatePicker>
+                    </div>
+                  </div>
+
                   <div class="row flex flex-row gap-3">
                     <div class="form-group flex-grow">
                       <label for="company">Company</label>
@@ -142,17 +153,6 @@ const route = inject("route");
                           </div>
                         </div>
                       </div> <!-- end .dropdown-color -->
-                    </div>
-                  </div>
-
-                  <div class="row flex flex-row gap-3 billing-filter-date">
-                    <div class="form-group w-1/2">
-                      <label class="filter-date">Deadline Time Frame</label>
-                      <VueDatePicker  position="left" class="billing-filter" value-type="format" format="dd/MM/yyyy" v-model="dateStart"></VueDatePicker>
-                    </div>
-                    <hr>
-                    <div class="form-group w-1/2 top-space">
-                      <VueDatePicker  position="right" class="billing-filter second" value-type="format" format="dd/MM/yyyy" v-model="dateEnd"></VueDatePicker>
                     </div>
                   </div>
 
