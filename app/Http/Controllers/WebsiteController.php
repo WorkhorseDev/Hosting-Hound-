@@ -34,6 +34,7 @@ class WebsiteController extends Controller
         $hostName = [];
         $hostType = [];
         $companies = [];
+        $names = [];
         foreach ($sites as $site) {
             if (!empty($site['company'])) {
                 array_push($companies, $site['company']);
@@ -41,7 +42,8 @@ class WebsiteController extends Controller
             if (!empty($site->provider)) {
                 foreach ($site->provider as $key=>$host) {
                     $hostType[] = $host['type'];
-                    $hostName[] = $host['name'];
+                    $hostName[$host['type']][] = $host['name'];
+                    $names[] = $host['name'];
                     if(!empty($host['renewal_type']) && !empty($host['renewal_date'])) {
                         $data = ['key' => $key, 'id' => $site->_id, 'icon' => $site->icon, 'provider' => $host, 'url' => $site->url, 'color' => $site->color, 'company' => $site->company];
                         $hosts[] = $data;
@@ -58,7 +60,7 @@ class WebsiteController extends Controller
             }
         }
 
-        return Inertia::render('Billing', ['sites' => $hosts, 'companies' => array_unique($companies), 'hosts' => array_unique($hostType), 'hostName' => array_unique($hostName)] );
+        return Inertia::render('Billing', ['sites' => $hosts, 'companies' => array_unique($companies), 'hosts' => array_unique($hostType), 'hostName' => $hostName, 'namesHost' => $names] );
     }
 
     /**
