@@ -49,14 +49,14 @@ const route = inject("route");
                     <span class="account-gray">Email: {{user.email}}</span>
                     <span class="account-gray">Phone: {{user.phone_number}}</span>
                 </div>
-                <button type="button" class="account btn-md btn-inverted">Personal Details & Password  <i class="fa-solid fa-caret-right"></i></button>
-                <button type="button" class="account btn-md btn-inverted">Notifications  <i class="fa-solid fa-caret-right"></i></button>
+                <button type="button" @click="showPersonal" class="account btn-md btn-inverted">Personal Details & Password  <i class="fa-solid fa-caret-right"></i></button>
+                <button type="button" @click="showNotification" class="account btn-md btn-inverted">Notifications  <i class="fa-solid fa-caret-right"></i></button>
                 <button type="button" class="account btn-md btn-inverted">Google Integration  <i class="fa-solid fa-caret-right"></i></button>
                 <Link :href="route('logout')" href="#" class="logout">
                   <span class="">Log Out</span>
                 </Link>
               </div>
-              <div class="mb-5">
+              <div class="mb-5" v-if="personal">
                 <div class="form-group form-group-icon account">
                   <input readonly type="text" placeholder="First Name" v-model="user.name">
                   <i class="fa-regular fa-user"></i>
@@ -86,6 +86,35 @@ const route = inject("route");
                   <i class="fa-solid fa-eye" @click="showTextPass"
                      v-if="showPassword"></i>
                   <i class="fa-solid fa-pencil" @click="showEdit('Change Password', user.pass, 'New Password', false, false, false, true)"></i>
+                </div>
+              </div>
+              <div class="mb-5 notification" v-if="notification">
+                <div class="form-group form-group-icon account">
+                  <label for="select_all" class="option-item">
+                    <span class="select-text">Allow notifications</span>
+                    <div class="w-16 h-10 flex items-center bg-gray-300 rounded-full p-1" @click="notificationActive = !notificationActive">
+                      <div class="bg-white w-8 h-8 rounded-full shadow-md transform" :class="{ 'translate-x-6': notificationActive,}"></div>
+                    </div>
+                  </label>
+                </div>
+              </div>
+              <div class="mb-5 profile-edit notification" v-if="notification">
+                <h4 class="notification">Notification Frequency</h4>
+                <span class="select-text">Day of deadline</span>
+                <div class="w-16 h-10 flex items-center bg-gray-300 rounded-full p-1" @click="daysActive = !daysActive">
+                  <div class="bg-white w-8 h-8 rounded-full shadow-md transform" :class="{ 'translate-x-6': daysActive,}"></div>
+                </div>
+                <span class="select-text">Day before deadline</span>
+                <div class="w-16 h-10 flex items-center bg-gray-300 rounded-full p-1" @click="dayBeforeActive = !dayBeforeActive">
+                  <div class="bg-white w-8 h-8 rounded-full shadow-md transform" :class="{ 'translate-x-6': dayBeforeActive,}"></div>
+                </div>
+                <span class="select-text">One Week before deadline</span>
+                <div class="w-16 h-10 flex items-center bg-gray-300 rounded-full p-1" @click="oneWeekActive = !oneWeekActive">
+                  <div class="bg-white w-8 h-8 rounded-full shadow-md transform" :class="{ 'translate-x-6': oneWeekActive,}"></div>
+                </div>
+                <span class="select-text">Two Weeks before deadline</span>
+                <div class="w-16 h-10 flex items-center bg-gray-300 rounded-full p-1" @click="twoWeekActive = !twoWeekActive">
+                  <div class="bg-white w-8 h-8 rounded-full shadow-md transform" :class="{ 'translate-x-6': twoWeekActive,}"></div>
                 </div>
               </div>
               <div class="mb-5 profile-edit">
@@ -136,6 +165,13 @@ export default {
   },
   data() {
     return {
+      daysActive: false,
+      twoWeekActive: false,
+      oneWeekActive: false,
+      notificationActive: false,
+      dayBeforeActive: false,
+      personal: true,
+      notification: false,
       showPassword: false,
       isEdit: false,
       header: '',
@@ -166,6 +202,14 @@ export default {
     }
   },
   methods: {
+    showNotification() {
+      this.notification = !this.notification;
+      this.personal = !this.personal;
+    },
+    showPersonal() {
+      this.personal = !this.personal;
+      this.notification = !this.notification;
+    },
     goBack() {
       window.history.back();
     },

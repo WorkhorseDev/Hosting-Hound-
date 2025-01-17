@@ -1578,6 +1578,36 @@ button.account {
     top: 145px;
 }
 
+.notification .form-group-icon {
+    margin-left: 93px;
+    margin-top: 90px;
+}
+.notification .select-text {
+    width: 245px;
+    vertical-align: super;
+    margin-bottom: 30px;
+    display: inline-block;
+}
+
+.notification .p-1 {
+    display: inline-block;
+    background-color: #fff;
+    box-shadow: 0px 3px 5px 0px rgba(112, 112, 112, 0.5);
+}
+
+h4.notification {
+    font-size: 25px;
+    margin-bottom: 15px;
+    margin-top: 30px;
+}
+
+.mb-5.profile-edit.notification {
+    margin-left: 80px;
+}
+
+.notification .shadow-md {
+    background-color: #3D5F58;
+}
 
 @media screen and (max-width: 768px) {
     .auth-layout {
