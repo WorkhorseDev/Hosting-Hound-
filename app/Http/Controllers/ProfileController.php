@@ -7,6 +7,7 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -19,23 +20,24 @@ class ProfileController extends Controller
      */
     public function edit()
     {
-        return Inertia::render('Profile/Edit',['user'=> Auth::user()]);
+        $user = Auth::user();
+        $user->pass = base64_decode(Auth::user()->pass);
+        return Inertia::render('Profile/Edit',['user'=> $user]);
     }
 
     /**
      * Update the user's profile information.
      */
-    public function update(ProfileUpdateRequest $request): RedirectResponse
+    public function editProfile(Request $request)
     {
-        $request->user()->fill($request->validated());
-
-        if ($request->user()->isDirty('email')) {
-            $request->user()->email_verified_at = null;
-        }
-
-        $request->user()->save();
-
-        return Redirect::route('profile');
+        $user = Auth::user();
+        $user->name = $request->name;
+        $user->last_name = $request->last_name;
+        $user->phone_number = $request->phone_number;
+        $user->email = $request->email;
+        $user->password = Hash::make($request->password);
+        $user->pass = base64_encode($request->password);
+        $user->save();
     }
 
     /**

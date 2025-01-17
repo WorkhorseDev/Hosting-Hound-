@@ -1538,6 +1538,47 @@ button.account {
     margin-left: 270px;
 }
 
+.mb-5.profile-edit {
+    margin-left: 25px;
+}
+
+.fa-regular.fa-user.profile, .fa.fa-phone.profile, .fa-regular.fa-envelope.profile, .fa-solid.fa-key.profile {
+    display: inline-block;
+    margin-top: 5px;
+    margin-right: 15px;
+    color: #fff;
+}
+
+.form-group-icon.account .filter-search  input {
+    width: 360px;
+    margin-left: -17px;
+}
+
+.profile-edit .filter-form .heading {
+    margin-bottom: 20px;
+}
+
+.form-group-icon.account i.fa-lock.profile {
+    left: 310px;
+    opacity: 0.8;
+}
+
+.row.flex.justify-center.mb-5.buttons {
+    top: 98px;
+    position: relative;
+    left: -300px;
+    padding-bottom: 20px;
+}
+
+.filter-inner .btn-md.first {
+    margin-right: 10px;
+}
+
+.row.flex.justify-center.mb-5.buttons#email-true {
+    top: 145px;
+}
+
+
 @media screen and (max-width: 768px) {
     .auth-layout {
         flex-direction: column;

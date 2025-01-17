@@ -21,8 +21,6 @@ Route::get('/', function () {
 
 Route::middleware('auth', 'twofactor')->group(function () {
     Route::get('/profile', [App\Http\Controllers\ProfileController::class, 'edit'])->name('profile');
-//    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-//    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::get('/dashboard', [App\Http\Controllers\WebsiteController::class, 'dashboard'])->name('dashboard');
     Route::get('/billing', [App\Http\Controllers\WebsiteController::class, 'billing'])->name('billing');
     Route::get('/addSite', [App\Http\Controllers\WebsiteController::class, 'showAddSitePage'])->name('addSite');
@@ -35,6 +33,7 @@ Route::middleware('auth', 'twofactor')->group(function () {
     Route::post('/unShareSites', [App\Http\Controllers\WebsiteController::class, 'unShareSites'])->name('unShareSites');
     Route::get('/hostDetail/{key}/{id}', [App\Http\Controllers\WebsiteController::class, 'showHostDetailPage'])->name('hostDetail');
     Route::get('/logout', [App\Http\Controllers\Auth\AuthenticatedSessionController::class, 'destroy'])->name('logout');
+    Route::post('/editProfile', [App\Http\Controllers\ProfileController::class, 'editProfile'])->name('editProfile');
 });
 
 require __DIR__.'/auth.php';
