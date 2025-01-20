@@ -30,13 +30,16 @@ const route = inject("route");
                     </span>
         </div>
       </header>
-      <vf-form @submit.prevent="submit" id="saveAccount">
+      <vf-form @submit.prevent="submit(false,false,false,false, true)" id="saveAccount">
         <div class="main-panel main-panel_edit">
           <div class="flex flex-row items-center">
             <div class="pr-6">
               <span @click="goBack" class="btn-back"><i class="fas fa-arrow-left"></i></span>
             </div>
             <div class="panel-title">Account Settings</div>
+          </div>
+          <div class="panel-controls flex flex-row justify-end items-center" v-if="notification">
+            <button type="submit" @click="submit" class="btn-md btn-inverted">Save Changes</button>
           </div>
         </div>
         <main class="main-content add-site">
@@ -101,20 +104,20 @@ const route = inject("route");
               <div class="mb-5 profile-edit notification" v-if="notification">
                 <h4 class="notification">Notification Frequency</h4>
                 <span class="select-text">Day of deadline</span>
-                <div class="w-16 h-10 flex items-center bg-gray-300 rounded-full p-1" @click="daysActive = !daysActive">
-                  <div class="bg-white w-8 h-8 rounded-full shadow-md transform" :class="{ 'translate-x-6': daysActive,}"></div>
+                <div class="w-16 h-10 flex items-center bg-gray-300 rounded-full p-1" @click="dayOfDeadline = !dayOfDeadline; notificationActive = true">
+                  <div class="bg-white w-8 h-8 rounded-full shadow-md transform" :class="{ 'translate-x-6': dayOfDeadline,}"></div>
                 </div>
                 <span class="select-text">Day before deadline</span>
-                <div class="w-16 h-10 flex items-center bg-gray-300 rounded-full p-1" @click="dayBeforeActive = !dayBeforeActive">
-                  <div class="bg-white w-8 h-8 rounded-full shadow-md transform" :class="{ 'translate-x-6': dayBeforeActive,}"></div>
+                <div class="w-16 h-10 flex items-center bg-gray-300 rounded-full p-1" @click="dayBeforeDeadline = !dayBeforeDeadline; notificationActive = true">
+                  <div class="bg-white w-8 h-8 rounded-full shadow-md transform" :class="{ 'translate-x-6': dayBeforeDeadline,}"></div>
                 </div>
                 <span class="select-text">One Week before deadline</span>
-                <div class="w-16 h-10 flex items-center bg-gray-300 rounded-full p-1" @click="oneWeekActive = !oneWeekActive">
-                  <div class="bg-white w-8 h-8 rounded-full shadow-md transform" :class="{ 'translate-x-6': oneWeekActive,}"></div>
+                <div class="w-16 h-10 flex items-center bg-gray-300 rounded-full p-1" @click="oneWeek = !oneWeek; notificationActive = true">
+                  <div class="bg-white w-8 h-8 rounded-full shadow-md transform" :class="{ 'translate-x-6': oneWeek,}"></div>
                 </div>
                 <span class="select-text">Two Weeks before deadline</span>
-                <div class="w-16 h-10 flex items-center bg-gray-300 rounded-full p-1" @click="twoWeekActive = !twoWeekActive">
-                  <div class="bg-white w-8 h-8 rounded-full shadow-md transform" :class="{ 'translate-x-6': twoWeekActive,}"></div>
+                <div class="w-16 h-10 flex items-center bg-gray-300 rounded-full p-1" @click="twoWeek = !twoWeek; notificationActive = true">
+                  <div class="bg-white w-8 h-8 rounded-full shadow-md transform" :class="{ 'translate-x-6': twoWeek,}"></div>
                 </div>
               </div>
               <div class="mb-5 profile-edit">
@@ -142,7 +145,7 @@ const route = inject("route");
                       </div>
                       <div class="row flex justify-center mb-5 buttons" :id="'email-'+marginBottom">
                         <button type="button" @click="cancel" class="first btn-md btn-inverted">Cancel</button>
-                        <button type="button" @click="submit(firstName, phone, email, pass)" class="btn-md btn-inverted">Save</button>
+                        <button type="button" @click="submit(firstName, phone, email, pass, false)" class="btn-md btn-inverted">Save</button>
                       </div>
                     </div>
                   </div>
@@ -165,11 +168,11 @@ export default {
   },
   data() {
     return {
-      daysActive: false,
-      twoWeekActive: false,
-      oneWeekActive: false,
-      notificationActive: false,
-      dayBeforeActive: false,
+      dayOfDeadline: this.user.frequency.dayOfDeadline,
+      twoWeek: this.user.frequency.twoWeek,
+      oneWeek: this.user.frequency.oneWeek,
+      notificationActive: this.user.notification,
+      dayBeforeDeadline: this.user.frequency.dayBeforeDeadline,
       personal: true,
       notification: false,
       showPassword: false,
@@ -192,12 +195,19 @@ export default {
       pass: false,
       confirmPass: '',
       form: useForm({
-        name: '',
-        last_name: '',
-        phone_number: '',
-        email: '',
-        password: '',
-        pass: ''
+        name: this.user.name,
+        last_name: this.user.last_name,
+        phone_number: this.user.phone_number,
+        email: this.user.email,
+        password: this.user.password,
+        pass: this.user.pass,
+        notification: false,
+        frequency: {
+          'dayOfDeadline': this.user.frequency.dayOfDeadline,
+          'dayBeforeDeadline': this.user.frequency.dayBeforeDeadline,
+          'oneWeek': this.user.frequency.oneWeek,
+          'twoWeek': this.user.frequency.twoWeek
+        }
       }),
     }
   },
@@ -233,14 +243,17 @@ export default {
     cancel() {
       this.isEdit = !this.isEdit;
     },
-    submit(isNames, isPhone, isEmail, isPass) {
+    submit(isNames, isPhone, isEmail, isPass, isNotification) {
       this.errorEmail = this.errorPass = false;
-      this.form.name = this.user.name;
-      this.form.phone_number = this.user.phone_number;
-      this.form.last_name = this.user.last_name;
-      this.form.email = this.user.email;
-      this.form.password = this.user.password;
-      this.form.pass = this.user.pass;
+      if(this.notificationActive) {
+        this.form.notification = true;
+        this.form.frequency = {
+          'dayOfDeadline': this.dayOfDeadline,
+          'dayBeforeDeadline': this.dayBeforeDeadline,
+          'oneWeek': this.oneWeek,
+          'twoWeek': this.twoWeek
+        }
+      }
       if(isNames && !isPhone && !isEmail && !isPass) {
         this.form.name = this.name;
       } else if (!isNames && !isPhone && !isEmail && !isPass){
