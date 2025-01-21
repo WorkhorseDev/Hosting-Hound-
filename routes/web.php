@@ -17,7 +17,7 @@ Route::get('/', function () {
  Route::post('/verifyStore', [App\Http\Controllers\Auth\TwoFactorController::class, 'store'])->name('verifyStore');
  Route::get('/verifyResend', [App\Http\Controllers\Auth\TwoFactorController::class, 'resend'])->name('verifyResend');
  Route::get('/re-send', [App\Http\Controllers\Auth\PasswordController::class, 'reSend'])->name('re-send');
-
+ Route::get('/sendEmails', [App\Http\Controllers\WebsiteController::class, 'verifyRenewalDates'])->name('sendEmails');
 
 Route::middleware('auth', 'twofactor')->group(function () {
     Route::get('/profile', [App\Http\Controllers\ProfileController::class, 'edit'])->name('profile');

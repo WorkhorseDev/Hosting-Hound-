@@ -35,8 +35,10 @@ class ProfileController extends Controller
         $user->last_name = $request->last_name;
         $user->phone_number = $request->phone_number;
         $user->email = $request->email;
-        $user->password = Hash::make($request->password);
-        $user->pass = base64_encode($request->password);
+        if($user->pass != base64_encode($request->password)) {
+            $user->password = Hash::make($request->password);
+            $user->pass = base64_encode($request->password);
+        }
         $user->notification = $request->notification;
         $user->frequency = $request->frequency;
         $user->save();

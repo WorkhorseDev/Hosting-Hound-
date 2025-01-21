@@ -3,9 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\Websites;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
+use Illuminate\Support\Facades\Mail;
+
 
 class WebsiteController extends Controller
 {
@@ -138,20 +141,28 @@ class WebsiteController extends Controller
 
     }
 
+    /**
+     * Show edit page for site
+     */
     public function editSiteView()
     {
         $site = Websites::find(request('id'));
         return Inertia::render('EditSite', ['site' => $site]);
     }
 
+    /**
+     * Show add page for site
+     */
     public function showAddSitePage()
     {
         return Inertia::render('AddSite');
     }
 
+    /**
+     * Show detail page for site
+     */
     public function showSiteDetailPage()
     {
-
         $site = Websites::find(request('id'));
         if (str_contains($site->shared_with, Auth::user()->email)) {
             $site->readonly = true;
@@ -160,6 +171,9 @@ class WebsiteController extends Controller
         return Inertia::render('DetailSite', ['site' => $site]);
     }
 
+    /**
+     * Show detail page for host
+     */
     public function showHostDetailPage()
     {
         $site = Websites::find(request('id'));
@@ -175,13 +189,83 @@ class WebsiteController extends Controller
         ]);
     }
 
+    /**
+     * Share site
+     */
     public function shareSites(Request $request)
     {
         Websites::shareSites($request->sitesList, $request->share);
     }
 
+    /**
+     * UnShare site
+     */
     public function unShareSites(Request $request)
     {
         Websites::unShareSites($request->sitesList);
+    }
+
+    /**
+     * Verify renewal dates
+     */
+    public function verifyRenewalDates()
+    {
+        $users = User::all()->where('notification', '=', true);
+        foreach ($users as $user) {
+            $websites  = Websites::all()->where('user_id', '=',$user->_id);
+            foreach ($websites as $website) {
+                if($website->provider) {
+                    foreach ($website->provider as $provider) {
+                        if(!empty($provider['renewal_date'])) {
+                            $this->sendEmails($website->name, $provider['renewal_date'], $provider['name'], $user);
+                        }
+                    }
+                    foreach ($website->software as $software) {
+                        if(!empty($software['renewal_date'])) {
+                            $this->sendEmails($website->name, $software['renewal_date'], $software['name'], $user);
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    /**
+     * Send emails
+     */
+    public function sendEmails($websiteName, $renewalDate, $serviceName, $user)
+    {
+        $send = false;
+        $date = date('d/m/Y');
+        if ($user->frequency['dayOfDeadline'] && $renewalDate == $date) {
+            $send = true;
+        }
+        if($user->frequency['dayBeforeDeadline']) {
+            $day_before = date( 'd/m/Y', strtotime( $renewalDate . ' -1 day' ) );
+            if($date == $day_before) {
+                $send = true;
+            }
+        }
+        if($user->frequency['oneWeek']) {
+            $day_before = date( 'd/m/Y', strtotime( $renewalDate . ' -7 day' ) );
+            var_dump($day_before, $date);
+            if($date == $day_before) {
+                $send = true;
+            }
+        }
+        if($user->frequency['twoWeek']) {
+            $day_before = date( 'd/m/Y', strtotime( $renewalDate . ' -14 day' ) );
+            if($date == $day_before) {
+                $send = true;
+            }
+        }
+        if($send) {
+            $email = $user->email;
+            Mail::send('emails.renewal-date', ['serviceName' => $serviceName, 'websiteName' => $websiteName, 'renewalDate'=>$renewalDate], function ($message) use ($email,$serviceName,$renewalDate) {
+                $message->from('info@workhorsedev.com');
+                $message->subject("Hosting Hound - ". $serviceName. " is Renewing on ". $renewalDate);
+                $message->to($email);
+            });
+        }
     }
 }
