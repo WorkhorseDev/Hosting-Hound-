@@ -73,7 +73,7 @@ class Websites extends Eloquent
             foreach ($data->softwares as $key => $host) {
                 $software[$key]['showSoft'] = false;
                 if(!empty($host['renewal_date'])) {
-                    $providers[$key]['renewal_date'] = date("m/d/Y", strtotime($host['renewal_date']));
+                    $software[$key]['renewal_date'] = date("m/d/Y", strtotime($host['renewal_date']));
                 }
             }
         }
