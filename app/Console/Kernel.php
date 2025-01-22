@@ -14,7 +14,7 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-           '\App\Http\Controllers\WebsiteController'
+
     ];
 
     /**
@@ -23,10 +23,10 @@ class Kernel extends ConsoleKernel
      * @param  \Illuminate\Console\Scheduling\Schedule  $schedule
      * @return void
      */
-    protected function schedule(Schedule $schedule)
+    public function schedule(Schedule $schedule)
     {
         $schedule->call(function () {
-            $controller = new \App\Http\Controllers\WebsiteController();
+            $controller = new WebsiteController();
             $controller->verifyRenewalDates();
        // })->dailyAt('08:00');
         })->everyMinute();
@@ -39,6 +39,7 @@ class Kernel extends ConsoleKernel
      */
     protected function commands()
     {
+
         $this->load(__DIR__.'/Commands');
 
         require base_path('routes/console.php');

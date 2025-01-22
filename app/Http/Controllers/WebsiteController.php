@@ -208,7 +208,7 @@ class WebsiteController extends Controller
     /**
      * Verify renewal dates
      */
-    public function verifyRenewalDates()
+    public static function verifyRenewalDates()
     {
         $users = User::all()->where('notification', '=', true);
         foreach ($users as $user) {
@@ -217,12 +217,12 @@ class WebsiteController extends Controller
                 if($website->provider) {
                     foreach ($website->provider as $provider) {
                         if(!empty($provider['renewal_date'])) {
-                            $this->sendEmails($website->name, $provider['renewal_date'], $provider['name'], $user);
+                            self::sendEmails($website->name, $provider['renewal_date'], $provider['name'], $user);
                         }
                     }
                     foreach ($website->software as $software) {
                         if(!empty($software['renewal_date'])) {
-                            $this->sendEmails($website->name, $software['renewal_date'], $software['name'], $user);
+                            self::sendEmails($website->name, $software['renewal_date'], $software['name'], $user);
                         }
                     }
                 }
@@ -233,7 +233,7 @@ class WebsiteController extends Controller
     /**
      * Send emails
      */
-    public function sendEmails($websiteName, $renewalDate, $serviceName, $user)
+    public static function sendEmails($websiteName, $renewalDate, $serviceName, $user)
     {
         $send = false;
         $date = date('d/m/Y');
@@ -248,7 +248,6 @@ class WebsiteController extends Controller
         }
         if($user->frequency['oneWeek']) {
             $day_before = date( 'd/m/Y', strtotime( $renewalDate . ' -7 day' ) );
-            var_dump($day_before, $date);
             if($date == $day_before) {
                 $send = true;
             }
