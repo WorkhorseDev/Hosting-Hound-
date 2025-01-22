@@ -197,6 +197,7 @@ const route = inject("route");
                 <div class="card-content" @click="hostDetail(item.id, item.key)">
                   <div class="info">
                     <p class="card-title">{{ item.provider.type }}</p>
+                    <p class="card-title">{{ item.provider.name }}</p>
                     <p class="card-link">$ {{ item.provider.cost }} - {{ item.provider.renewal_date }}</p>
                     <span class="card-link">{{ item.url }}</span>
                   </div>
