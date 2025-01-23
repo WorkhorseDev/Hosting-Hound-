@@ -1609,6 +1609,19 @@ h4.notification {
     background-color: #3D5F58;
 }
 
+.google .select-text {
+    text-align: center;
+    width: 310px;
+    display: block;
+    margin-left: 150px;
+    margin-top: 150px;
+    margin-bottom: 20px;
+}
+
+.google .form-group-icon {
+    margin-left: 60px;
+}
+
 @media screen and (max-width: 768px) {
     .auth-layout {
         flex-direction: column;

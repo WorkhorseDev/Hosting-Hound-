@@ -38,7 +38,7 @@ const route = inject("route");
             </div>
             <div class="panel-title">Account Settings</div>
           </div>
-          <div class="panel-controls flex flex-row justify-end items-center" v-if="notification">
+          <div class="panel-controls flex flex-row justify-end items-center" v-if="notification || google">
             <button type="submit" @click="submit" class="btn-md btn-inverted">Save Changes</button>
           </div>
         </div>
@@ -54,7 +54,7 @@ const route = inject("route");
                 </div>
                 <button type="button" @click="showPersonal" class="account btn-md btn-inverted">Personal Details & Password  <i class="fa-solid fa-caret-right"></i></button>
                 <button type="button" @click="showNotification" class="account btn-md btn-inverted">Notifications  <i class="fa-solid fa-caret-right"></i></button>
-                <button type="button" class="account btn-md btn-inverted">Google Integration  <i class="fa-solid fa-caret-right"></i></button>
+                <button type="button" @click="showGoogle" class="account btn-md btn-inverted">Google Integration  <i class="fa-solid fa-caret-right"></i></button>
                 <Link :href="route('logout')" href="#" class="logout">
                   <span class="">Log Out</span>
                 </Link>
@@ -97,6 +97,16 @@ const route = inject("route");
                     <span class="select-text">Allow notifications</span>
                     <div class="w-16 h-10 flex items-center bg-gray-300 rounded-full p-1" @click="notificationActive = !notificationActive">
                       <div class="bg-white w-8 h-8 rounded-full shadow-md transform" :class="{ 'translate-x-6': notificationActive,}"></div>
+                    </div>
+                  </label>
+                </div>
+              </div>
+              <div class="mb-5 google" v-if="google">
+                <div class="form-group form-group-icon account">
+                  <label for="select_all" class="option-item">
+                    <span class="select-text">In order to use these integration features, you will need to link your account with a Google Account</span>
+                    <div class="form-group form-group-icon account">
+                      <input type="text" id="google_notification" placeholder="Link Google Account" v-model=google_email>
                     </div>
                   </label>
                 </div>
@@ -168,6 +178,7 @@ export default {
   },
   data() {
     return {
+      google: false,
       dayOfDeadline: this.user.frequency.dayOfDeadline,
       twoWeek: this.user.frequency.twoWeek,
       oneWeek: this.user.frequency.oneWeek,
@@ -180,6 +191,7 @@ export default {
       header: '',
       name: '',
       last_name: '',
+      google_email: this.user.google_email,
       phoneNum: '',
       phone: false,
       email: false,
@@ -202,6 +214,7 @@ export default {
         password: this.user.password,
         pass: this.user.pass,
         notification: false,
+        google_email: this.user.google_email,
         frequency: {
           'dayOfDeadline': this.user.frequency.dayOfDeadline,
           'dayBeforeDeadline': this.user.frequency.dayBeforeDeadline,
@@ -212,13 +225,20 @@ export default {
     }
   },
   methods: {
+    showGoogle() {
+      this.notification = false;
+      this.personal = false;
+      this.google = true;
+    },
     showNotification() {
-      this.notification = !this.notification;
-      this.personal = !this.personal;
+      this.notification = true;
+      this.personal = false;
+      this.google = false;
     },
     showPersonal() {
-      this.personal = !this.personal;
-      this.notification = !this.notification;
+      this.personal = true;
+      this.notification = false;
+      this.google = false;
     },
     goBack() {
       window.history.back();
@@ -254,6 +274,9 @@ export default {
           'twoWeek': this.twoWeek
         }
       }
+      if(this.google) {
+        this.form.google_email = this.google_email;
+      }
       if(isNames && !isPhone && !isEmail && !isPass) {
         this.form.name = this.name;
       } else if (!isNames && !isPhone && !isEmail && !isPass){
@@ -275,7 +298,7 @@ export default {
         this.form.pass=  this.pass;
       }
       this.form.post(route('editProfile'), {
-        onFinish: () => window.location.reload()
+     //   onFinish: () => window.location.reload()
       });
     }
   }

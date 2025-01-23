@@ -28,7 +28,6 @@ class Kernel extends ConsoleKernel
         $schedule->call(function () {
             $controller = new WebsiteController();
             $controller->verifyRenewalDates();
-       // })->dailyAt('08:00');
         })->everyMinute();
     }
 
