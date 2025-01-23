@@ -354,6 +354,7 @@ export default {
         Object.values(this.sortArr).filter(item => {
           if (item.provider.renewal_date) {
             if(this.dateStart && this.dateEnd) {
+              console.log(new Date(item.provider.renewal_date).getTime(), new Date(this.dateStart).getTime(), new Date(this.dateEnd).getTime());
               if ( new Date(item.provider.renewal_date).getTime() >= new Date(this.dateStart).getTime() && new Date(item.provider.renewal_date).getTime() <= new Date(this.dateEnd).getTime()) {
                 this.arr.push(item);
               }

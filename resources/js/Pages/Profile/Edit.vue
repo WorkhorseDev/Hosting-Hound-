@@ -30,7 +30,7 @@ const route = inject("route");
                     </span>
         </div>
       </header>
-      <vf-form @submit.prevent="submit(false,false,false,false, true)" id="saveAccount">
+      <vf-form @submit.prevent="submit(false,false,false,false)" id="saveAccount">
         <div class="main-panel main-panel_edit">
           <div class="flex flex-row items-center">
             <div class="pr-6">
@@ -39,7 +39,7 @@ const route = inject("route");
             <div class="panel-title">Account Settings</div>
           </div>
           <div class="panel-controls flex flex-row justify-end items-center" v-if="notification">
-            <button type="submit" @click="submit" class="btn-md btn-inverted">Save Changes</button>
+            <button type="submit" @click="submit(false,false,false,false)" class="btn-md btn-inverted">Save Changes</button>
           </div>
         </div>
         <main class="main-content add-site">
@@ -243,17 +243,8 @@ export default {
     cancel() {
       this.isEdit = !this.isEdit;
     },
-    submit(isNames, isPhone, isEmail, isPass, isNotification) {
+    submit(isNames, isPhone, isEmail, isPass) {
       this.errorEmail = this.errorPass = false;
-      if(this.notificationActive) {
-        this.form.notification = true;
-        this.form.frequency = {
-          'dayOfDeadline': this.dayOfDeadline,
-          'dayBeforeDeadline': this.dayBeforeDeadline,
-          'oneWeek': this.oneWeek,
-          'twoWeek': this.twoWeek
-        }
-      }
       if(isNames && !isPhone && !isEmail && !isPass) {
         this.form.name = this.name;
       } else if (!isNames && !isPhone && !isEmail && !isPass){
@@ -273,6 +264,15 @@ export default {
         }
         this.form.password =  this.password;
         this.form.pass=  this.pass;
+      }
+      if(this.notificationActive) {
+        this.form.notification = true;
+        this.form.frequency = {
+          'dayOfDeadline': this.dayOfDeadline,
+          'dayBeforeDeadline': this.dayBeforeDeadline,
+          'oneWeek': this.oneWeek,
+          'twoWeek': this.twoWeek
+        }
       }
       this.form.post(route('editProfile'), {
         onFinish: () => window.location.reload()
