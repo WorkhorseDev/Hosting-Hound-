@@ -101,11 +101,11 @@ const route = inject("route");
                   <div class="row flex flex-row gap-3 billing-filter-date">
                     <div class="form-group w-1/2">
                       <label class="filter-date">Deadline Time Frame</label>
-                      <VueDatePicker  position="left" class="billing-filter" value-type="format" format="MM/dd/yyyy" v-model="dateStart"></VueDatePicker>
+                      <VueDatePicker  position="left" class="billing-filter" value-type="date" format="MM/dd/yyyy" v-model="dateStart"></VueDatePicker>
                     </div>
                     <hr>
                     <div class="form-group w-1/2 top-space">
-                      <VueDatePicker  position="right" class="billing-filter second" value-type="format" format="MM/dd/yyyy" v-model="dateEnd"></VueDatePicker>
+                      <VueDatePicker  position="right" class="billing-filter second" value-type="date" format="MM/dd/yyyy" v-model="dateEnd"></VueDatePicker>
                     </div>
                   </div>
 
@@ -348,25 +348,29 @@ export default {
       }
       if (this.dateStart || this.dateEnd) {
         this.arr = [];
-        let dateFormatStart = moment(this.dateStart).format('MM/DD/yyyy');
-        let dateFormatEnd = moment(this.dateEnd).format('MM/DD/yyyy');
+        let dateFormatStart = this.dateStart.toISOString().substring(0, 10);
+        let dateFormatEnd = this.dateEnd.toISOString().substring(0, 10);
         this.deadline = dateFormatStart +' - '+ dateFormatEnd;
+        const [y, m, d] = dateFormatStart.split(/-|\//);
+        const dateStart = new Date(y, m - 1, d,0,0,0);
+        const [y1, m1, d1] = dateFormatEnd.split(/-|\//);
+        const dateEnd = new Date(y1, m1 - 1, d1,0,0,0);
         Object.values(this.sortArr).filter(item => {
           if (item.provider.renewal_date) {
             if(this.dateStart && this.dateEnd) {
               const [d, m, y] = item.provider.renewal_date.split(/-|\//); // splits "26-02-2012" or "26/02/2012"
               const date = new Date(y, m - 1, d,0,0,0);
-              console.log(item.provider.renewal_date, date.getTime(), new Date(this.dateStart).getTime(), new Date(this.dateEnd).getTime());
-              if (date.getTime() >= new Date(this.dateStart).getTime() && date.getTime() <= new Date(this.dateEnd).getTime()) {
+              console.log(item.provider.renewal_date, date.getTime(), dateStart.getTime(), dateEnd.getTime());
+              if (date.getTime() >= dateStart.getTime() && date.getTime() <= dateEnd.getTime()) {
                 this.arr.push(item);
               }
             } else if (this.dateStart && !this.dateEnd) {
-              if ( date.getTime() >= new Date(this.dateStart).getTime()) {
+              if ( date.getTime() >= dateStart.getTime()) {
                 this.arr.push(item);
               }
               this.deadline = dateFormatStart;
             } else if (!this.dateStart && this.dateEnd) {
-              if ( date.getTime() <= new Date(this.dateEnd).getTime()) {
+              if ( date.getTime() <= dateEnd.getTime()) {
                 this.arr.push(item);
               }
               this.deadline = dateFormatEnd;
@@ -378,15 +382,15 @@ export default {
             const [d, m, y] = item.software.renewal_date.split(/-|\//); // splits "26-02-2012" or "26/02/2012"
             const date = new Date(y, m - 1, d, 0, 0, 0);
             if(this.dateStart && this.dateEnd) {
-              if ( date.getTime() >= new Date(this.dateStart).getTime() && date.getTime() <= new Date(this.dateEnd).getTime()) {
+              if ( date.getTime() >= dateStart.getTime() && date.getTime() <= dateStart.getTime()) {
                 this.arr.push(item);
               }
             } else if (this.dateStart && !this.dateEnd) {
-              if ( date.getTime() >= new Date(this.dateStart).getTime()) {
+              if ( date.getTime() >= dateStart.getTime()) {
                 this.arr.push(item);
               }
             } else if (!this.dateStart && this.dateEnd) {
-              if (date.getTime() <= new Date(this.dateEnd).getTime()) {
+              if (date.getTime() <= dateEnd.getTime()) {
                 this.arr.push(item);
               }
             }
