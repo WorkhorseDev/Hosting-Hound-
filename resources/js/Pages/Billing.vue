@@ -348,8 +348,8 @@ export default {
       }
       if (this.dateStart || this.dateEnd) {
         this.arr = [];
-        let dateFormatStart = moment(this.dateStart).format('MM/DD/yyyy');
-        let dateFormatEnd = moment(this.dateEnd).format('MM/DD/yyyy');
+        let dateFormatStart = moment(this.dateStart).format('DD/MM/yyyy');
+        let dateFormatEnd = moment(this.dateEnd).format('DD/MM/yyyy');
         this.deadline = dateFormatStart +' - '+ dateFormatEnd;
         Object.values(this.sortArr).filter(item => {
           if (item.provider.renewal_date) {
@@ -509,13 +509,6 @@ export default {
 
     showFilter() {
       this.isFilterOpen = !this.isFilterOpen;
-      // this.searchData = '';
-      // this.companySort = '';
-      // this.date = '';
-      // this.hostSort = '';
-      // this.hostNameSort = '';
-      // this.arr = this.sites;
-      // this.color = 'multi';
     },
 
     showDropdownColor() {
