@@ -355,18 +355,18 @@ export default {
           if (item.provider.renewal_date) {
             if(this.dateStart && this.dateEnd) {
               const [d, m, y] = item.provider.renewal_date.split(/-|\//); // splits "26-02-2012" or "26/02/2012"
-              const date = new Date(y, m - 1, d);
+              const date = new Date(y, m - 1, d,0,0,0);
               console.log(item.provider.renewal_date, date.getTime(), new Date(this.dateStart).getTime(), new Date(this.dateEnd).getTime());
               if (date.getTime() >= new Date(this.dateStart).getTime() && date.getTime() <= new Date(this.dateEnd).getTime()) {
                 this.arr.push(item);
               }
             } else if (this.dateStart && !this.dateEnd) {
-              if ( new Date(filterDate).getTime() >= new Date(this.dateStart).getTime()) {
+              if ( date.getTime() >= new Date(this.dateStart).getTime()) {
                 this.arr.push(item);
               }
               this.deadline = dateFormatStart;
             } else if (!this.dateStart && this.dateEnd) {
-              if ( new Date(filterDate).getTime() <= new Date(this.dateEnd).getTime()) {
+              if ( date.getTime() <= new Date(this.dateEnd).getTime()) {
                 this.arr.push(item);
               }
               this.deadline = dateFormatEnd;
@@ -376,17 +376,17 @@ export default {
         Object.values(this.sortArr).filter(item => {
           if (item.software && item.software.renewal_date) {
             const [d, m, y] = item.software.renewal_date.split(/-|\//); // splits "26-02-2012" or "26/02/2012"
-            const date = new Date(y, m - 1, d);
+            const date = new Date(y, m - 1, d, 0, 0, 0);
             if(this.dateStart && this.dateEnd) {
               if ( date.getTime() >= new Date(this.dateStart).getTime() && date.getTime() <= new Date(this.dateEnd).getTime()) {
                 this.arr.push(item);
               }
             } else if (this.dateStart && !this.dateEnd) {
-              if ( new Date(filterDate).getTime() >= new Date(this.dateStart).getTime()) {
+              if ( date.getTime() >= new Date(this.dateStart).getTime()) {
                 this.arr.push(item);
               }
             } else if (!this.dateStart && this.dateEnd) {
-              if ( new Date(filterDate).getTime() <= new Date(this.dateEnd).getTime()) {
+              if (date.getTime() <= new Date(this.dateEnd).getTime()) {
                 this.arr.push(item);
               }
             }
