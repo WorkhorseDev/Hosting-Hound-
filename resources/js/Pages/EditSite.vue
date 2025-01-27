@@ -11,7 +11,7 @@ import InputError from "@/Components/InputError.vue";
 
   <div class="wrapper">
     <div class="container dashboard">
-      <header class="header">
+      <header class="header hidden md:flex">
         <div class="tabs">
           <Link :href="route('dashboard')" class="tab-item is-active">
             <span class="">Websites</span>
@@ -43,12 +43,12 @@ import InputError from "@/Components/InputError.vue";
             <button class="btn-remove">
               <i class="fa fa-trash-can" @click="deleteSite"></i>
             </button>
-            <button class="btn-edit">
+            <button class="btn-edit hidden md:inline">
               <i class="fa-solid fa-pencil"></i>
             </button>
           </div>
         </div>
-        <main class="main-content add-site">
+        <main class="main-content main-content_edit add-site">
           <div class="inner">
             <div class="grid grid-cols-3 gap-4">
               <div>
@@ -62,43 +62,48 @@ import InputError from "@/Components/InputError.vue";
                   </div>
                 </div>
 
-                <div class="mb-5 left">
-                  <label for="file-upload" class="block text-sm font-medium leading-6 text-gray-900">Icon</label>
-                  <div class="mt-2">
-                    <label  for="file" class="preview block text-sm font-medium leading-6 text-gray-900">
-                      <i v-if="!img"  class="fa-solid fa-plus"></i>
-                      <img class="previe" v-if="img" v-bind:src="img"/>
-                    </label>
-                    <input class="file" id="file" type="file" hidden="hidden"
-                           @change="appendFile($event.target.name, $event.target.files)"
-                           ref="file">
-                  </div>
-                </div>
-
-                <div class="mb-5 right">
-                  <label for="name" class="block text-sm font-medium leading-6 text-gray-900">Name</label>
-                  <div class="mt-2">
-                    <input v-bind:value="site.name" v-model="site.name" required id="name" name="name" type="text" autocomplete="name"
-                           placeholder="Website Name"
-                           class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
-                    <InputError v-if="nameError" class="mt-2" :message="form.errors.name"/>
-                  </div>
-                </div>
-
-                <div class="mb-5 right color">
-                  <label for="color" class="block text-sm font-medium leading-6 text-gray-900">Color</label>
-                  <div class="mt-2">
-                    <div id="color" v-bind:style="{background: color}" @click="itemShow = !itemShow"
-                         class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6">
-                      <div class="for-caret"><i class="fa-solid fa-caret-down"></i></div>
+                <div class="site-name-wrap">
+                    <div class="mb-5 left">
+                        <label for="file-upload" class="block text-sm font-medium leading-6 text-gray-900">Icon</label>
+                        <div class="mt-2">
+                            <label  for="file" class="preview block text-sm font-medium leading-6 text-gray-900">
+                                <i v-if="!img"  class="fa-solid fa-plus"></i>
+                                <img class="previe" v-if="img" v-bind:src="img"/>
+                            </label>
+                            <input class="file" id="file" type="file" hidden="hidden"
+                                   @change="appendFile($event.target.name, $event.target.files)"
+                                   ref="file">
+                        </div>
                     </div>
-                    <div class="select-item" v-if="itemShow">
-                      <div style="background: #3D5F58" @click=setColor(dark_green)></div>
-                      <div style="background: #A7B57C" @click=setColor(light_green)></div>
-                      <div style="background: #FF920A" @click=setColor(orange)></div>
-                    </div>
-                  </div>
-                </div>
+
+                    <div class="right-group">
+                        <div class="mb-5 right">
+                            <label for="name" class="block text-sm font-medium leading-6 text-gray-900">Name</label>
+                            <div class="mt-2">
+                                <input  v-model="site.name" required id="name" name="name" type="text" autocomplete="name"
+                                        placeholder="Website Name"
+                                        class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                                <InputError v-if="nameError" class="mt-2" :message="form.errors.name"/>
+                            </div>
+                        </div>
+
+                        <div class="mb-5 right color">
+                            <label for="color" class="block text-sm font-medium leading-6 text-gray-900">Color</label>
+                            <div class="mt-2 color-select-wrap">
+                                <div id="color" v-bind:style="{background: color}" @click="itemShow = !itemShow"
+                                     class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6">
+                                    <div class="for-caret"><i class="fa-solid fa-caret-down"></i></div>
+                                </div>
+                                <div class="select-item" v-if="itemShow">
+                                    <div style="background: #3D5F58" @click=setColor(dark_green)></div>
+                                    <div style="background: #A7B57C" @click=setColor(light_green)></div>
+                                    <div style="background: #FF920A" @click=setColor(orange)></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div> <!-- end .right-group -->
+                </div> <!-- end .site-name-wrap -->
+
                 <div class="mb-5"><span v-if="fileErr" class="text-red-600 text-sm">{{form.errors.fileErr}}</span></div>
                 <div class="mb-5">
                   <label for="company" class="block text-sm font-medium leading-6 text-gray-900">Company</label>
@@ -132,7 +137,7 @@ import InputError from "@/Components/InputError.vue";
                   <label for="shared_with" class="block text-sm font-medium leading-6 text-gray-900">Shared
                     with:</label>
                   <div class="mt-2">
-                    <textarea v-bind:value="site.shared_with" v-model="site.shared_with" id="shared_with" name="shared_with" rows="3"
+                    <textarea v-model="site.shared_with" id="shared_with" name="shared_with" rows="3"
                               placeholder="Type a name or email serparated by a comma…"
                               class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"></textarea>
                   </div>
@@ -141,7 +146,7 @@ import InputError from "@/Components/InputError.vue";
                 <div class="mb-5">
                   <label for="notes" class="block text-sm font-medium leading-6 text-gray-900">Notes</label>
                   <div class="mt-2">
-                    <textarea v-bind:value="site.notes" v-model="site.notes" id="notes" name="notes" rows="3" placeholder="Enter notes here"
+                    <textarea v-model="site.notes" id="notes" name="notes" rows="3" placeholder="Enter notes here"
                               class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"></textarea>
                   </div>
                 </div>
@@ -362,9 +367,13 @@ import InputError from "@/Components/InputError.vue";
                     </div>
                   </div>
                 </div>
+              </div> <!-- end .software -->
+
+              <div class="form-footer flex justify-center mt-10 md:hidden">
+                  <button type="submit" class="btn" @click="submit" >Save Changes</button>
               </div>
             </div>
-          </div>
+          </div> <!-- end .inner -->
         </main>
       </vf-form>
     </div>
