@@ -102,14 +102,26 @@ const route = inject("route");
                   </div>
               </div> <!-- end .panel-controls_unshare -->
 
-              <div v-if="showDeleteBlock" class="panel-controls panel-controls_delete panel-controls_m-popup flex flex-row justify-end items-center gap-5">
-                  <i class="fa-solid fa-trash-can in-textarea"></i>
-                  <textarea readonly :placeholder="plaсeholderDelete" id="delete"
-                            class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"></textarea>
-                  <button class="btn-md" type="button" @click="cancel">Cancel</button>
-                  <button class="btn-md" type="button" @click="deleteSite">Delete</button>
-              </div>
-          </div>
+              <div v-if="showDeleteBlock" class="panel-controls panel-controls_delete panel-controls_m-popup flex flex-row justify-center md:justify-end items-center gap-5">
+                  <div class="inner-wrap flex flex-col md:flex-row gap-4 md:gap-5 items-center">
+                      <i class="fa-solid fa-trash-can in-textarea"></i>
+                      <textarea readonly :placeholder="plaсeholderDelete" id="delete"
+                                class="hidden md:block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"></textarea>
+                      <div class="msg md:hidden text-center text-xl mb-1">
+                          Are you sure you want to delete {{ siteLength }} selected item (s) ?
+                          <div class="attn">
+                              <i class="fas fa-exclamation-triangle"></i>
+                              THIS ACTION CANNOT BE UNDONE
+                              <i class="fas fa-exclamation-triangle"></i>
+                          </div>
+                      </div>
+                      <div class="buttons flex gap-6 justify-center md:justify-normal self-stretch md:self-auto">
+                          <button class="btn-md btn-md_m-white" type="button" @click="cancel">Cancel</button>
+                          <button class="btn-md btn-md_m-white" type="button" @click="deleteSite">Delete</button>
+                      </div>
+                  </div>
+              </div> <!-- end .panel-controls_delete -->
+          </div> <!-- end .controls-wrap -->
       </div> <!-- end .main-panel -->
 
       <div class="sort-panel sorting">
@@ -122,7 +134,7 @@ const route = inject("route");
             <input type="checkbox" :checked="sortCompany" @change="sortedArray" id="sort_by_company">
             <span class="select-text">sort by company</span>
           </label>
-          <span class="message" v-if="showDeleteBlock"><i class="fas fa-exclamation-triangle"></i> THIS ACTION CANNOT BE UNDONE <i
+          <span class="message hidden md:inline-block" v-if="showDeleteBlock"><i class="fas fa-exclamation-triangle"></i> THIS ACTION CANNOT BE UNDONE <i
               class="fas fa-exclamation-triangle"></i></span>
         </div>
       </div>
