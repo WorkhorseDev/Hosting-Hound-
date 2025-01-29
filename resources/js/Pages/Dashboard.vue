@@ -46,42 +46,66 @@ const route = inject("route");
                             <i class="icon fas fa-filter"></i>
                         </span>
           </div>
-          <span class="select-items"
-                v-if="selectAll && !showShareBlock && !showUnshareBlock && !showDeleteBlock"><em>{{ countAll }} selected item (s)</em></span>
-          <span class="select-items" v-if="showShareBlock"><em>Share {{ siteLength }} item (s) with</em></span>
-          <span class="select-items" v-if="showUnshareBlock"><em>Unshare {{ siteLength }} item (s) ?</em></span>
-          <span class="select-items" v-if="showDeleteBlock"><em>Delete  {{ siteLength }} item (s) ?</em></span>
+
         </div>
-        <div v-if="(selectAll || selectOnes) && !showShareBlock && !showUnshareBlock && !showDeleteBlock"
-             class="panel-controls flex flex-row justify-end items-center gap-5">
-          <button class="btn-md" type="button" @click="showShare">Share</button>
-          <button class="btn-md" type="button" @click="showUnshare">Unshare</button>
-          <button class="btn-md" type="button" @click="showDelete">Delete</button>
-        </div>
-        <div v-if="showShareBlock && !showUnshareBlock && !showDeleteBlock"
-             class="panel-controls flex flex-row justify-end items-center gap-5">
-          <i class="fa fa-users in-textarea" aria-hidden="true"></i>
-          <textarea v-model="form.share" placeholder="Type a name or email serparated by a comma…" id="share" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm
-                ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"></textarea>
-          <button class="btn-md" type="button" @click="cancel">Cancel</button>
-          <button class="btn-md" type="button" @click="share">Share</button>
-        </div>
-        <div v-if="showUnshareBlock && !showDeleteBlock"
-             class="panel-controls flex flex-row justify-end items-center gap-5">
-          <i class="fa-solid fa-circle-exclamation in-textarea"></i>
-          <textarea :placeholder="placeholderUnshare" id="unshare"
-                    class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"></textarea>
-          <button class="btn-md" type="button" @click="cancel">Cancel</button>
-          <button class="btn-md" type="button" @click="unshare">Unshare</button>
-        </div>
-        <div v-if="showDeleteBlock" class="panel-controls flex flex-row justify-end items-center gap-5">
-          <i class="fa-solid fa-trash-can in-textarea"></i>
-          <textarea readonly :placeholder="plaсeholderDelete" id="delete"
-                    class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"></textarea>
-          <button class="btn-md" type="button" @click="cancel">Cancel</button>
-          <button class="btn-md" type="button" @click="deleteSite">Delete</button>
-        </div>
-      </div>
+          <div v-if="(selectAll || selectOnes)" class="controls-wrap flex flex-auto flex-col md:flex-row justify-between items-center">
+              <span class="select-items hidden md:inline"
+                    v-if="selectAll && !showShareBlock && !showUnshareBlock && !showDeleteBlock"><em>{{ countAll }} selected item (s)</em></span>
+              <span class="select-items hidden md:inline" v-if="showShareBlock"><em>Share {{ siteLength }} item (s) with</em></span>
+              <span class="select-items hidden md:inline" v-if="showUnshareBlock"><em>Unshare {{ siteLength }} item (s) ?</em></span>
+              <span class="select-items hidden md:inline" v-if="showDeleteBlock"><em>Delete  {{ siteLength }} item (s) ?</em></span>
+              <div v-if="(selectAll || selectOnes) && !showShareBlock && !showUnshareBlock && !showDeleteBlock"
+                   class="panel-controls hidden md:flex flex-row flex-grow justify-end items-center gap-5">
+                  <button class="btn-md" type="button" @click="showShare">Share</button>
+                  <button class="btn-md" type="button" @click="showUnshare">Unshare</button>
+                  <button class="btn-md" type="button" @click="showDelete">Delete</button>
+              </div>
+              <span class="select-items md:hidden"><em>{{ countAll }} selected item (s)</em></span>
+              <div class="panel-controls panel-controls_m-buttons md:hidden flex flex-row gap-4">
+                  <button class="btn-md" type="button" @click="showShare">Share</button>
+                  <button class="btn-md" type="button" @click="showUnshare">Unshare</button>
+                  <button class="btn-md" type="button" @click="showDelete">Delete</button>
+              </div>
+
+              <div v-if="showShareBlock && !showUnshareBlock && !showDeleteBlock"
+                   class="panel-controls panel-controls_share panel-controls_m-popup flex flex-row justify-center md:justify-end items-center md:gap-5">
+                  <div class="inner-wrap">
+                      <div class="heading-message flex gap-4">
+                          <i class="inline md:hidden fa fa-users in-textarea" aria-hidden="true"></i>
+                          <span class="select-items block md:hidden" v-if="showShareBlock">Share {{ siteLength }} item (s) with:</span>
+                      </div>
+                      <div class="textarea-wrap flex flex-col md:flex-row gap-5 items-center">
+                          <i class="hidden md:inline fa fa-users in-textarea" aria-hidden="true"></i>
+                          <textarea v-model="form.share"
+                                    placeholder="Type a name or email separated by a comma…"
+                                    id="share"
+                                    class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"></textarea>
+                          <div class="buttons flex gap-6 justify-center md:justify-normal self-stretch md:self-auto">
+                              <button class="btn-md" type="button" @click="cancel">Cancel</button>
+                              <button class="btn-md" type="button" @click="share">Share</button>
+                          </div>
+                      </div>
+                  </div>
+              </div> <!-- end .panel-controls_share -->
+
+              <div v-if="showUnshareBlock && !showDeleteBlock"
+                   class="panel-controls panel-controls_unshare panel-controls_m-popup flex flex-row justify-end items-center gap-5">
+                  <i class="fa-solid fa-circle-exclamation in-textarea"></i>
+                  <textarea :placeholder="placeholderUnshare" id="unshare"
+                            class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"></textarea>
+                  <button class="btn-md" type="button" @click="cancel">Cancel</button>
+                  <button class="btn-md" type="button" @click="unshare">Unshare</button>
+              </div>
+
+              <div v-if="showDeleteBlock" class="panel-controls panel-controls_delete panel-controls_m-popup flex flex-row justify-end items-center gap-5">
+                  <i class="fa-solid fa-trash-can in-textarea"></i>
+                  <textarea readonly :placeholder="plaсeholderDelete" id="delete"
+                            class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"></textarea>
+                  <button class="btn-md" type="button" @click="cancel">Cancel</button>
+                  <button class="btn-md" type="button" @click="deleteSite">Delete</button>
+              </div>
+          </div>
+      </div> <!-- end .main-panel -->
 
       <div class="sort-panel sorting">
         <div class="options">
