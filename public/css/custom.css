@@ -1959,11 +1959,19 @@ h4.notification {
         background: #3d5f58;
         padding-top: 25px;
     }
+    #addSite .main-panel_new {
+        background: none;
+        box-shadow: none;
+        padding-top: 50px;
+    }
     #addSite .main-panel .btn-back {
         color: #3d5f58;
     }
     #addSite .main-panel_edit .btn-back {
         color: #ffffff;
+    }
+    #addSite .main-panel_new .btn-back {
+        color: #3d5f58;
     }
     #addSite .panel-title {
         margin: 0;
@@ -1975,6 +1983,10 @@ h4.notification {
         color: #ffffff;
         text-align: left;
         margin-left: 15px;
+    }
+    #addSite .main-panel_new .panel-title {
+        color: #3d5f58;
+        text-align: center;
     }
     .main-content.add-site {
         padding: 0 0 50px;

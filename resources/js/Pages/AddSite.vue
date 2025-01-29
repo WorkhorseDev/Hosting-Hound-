@@ -31,7 +31,7 @@ import InputError from "@/Components/InputError.vue";
         </div>
       </header>
       <vf-form @submit.prevent="submit" id="addSite">
-        <div class="main-panel main-panel_edit">
+        <div class="main-panel main-panel_edit main-panel_new">
           <div class="flex flex-row items-center w-full md:w-auto">
             <div class="pr-6 b-back">
               <span @click="goBack" class="btn-back"><i class="fas fa-arrow-left"></i></span>
