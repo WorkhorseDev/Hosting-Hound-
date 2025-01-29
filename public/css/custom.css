@@ -2105,6 +2105,10 @@ h4.notification {
         flex-grow: 1;
         padding: 3px 0 4px;
     }
+    .panel-controls .btn-md_m-white {
+        background: #ffffff;
+        color: #15202e;
+    }
     .panel-controls_m-popup {
         position: fixed;
         top: 0;
@@ -2146,6 +2150,12 @@ h4.notification {
         font-size: 30px;
         left: 0;
         color: #ffffff;
+    }
+    .panel-controls .in-textarea {
+        color: #ffffff;
+        font-size: 40px;
+        left: 0;
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
     }
     .panel-controls .textarea-wrap {
         background: #ffffff;
