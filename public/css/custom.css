@@ -1622,6 +1622,20 @@ h4.notification {
     margin-left: 60px;
 }
 
+.logout.gray img {
+    display: inline-block;
+    width: 40px;
+    float: left;
+}
+
+.logout.gray {
+    color: #15202E;
+    background: #fff;
+    box-shadow: 0px 3px 5px 0px rgba(112, 112, 112, 0.5);
+    width: 330px;
+    margin-left: 85px;
+}
+
 @media screen and (max-width: 768px) {
     .auth-layout {
         flex-direction: column;

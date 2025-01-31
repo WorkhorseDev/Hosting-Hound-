@@ -30,7 +30,8 @@ class User extends Authenticatable
         'google_email',
         'google_id',
         'google_token',
-        'google_refresh_token'
+        'google_refresh_token',
+        'google_calendar_id'
     ];
 
     /**

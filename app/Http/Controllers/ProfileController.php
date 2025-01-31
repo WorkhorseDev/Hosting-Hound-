@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Websites;
+use DateTime;
 use Google\Service\Calendar;
 use Google_Client;
 use Google_Service_Calendar;
@@ -52,16 +54,23 @@ class ProfileController extends Controller
         $authUser = Auth::user();
         $authUser->google_email = $user->getEmail();
         $authUser->google_id = $user->getId();
-        $authUser->google_token = ["access_token" => $user->token, "expires_in" => $user->expiresIn, 'refresh_token' => $user->refreshToken];
+        $data = ["access_token" => $user->token, "expires_in" => $user->expiresIn, 'refresh_token' => $user->refreshToken];
+        $authUser->google_token =  $data;
         $authUser->google_refresh_token = $user->refreshToken;
         $authUser->save();
+        $jsonData = json_encode($data, JSON_PRETTY_PRINT);
+        $filePath = storage_path('app/google-calendar/'.$authUser->_id.'.json');
+        file_put_contents($filePath, $jsonData);
         auth()->login($authUser, true);
+
+        $this->createGoogleCalendarEvent();
         return redirect()->route('profile');
 
     }
     public function createGoogleCalendarEvent() {
 
         $authUser = Auth::user();
+        config(['google-calendar.token_json' =>  storage_path('app/google-calendar/'.$authUser->_id.'.json.')]);
         $googleClient = new Google_Client();
         $googleClient->setAccessToken( $authUser->google_token);
         if ($googleClient->isAccessTokenExpired()) {
@@ -71,28 +80,52 @@ class ProfileController extends Controller
         }
 
       try {
-          $googleClient->setAuthConfig(storage_path('app/google-calendar/oauth-credentials.json'));
-          $googleClient->addScope(Google_Service_Calendar::CALENDAR);
-          $service = new Google_Service_Calendar($googleClient);
-          $calendar = new Google_Service_Calendar_Calendar();
-          $calendar->setSummary('Hosting Hound');
-          $calendar->setTimeZone('America/New_York');
-
-          // Insert the calendar
-          $createdCalendar = $service->calendars->insert($calendar);
-          $id = $createdCalendar->getId();
-          config(['google-calendar.calendar_id'=> $id]);
+          if ($authUser->google_calendar_id && !empty($authUser->google_calendar_id)) {
+              $id = $authUser->google_calendar_id;
+          } else {
+              $googleClient->setAuthConfig(storage_path('app/google-calendar/oauth-credentials.json'));
+              $googleClient->addScope(Google_Service_Calendar::CALENDAR);
+              $service = new Google_Service_Calendar($googleClient);
+              $calendar = new Google_Service_Calendar_Calendar();
+              $calendar->setSummary('Hosting Hound');
+              $calendar->setTimeZone('America/New_York');
+              $createdCalendar = $service->calendars->insert($calendar);
+              $id = $createdCalendar->getId();
+              $authUser->google_calendar_id = $id;
+              $authUser->save();
+          }
+          config(['google-calendar.calendar_id' => $id]);
           $event = new Event;
-          $event->name = 'Test New';
-          $event->startDateTime = Carbon::now();;
-          $event->endDateTime = Carbon::now()->addHour();
-          $event->save();
-          $events = Event::get();
-          return response()->json(['message' => 'Event created successfully.', 'event_id' => $event->id,]);
+          $sites = Websites::all()->where('user_id', '=', Auth::user()->_id);
+          $hosts = [];
+          foreach ($sites as $site) {
+              if (!empty($site->provider)) {
+                  foreach ($site->provider as $key => $host) {
+                      if (!empty($host['renewal_date'])) {
+                          $hosts[] = $host;
+                      }
+                  }
+              }
+              if (!empty($site->software)) {
+                  foreach ($site->software as $key => $soft) {
+                      if (!empty($soft['renewal_date'])) {
+                          $hosts[] = $soft;
+                      }
+                  }
+              }
+          }
+          foreach ($hosts as $host) {
+              $event->name = $host['name'];
+              $date = DateTime::createFromFormat("d/m/Y" , $host['renewal_date']);
+              $show_date = $date->format('Y-m-d');
+              $event->startDate = Carbon::createFromFormat('Y-m-d', $show_date);
+              $event->endDate = Carbon::createFromFormat('Y-m-d', $show_date);
+              $event->save();
+          }
       } catch (\Exception $e) {
           dd($e->getMessage());
       }
-        //return redirect()->route('profile');
+        return redirect()->route('profile');
     }
 
     /**

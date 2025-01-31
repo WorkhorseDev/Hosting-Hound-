@@ -106,11 +106,8 @@ const route = inject("route");
                   <label for="select_all" class="option-item">
                     <span class="select-text">In order to use these integration features, you will need to link your account with a Google Account</span>
                     <div class="form-group form-group-icon account">
-                      <a :href="route('auth/google')">
-                        <span class="">Auth with google</span>
-                      </a>
-                      <a :href="route('createEvent')">
-                        <span class="">Create Event</span>
+                      <a :href="route('auth/google')" class="logout gray account btn-md btn-inverted">
+                        <img class="cross title-edit-account" src="/images/google-g-logo.png"><span class="">Link Google Account</span>
                       </a>
                     </div>
                   </label>
