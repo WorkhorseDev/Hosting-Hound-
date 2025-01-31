@@ -106,7 +106,12 @@ const route = inject("route");
                   <label for="select_all" class="option-item">
                     <span class="select-text">In order to use these integration features, you will need to link your account with a Google Account</span>
                     <div class="form-group form-group-icon account">
-                      <input type="text" id="google_notification" placeholder="Link Google Account" v-model=google_email>
+                      <a :href="route('auth/google')">
+                        <span class="">Auth with google</span>
+                      </a>
+                      <a :href="route('createEvent')">
+                        <span class="">Create Event</span>
+                      </a>
                     </div>
                   </label>
                 </div>

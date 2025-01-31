@@ -27,7 +27,10 @@ class User extends Authenticatable
         'pass',
         'notification',
         'frequency',
-        'google_email'
+        'google_email',
+        'google_id',
+        'google_token',
+        'google_refresh_token'
     ];
 
     /**

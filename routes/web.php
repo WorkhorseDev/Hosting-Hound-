@@ -34,6 +34,9 @@ Route::middleware('auth', 'twofactor')->group(function () {
     Route::get('/hostDetail/{key}/{id}', [App\Http\Controllers\WebsiteController::class, 'showHostDetailPage'])->name('hostDetail');
     Route::get('/logout', [App\Http\Controllers\Auth\AuthenticatedSessionController::class, 'destroy'])->name('logout');
     Route::post('/editProfile', [App\Http\Controllers\ProfileController::class, 'editProfile'])->name('editProfile');
+    Route::get('auth/google', [ProfileController::class, 'redirectToGoogle'])->name('auth/google');
+    Route::get('auth/google/callback', [ProfileController::class, 'handleGoogleCallback'])->name('auth/google/callback');
+    Route::get('createEvent', [ProfileController::class, 'createGoogleCalendarEvent'])->name('createEvent');
 });
 
 require __DIR__.'/auth.php';
