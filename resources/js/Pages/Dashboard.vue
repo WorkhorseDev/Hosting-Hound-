@@ -354,7 +354,7 @@ export default {
       selectOnes: false,
       showShareBlock: false,
       siteLength: 0,
-      countAll: this.sites.length,
+      countAll: Object.values(this.sites).length,
       showUnshareBlock: false,
       showDeleteBlock: false,
       checkedSites: [],
