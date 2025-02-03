@@ -203,6 +203,9 @@
     color: #ffffff;
 }
 
+.billing .filter-block {
+    padding-top: 20px;
+}
 .filter-block {
     width: 100%;
     flex: 380px 1 0;
@@ -998,8 +1001,12 @@ select option {
 
     width: calc(33.333% - 20px);
 }
-.card-list.filter_active .card-item {
+.card-list.filter_active .card-item,
+.card-list.filter_active.calendar_active .card-item {
     width: calc(50% - 20px);
+}
+.card-list.calendar_active .card-item {
+    width: 100%;
 }
 .card-item .options input {
     margin-right: 15px;
@@ -1262,7 +1269,10 @@ em.gray-text {
     cursor: pointer;
 }
 
-.fa-solid.fa-calendar-days {
+.calendar-btn {
+    min-width: 95px;
+}
+.calendar-btn i {
     font-size: 45px;
     color: #3D5F58;
     padding-left: 25px;
@@ -1272,6 +1282,7 @@ em.gray-text {
 
 .billing .card-list {
     padding: 20px 20px;
+    align-self: flex-start;
 }
 
 .form-group input.billing-filter {
@@ -1651,6 +1662,15 @@ h4.notification {
     box-shadow: 0px 3px 5px 0px rgba(112, 112, 112, 0.5);
     width: 330px;
     margin-left: 85px;
+}
+
+.calendar-container {
+    flex: 1 0 100%;
+    max-width: 875px;
+    padding-top: 20px;
+}
+.filter_active + .calendar-container {
+    max-width: 930px;
 }
 
 @media screen and (max-width: 768px) {

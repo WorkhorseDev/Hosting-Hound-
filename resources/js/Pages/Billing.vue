@@ -34,7 +34,9 @@ const route = inject("route");
       </header>
       <div class="main-panel">
         <div class="search-section">
-          <i class="fa-solid fa-calendar-days"></i>
+          <span class="calendar-btn" @click="showCalendar">
+              <i class="fa-solid" :class="[ isCalendarOpen ? 'fa-list' : 'fa-calendar-days' ]"></i>
+          </span>
           <div class="search-bar">
             <form action="" class="search-form" id="search_form">
               <input type="text" v-model="searchData" @change="search" class="search-input" id="search"
@@ -195,27 +197,35 @@ const route = inject("route");
               </div>
             </div>
 
-              <div class="calendar-container">
-                  <Calendar :attributes='calendarAttributes' />
-              </div>
+              <div class="flex w-full"
+                   :class="[ isCalendarOpen ? 'gap-x-14 gap-y-8' : '', isFilterOpen && isCalendarOpen ? 'flex-col': '' ]">
+                  <div class="data card-list"
+                       v-if="arr && arr.length !== 0"
+                       :class="{
+                           filter_active: isFilterOpen,
+                           calendar_active: isCalendarOpen,
+                           'order-2': isFilterOpen && isCalendarOpen }">
+                      <div v-for="item in arr" class="card-item">
+                          <div class="card-content" @click="hostDetail(item.id, item.key)">
+                              <div class="info">
+                                  <p class="card-title">{{ item.provider.type }}</p>
+                                  <p class="card-title">{{ item.provider.name }}</p>
+                                  <p class="card-link">$ {{ item.provider.cost }} - {{ item.provider.renewal_date }}</p>
+                                  <span class="card-link">{{ item.url }}</span>
+                              </div>
+                              <div class="card-logo">
+                                  <img v-if="item.icon" :src="item.icon"/>
+                                  <span v-else>Logo</span>
+                              </div>
+                              <span class="card-color" :style="{ backgroundColor: item.color }"></span>
+                          </div>
+                      </div> <!-- end .card-item -->
+                  </div> <!-- end .card-list -->
 
-            <div class="data card-list" v-if="arr && arr.length !== 0" :class="{ filter_active: isFilterOpen }">
-              <div v-for="item in arr" class="card-item">
-                <div class="card-content" @click="hostDetail(item.id, item.key)">
-                  <div class="info">
-                    <p class="card-title">{{ item.provider.type }}</p>
-                    <p class="card-title">{{ item.provider.name }}</p>
-                    <p class="card-link">$ {{ item.provider.cost }} - {{ item.provider.renewal_date }}</p>
-                    <span class="card-link">{{ item.url }}</span>
-                  </div>
-                  <div class="card-logo">
-                    <img v-if="item.icon" :src="item.icon"/>
-                    <span v-else>Logo</span>
-                  </div>
-                  <span class="card-color" :style="{ backgroundColor: item.color }"></span>
-                </div>
-              </div> <!-- end .card-item -->
-            </div> <!-- end .card-list -->
+                  <div class="calendar-container" v-if="isCalendarOpen">
+                      <Calendar class="billing-calendar" :attributes='calendarAttributes' />
+                  </div> <!-- end .calendar-container -->
+              </div> <!-- end .data-wrapper -->
           </div>
         </div>
       </main>
@@ -284,6 +294,7 @@ export default {
       }),
       arr: this.sites,
       isFilterOpen: false,
+      isCalendarOpen: false,
       sortArr: [],
       dateStart: '',
       dateEnd: '',
@@ -560,6 +571,10 @@ export default {
       this.isFilterOpen = !this.isFilterOpen;
     },
 
+    showCalendar() {
+      this.isCalendarOpen = !this.isCalendarOpen;
+    },
+
     showDropdownColor() {
       this.isDropdownColorOpen = !this.isDropdownColorOpen;
     },
@@ -577,3 +592,104 @@ export default {
   }
 }
 </script>
+
+<style >
+
+.billing-calendar {
+    width: 100%;
+    background: #D8D8D8;
+    border-radius: 70px;
+    box-shadow: 0 4px 9px 0 rgba(0, 0, 0, 0.5);
+    border: none;
+}
+.billing-calendar .vc-header {
+    height: auto;
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+.billing-calendar .vc-pane-header-wrapper {
+    top: 20px;
+    width: 550px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+.billing-calendar .vc-header .vc-title-wrapper {
+    padding: 20px 35px;
+    border-radius: 50px;
+    background: #fff;
+}
+.billing-calendar .vc-header .vc-arrow {
+    width: auto;
+    height: auto;
+    color: rgba(21, 32, 46, 0.75);
+}
+.billing-calendar .vc-header .vc-arrow:hover {
+    background: #ffffff;
+    opacity: 0.8;
+}
+.billing-calendar .vc-header .vc-base-icon {
+    width: 48px;
+    height: 48px;
+}
+.billing-calendar .vc-header .vc-title {
+    font-size: 45px;
+    font-weight: normal;
+    color: rgba(21, 32, 46, 0.75);
+    display: block;
+    line-height: 45px;
+}
+.billing-calendar .vc-day-content {
+    background: #ffffff;
+    font-size: 45px;
+    font-weight: normal;
+    width: 85px;
+    height: 85px;
+    line-height: 85px;
+    color: rgba(21, 32, 46, 0.75);
+}
+.billing-calendar .is-today .vc-day-content {
+    background: #3D5F58;
+    color: white;
+}
+.billing-calendar .vc-weeks {
+    padding: 5px 25px 30px;
+}
+.billing-calendar .vc-week,
+.billing-calendar .vc-weekdays {
+    margin-bottom: 20px;
+}
+.billing-calendar .vc-weekdays {
+    margin-bottom: 25px;
+}
+.billing-calendar .vc-weekday {
+    font-size: 45px;
+    font-weight: normal;
+    line-height: 45px;
+    color: rgba(21, 32, 46, 0.75);
+}
+.billing-calendar .is-not-in-month * {
+    opacity: 1;
+    color: rgba(21, 32, 46, 0.3);
+}
+.billing-calendar .vc-dots .vc-dot {
+    width: 30px;
+    height: 30px;
+}
+.billing-calendar .vc-day .vc-day-box-center-bottom {
+    top: -5px;
+    left: auto;
+    bottom: auto;
+    right: 12px;
+}
+.calendar-container .vc-day-popover-container {
+    font-size: 16px;
+    font-weight: normal;
+}
+.calendar-container .vc-popover-content {
+    padding: 7px;
+}
+.calendar-container .vc-day-popover-header,
+.calendar-container .vc-day-popover-row-label {
+    font-size: 16px;
+}
+</style>
