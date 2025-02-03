@@ -318,7 +318,11 @@ export default {
                 const [day, month, year] = service.provider.renewal_date.split("/").map(Number);
                 return {
                     dates: new Date(year, month - 1, day),
-                    dot: 'red',
+                    dot: {
+                        style: {
+                            backgroundColor: service.color,
+                        }
+                    },
                     popover: {
                         label: `${service.provider.type} (${service.url}) expires ${service.provider.renewal_date}`,
                     },
