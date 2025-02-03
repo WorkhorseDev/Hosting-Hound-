@@ -48,7 +48,7 @@ const route = inject("route");
           </div>
 
         </div>
-          <div class="controls-wrap flex flex-auto flex-col md:flex-row justify-between items-center">
+          <div v-if="(selectAll || selectOnes)" class="controls-wrap flex flex-auto flex-col md:flex-row justify-between items-center">
               <span class="select-items hidden md:inline"
                     v-if="selectAll && !showShareBlock && !showUnshareBlock && !showDeleteBlock"><em>{{ countAll }} selected item (s)</em></span>
               <span class="select-items hidden md:inline" v-if="showShareBlock"><em>Share {{ siteLength }} item (s) with</em></span>
