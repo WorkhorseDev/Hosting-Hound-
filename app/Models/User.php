@@ -24,6 +24,14 @@ class User extends Authenticatable
         'email',
         'phone_number',
         'password',
+        'pass',
+        'notification',
+        'frequency',
+        'google_email',
+        'google_id',
+        'google_token',
+        'google_refresh_token',
+        'google_calendar_id'
     ];
 
     /**

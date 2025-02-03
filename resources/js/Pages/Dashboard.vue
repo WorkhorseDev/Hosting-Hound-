@@ -26,7 +26,7 @@ const route = inject("route");
                        <Link :href="route('addSite')"><i class="fas fa-add"></i></Link>
                     </span>
           <span class="link-item link-item_user">
-                        <i class="fas fa-user"></i>
+            <Link :href="route('profile')"> <i class="fas fa-user"></i></Link>
                     </span>
         </div>
       </header>
@@ -46,44 +46,85 @@ const route = inject("route");
                             <i class="icon fas fa-filter"></i>
                         </span>
           </div>
-          <span class="select-items"
-                v-if="selectAll && !showShareBlock && !showUnshareBlock && !showDeleteBlock"><em>{{ countAll }} selected item (s)</em></span>
-          <span class="select-items" v-if="showShareBlock"><em>Share {{ siteLength }} item (s) with</em></span>
-          <span class="select-items" v-if="showUnshareBlock"><em>Unshare {{ siteLength }} item (s) ?</em></span>
-          <span class="select-items" v-if="showDeleteBlock"><em>Delete  {{ siteLength }} item (s) ?</em></span>
-        </div>
-        <div v-if="(selectAll || selectOnes) && !showShareBlock && !showUnshareBlock && !showDeleteBlock"
-             class="panel-controls flex flex-row justify-end items-center gap-5">
-          <button class="btn-md" type="button" @click="showShare">Share</button>
-          <button class="btn-md" type="button" @click="showUnshare">Unshare</button>
-          <button class="btn-md" type="button" @click="showDelete">Delete</button>
-        </div>
-        <div v-if="showShareBlock && !showUnshareBlock && !showDeleteBlock"
-             class="panel-controls flex flex-row justify-end items-center gap-5">
-          <i class="fa fa-users in-textarea" aria-hidden="true"></i>
-          <textarea v-model="form.share" placeholder="Type a name or email serparated by a comma…" id="share" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm
-                ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"></textarea>
-          <button class="btn-md" type="button" @click="cancel">Cancel</button>
-          <button class="btn-md" type="button" @click="share">Share</button>
-        </div>
-        <div v-if="showUnshareBlock && !showDeleteBlock"
-             class="panel-controls flex flex-row justify-end items-center gap-5">
-          <i class="fa-solid fa-circle-exclamation in-textarea"></i>
-          <textarea :placeholder="placeholderUnshare" id="unshare"
-                    class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"></textarea>
-          <button class="btn-md" type="button" @click="cancel">Cancel</button>
-          <button class="btn-md" type="button" @click="unshare">Unshare</button>
-        </div>
-        <div v-if="showDeleteBlock" class="panel-controls flex flex-row justify-end items-center gap-5">
-          <i class="fa-solid fa-trash-can in-textarea"></i>
-          <textarea readonly :placeholder="plaсeholderDelete" id="delete"
-                    class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"></textarea>
-          <button class="btn-md" type="button" @click="cancel">Cancel</button>
-          <button class="btn-md" type="button" @click="deleteSite">Delete</button>
-        </div>
-      </div>
 
-      <div class="sort-panel">
+        </div>
+          <div class="controls-wrap flex flex-auto flex-col md:flex-row justify-between items-center">
+              <span class="select-items hidden md:inline"
+                    v-if="selectAll && !showShareBlock && !showUnshareBlock && !showDeleteBlock"><em>{{ countAll }} selected item (s)</em></span>
+              <span class="select-items hidden md:inline" v-if="showShareBlock"><em>Share {{ siteLength }} item (s) with</em></span>
+              <span class="select-items hidden md:inline" v-if="showUnshareBlock"><em>Unshare {{ siteLength }} item (s) ?</em></span>
+              <span class="select-items hidden md:inline" v-if="showDeleteBlock"><em>Delete  {{ siteLength }} item (s) ?</em></span>
+              <div v-if="(selectAll || selectOnes) && !showShareBlock && !showUnshareBlock && !showDeleteBlock"
+                   class="panel-controls hidden md:flex flex-row flex-grow justify-end items-center gap-5">
+                  <button class="btn-md" type="button" @click="showShare">Share</button>
+                  <button class="btn-md" type="button" @click="showUnshare">Unshare</button>
+                  <button class="btn-md" type="button" @click="showDelete">Delete</button>
+              </div>
+              <span class="select-items md:hidden"><em>{{ countAll }} selected item (s)</em></span>
+              <div class="panel-controls panel-controls_m-buttons md:hidden flex flex-row gap-4">
+                  <button class="btn-md" type="button" @click="showShare">Share</button>
+                  <button class="btn-md" type="button" @click="showUnshare">Unshare</button>
+                  <button class="btn-md" type="button" @click="showDelete">Delete</button>
+              </div>
+
+              <div v-if="showShareBlock && !showUnshareBlock && !showDeleteBlock"
+                   class="panel-controls panel-controls_share panel-controls_m-popup flex flex-row justify-center md:justify-end items-center md:gap-5">
+                  <div class="inner-wrap">
+                      <div class="heading-message flex gap-4">
+                          <i class="inline md:hidden fa fa-users in-textarea" aria-hidden="true"></i>
+                          <span class="select-items block md:hidden" v-if="showShareBlock">Share {{ siteLength }} item (s) with:</span>
+                      </div>
+                      <div class="textarea-wrap flex flex-col md:flex-row gap-5 items-center">
+                          <i class="hidden md:inline fa fa-users in-textarea" aria-hidden="true"></i>
+                          <textarea v-model="form.share"
+                                    placeholder="Type a name or email separated by a comma…"
+                                    id="share"
+                                    class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"></textarea>
+                          <div class="buttons flex gap-6 justify-center md:justify-normal self-stretch md:self-auto">
+                              <button class="btn-md" type="button" @click="cancel">Cancel</button>
+                              <button class="btn-md" type="button" @click="share">Share</button>
+                          </div>
+                      </div>
+                  </div>
+              </div> <!-- end .panel-controls_share -->
+
+              <div v-if="showUnshareBlock && !showDeleteBlock"
+                   class="panel-controls panel-controls_unshare panel-controls_m-popup flex flex-row justify-center md:justify-end items-center gap-5">
+                  <div class="inner-wrap flex flex-col md:flex-row gap-4 md:gap-5 items-center">
+                      <i class="fa-solid fa-circle-exclamation in-textarea"></i>
+                      <textarea :placeholder="placeholderUnshare" id="unshare"
+                            class="hidden md:block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"></textarea>
+                      <div class="msg md:hidden text-center text-xl mb-2">Are you sure you want to unshare {{ siteLength }} selected item (s) ?</div>
+                      <div class="buttons flex gap-6 justify-center md:justify-normal self-stretch md:self-auto">
+                          <button class="btn-md btn-md_m-white" type="button" @click="cancel">Cancel</button>
+                          <button class="btn-md btn-md_m-white" type="button" @click="unshare">Unshare</button>
+                      </div>
+                  </div>
+              </div> <!-- end .panel-controls_unshare -->
+
+              <div v-if="showDeleteBlock" class="panel-controls panel-controls_delete panel-controls_m-popup flex flex-row justify-center md:justify-end items-center gap-5">
+                  <div class="inner-wrap flex flex-col md:flex-row gap-4 md:gap-5 items-center">
+                      <i class="fa-solid fa-trash-can in-textarea"></i>
+                      <textarea readonly :placeholder="plaсeholderDelete" id="delete"
+                                class="hidden md:block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"></textarea>
+                      <div class="msg md:hidden text-center text-xl mb-1">
+                          Are you sure you want to delete {{ siteLength }} selected item (s) ?
+                          <div class="attn mt-2">
+                              <i class="fas fa-exclamation-triangle"></i>
+                              THIS ACTION CANNOT BE UNDONE
+                              <i class="fas fa-exclamation-triangle"></i>
+                          </div>
+                      </div>
+                      <div class="buttons flex gap-6 justify-center md:justify-normal self-stretch md:self-auto">
+                          <button class="btn-md btn-md_m-white" type="button" @click="cancel">Cancel</button>
+                          <button class="btn-md btn-md_m-white" type="button" @click="deleteSite">Delete</button>
+                      </div>
+                  </div>
+              </div> <!-- end .panel-controls_delete -->
+          </div> <!-- end .controls-wrap -->
+      </div> <!-- end .main-panel -->
+
+      <div class="sort-panel sorting">
         <div class="options">
           <label for="select_all" class="option-item">
             <input type="checkbox" :checked="selectAll" @click="selectAll = !selectAll" id="select_all">
@@ -93,9 +134,27 @@ const route = inject("route");
             <input type="checkbox" :checked="sortCompany" @change="sortedArray" id="sort_by_company">
             <span class="select-text">sort by company</span>
           </label>
-          <span class="message" v-if="showDeleteBlock"><i class="fas fa-exclamation-triangle"></i> THIS ACTION CANNOT BE UNDONE <i
+          <span class="message hidden md:inline-block" v-if="showDeleteBlock"><i class="fas fa-exclamation-triangle"></i> THIS ACTION CANNOT BE UNDONE <i
               class="fas fa-exclamation-triangle"></i></span>
         </div>
+      </div>
+      <div class="sort-panel">
+            <div v-if="companyText" class="gray-border"> <i class="fa-solid fa-x" @click="sortNoCompany"></i> <span>{{companyText}}</span></div>
+            <div v-if="colorText" class="gray-border">
+              <i class="fa-solid fa-x" @click="sortNoColor"></i>
+              <span>Color</span>
+              <div  v-if="colorText !== 'multi'" class="item-circle small"v-bind:style="{background: colorText}"></div>
+              <div class="item-circle small multi-color" v-if="colorText === 'multi'">
+                <div class="half" style="background-color: #FF9500;"></div>
+                <div class="half" style="background-color: #2E4C42;"></div>
+                <div class="half" style="background-color: #B6C793;"></div>
+              </div>
+            </div>
+            <div v-if="hostText" class="gray-border"> <i class="fa-solid fa-x" @click="sortNoHost"></i> <span>{{hostText}}</span></div>
+            <div v-if="domainText" class="gray-border"> <i class="fa-solid fa-x" @click="sortNoDomain"></i> <span>{{domainText}}</span></div>
+            <div v-if="sslText" class="gray-border"> <i class="fa-solid fa-x" @click="sortNoSSl"></i> <span>{{sslText}}</span></div>
+            <div v-if="emailText" class="gray-border"> <i class="fa-solid fa-x" @click="sortNoEmail"></i> <span>{{emailText}}</span></div>
+            <div v-if="cmsText" class="gray-border"> <i class="fa-solid fa-x" @click="sortNoCMS"></i> <span>{{cmsText}}</span></div>
       </div>
 
       <main class="main-content">
@@ -119,7 +178,10 @@ const route = inject("route");
           <div class="data-container">
             <div class="filter-block" v-if="isFilterOpen">
               <div class="filter-form">
-                <div class="heading row flex justify-center text-2xl mb-5">Filter items below</div>
+                <div class="heading row flex justify-center text-2xl mb-5">
+                    <span class="filter-close md:hidden" @click="showFilter"><i class="fa-solid fa-xmark"></i></span>
+                    Filter <span class="hidden md:inline-flex">&nbsp;items below</span>
+                </div>
                 <div class="filter-inner">
                   <div class="filter-search mb-5">
                     <input type="text" @change="search" v-model="searchData" class="filter-search-input"
@@ -227,7 +289,7 @@ const route = inject("route");
             </div>
 
             <div class="data card-list" v-if="arr && arr.length !== 0" :class="{ filter_active: isFilterOpen }">
-              <div v-for="item in arr" class="card-item">
+              <div v-for="item in arr" :key="item.id" class="card-item">
                 <label class="options">
                   <span class="readonly" v-if="item.readonly"></span>
                   <input v-if="!item.readonly" v-model="checkedSites[item._id]" type="checkbox" name="sites"
@@ -269,6 +331,13 @@ export default {
   },
   data() {
     return {
+      cmsText: '',
+      emailText:'',
+      companyText: '',
+      colorText: '',
+      hostText: '',
+      domainText: '',
+      sslText: '',
       color: 'multi',
       orange: '#FF920A',
       dark_green: '#3D5F58',
@@ -285,7 +354,7 @@ export default {
       selectOnes: false,
       showShareBlock: false,
       siteLength: 0,
-      countAll: this.sites.length,
+      countAll: Object.values(this.sites).length,
       showUnshareBlock: false,
       showDeleteBlock: false,
       checkedSites: [],
@@ -315,6 +384,7 @@ export default {
     setColor(color) {
       if (color === 'multi') {
         this.multi = true;
+        this.color = 'multi';
       } else {
         this.multi = false;
         this.color = color;
@@ -322,13 +392,53 @@ export default {
       this.sortColor = true;
       this.isDropdownColorOpen = !this.isDropdownColorOpen;
     },
+    sortNoCompany() {
+      this.companySort = '';
+      this.companyText = '';
+      this.closeChips();
+    },
+    sortNoColor() {
+      this.sortColor = '';
+      this.colorText = '';
+      this.closeChips();
+    },
+    sortNoHost() {
+      this.hostSort = '';
+      this.hostText = '';
+      this.closeChips();
+    },
+    sortNoEmail() {
+      this.emailSort = '';
+      this.emailText = '';
+      this.closeChips();
+    },
+    sortNoDomain() {
+      this.domainText = '';
+      this.providerSort = '';
+      this.closeChips();
+    },
+    sortNoSSl() {
+      this.sslText = '';
+      this.sslSort = '';
+      this.closeChips();
+    },
+    sortNoCMS() {
+      this.cmsText = '';
+      this.cmsSort = '';
+      this.closeChips();
+    },
+    closeChips() {
+      this.sortField();
+      this.isFilterOpen = !this.isFilterOpen;
+    },
     sortField() {
-      this.arr = Object.values(JSON.parse(JSON.stringify(this.arr)));
-      if (this.companySort)  {
+      this.sortArr = [];
+      this.arr = [];
+      if (this.companySort && this.companySort !== '')  {
+        this.companyText = this.companySort;
         if (this.companySort === 'All Companies') {
           this.arr = this.sites;
         } else {
-          this.arr = [];
           Object.values(this.sites).filter(item => {
             if (item.company) {
               if (this.companySort.toLowerCase() === item.company.toLowerCase()) {
@@ -337,13 +447,22 @@ export default {
             }
           });
         }
+        this.sortArr = this.arr;
+      } else {
+        this.companyText = '';
+        this.arr = this.sites;
+        this.sortArr = this.arr;
       }
-     this.sortArr = this.arr;
-      if (this.sortColor)  {
-        if (this.multi) {
-          this.arr = this.sortArr;
+      if (this.sortColor && this.sortColor !== '')  {
+        this.colorText = this.color;
+        this.arr = [];
+        if (this.color === 'multi') {
+          if(this.sortArr.length === 0) {
+            this.arr = this.sites;
+          } else {
+            this.arr = this.sortArr;
+          }
         } else {
-          this.arr = [];
           Object.values(this.sortArr).filter(item => {
             if (item.color) {
               if (this.color.toLowerCase() === item.color.toLowerCase()) {
@@ -352,35 +471,58 @@ export default {
             }
           });
         }
+        this.sortArr = this.arr;
+      } else {
+        this.colorText = '';
+        this.arr = this.sortArr;
       }
-      this.sortArr = this.arr;
       if (this.hostSort && this.hostSort !== '') {
-         this.arr = this.sortProviders('Host', this.hostSort, this.sortArr)
+        this.hostText = this.hostSort;
+         this.arr = this.sortProviders('Host', this.hostSort, this.sortArr);
+         this.sortArr = this.arr;
+      } else {
+        this.hostText = '';
       }
-      this.sortArr = this.arr;
       if (this.providerSort && this.providerSort !== '') {
-        this.arr = this.sortProviders('Domain Register', this.providerSort, this.sortArr)
+        this.domainText = this.providerSort;
+        this.arr = this.sortProviders('Domain Register', this.providerSort, this.sortArr);
+        this.sortArr = this.arr;
+      } else {
+        this.domainText = '';
       }
-      this.sortArr = this.arr;
       if (this.sslSort && this.sslSort !== '') {
-        this.arr = this.sortProviders('SSL Provider', this.sslSort, this.sortArr)
+        this.sslText = this.sslSort;
+        this.arr = this.sortProviders('SSL Provider', this.sslSort, this.sortArr);
+        this.sortArr = this.arr;
+      } else {
+        this.sslText = '';
       }
-      this.sortArr = this.arr;
       if (this.emailSort && this.emailSort !== '') {
-        this.arr = this.sortProviders('Email Plan Provider', this.emailSort, this.sortArr)
+        this.emailText = this.emailSort;
+        this.arr = this.sortProviders('Email Plan Provider', this.emailSort, this.sortArr);
+        this.sortArr = this.arr;
+      } else {
+        this.emailText = '';
       }
-      this.sortArr = this.arr;
       if (this.cmsSort && this.cmsSort !== '') {
-        this.arr = this.sortSoftware('CMS', this.cmsSort, this.sortArr)
+        this.cmsText = this.cmsSort;
+        this.arr = this.sortSoftware('CMS', this.cmsSort, this.sortArr);
+      } else {
+        this.cmsText = '';
       }
-      return this.arr;
+      this.arr  =
+          [...new Set(Object.values(this.arr).map(JSON.stringify))].map(JSON.parse);
+      this.isFilterOpen = !this.isFilterOpen;
     },
+
     sortSoftware (filed, value, arr) {
-      if (this.cmsSort === 'View All') {
-        this.arr = this.sites;
+      this.data = [];
+      this.arr = [];
+      if (this.cmsSort === 'All CMS') {
+        this.arr = arr;
         return this.arr;
       }
-      arr.filter(item => {
+      Object.values(arr).filter(item => {
         if (item.software && item.software.length !== 0) {
           for (var host in item.software) {
             if (item.software[host].type === filed) {
@@ -394,11 +536,13 @@ export default {
       return this.data;
     },
     sortProviders(filed, value, arr) {
+      this.data = [];
+      this.arr = [];
       if (value === 'View All') {
         this.arr = arr;
         return this.arr;
       }
-      arr.filter(item => {
+      Object.values(arr).filter(item => {
         if (item.provider && item.provider.length !== 0) {
           for (var host in item.provider) {
             if (item.provider[host].type === filed) {
@@ -435,6 +579,7 @@ export default {
     },
 
     getCheck(el) {
+      console.log(this.countAll);
       this.selectOnes = true;
       if (!el.target.checked && this.selectAll) {
         this.countAll--;
@@ -448,15 +593,6 @@ export default {
 
     showFilter() {
       this.isFilterOpen = !this.isFilterOpen;
-      this.searchData= '';
-      this.companySort= '';
-      this.providerSort= '';
-      this.sslSort= '';
-      this.hostSort= '';
-      this.emailSort= '';
-      this.cmsSort= '';
-      this.arr = this.sites;
-      this.color = 'multi';
     },
 
     showDropdownColor() {

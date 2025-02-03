@@ -1,6 +1,6 @@
 <script setup>
 
-import {Head, useForm} from "@inertiajs/vue3";
+import {Head, Link, useForm} from "@inertiajs/vue3";
 import TextInput from "@/Components/TextInput.vue";
 import {reactive} from "vue";
 import InputError from "@/Components/InputError.vue";
@@ -11,14 +11,14 @@ import InputError from "@/Components/InputError.vue";
 
   <div class="wrapper">
     <div class="container dashboard">
-      <header class="header">
+      <header class="header hidden md:flex">
         <div class="tabs">
-          <a href="#" class="tab-item is-active">
+          <Link :href="route('dashboard')" class="tab-item is-active">
             <span class="">Websites</span>
-          </a>
-          <a href="#" class="tab-item">
+          </Link>
+          <Link :href="route('billing')" href="#" class="tab-item">
             <span class="">Billings</span>
-          </a>
+          </Link>
         </div>
 
         <div class="links">
@@ -26,24 +26,27 @@ import InputError from "@/Components/InputError.vue";
                        <button type="submit"><i class="fas fa-add"></i></button>
                     </span>
           <span class="link-item link-item_user">
-                        <i class="fas fa-user"></i>
+                       <Link :href="route('profile')"> <i class="fas fa-user"></i></Link>
                     </span>
         </div>
       </header>
       <vf-form @submit.prevent="submit" id="addSite">
-        <div class="main-panel main-panel_edit">
-          <div class="flex flex-row items-center">
-            <div class="pr-6">
+        <div class="main-panel main-panel_edit main-panel_new">
+          <div class="flex flex-row items-center w-full md:w-auto">
+            <div class="pr-6 b-back">
               <span @click="goBack" class="btn-back"><i class="fas fa-arrow-left"></i></span>
             </div>
-            <div class="panel-title">Add Website</div>
+            <div class="panel-title">
+                <span class="hidden md:inline">Add Website</span>
+                <span class="md:hidden">New Site</span>
+            </div>
           </div>
           <div class="panel-controls flex flex-row justify-end items-center">
             <button type="submit" @click="submit" class="btn-md btn-inverted">Save Changes</button>
             <button class="btn-remove">
               <i class="fa fa-trash-can" v-if="path !== '/addSite'"></i>
             </button>
-            <button class="btn-edit">
+            <button class="btn-edit hidden md:flex">
               <i class="fa-solid fa-pencil" v-if="path !== '/addSite'"></i>
               <i class="fa-solid fa-pencil" style="color: #979797" v-if="path == '/addSite'"></i>
             </button>
@@ -63,43 +66,48 @@ import InputError from "@/Components/InputError.vue";
                   </div>
                 </div>
 
-                <div class="mb-5 left">
-                  <label for="file-upload" class="block text-sm font-medium leading-6 text-gray-900">Icon</label>
-                  <div class="mt-2">
-                    <label  for="file" class="preview block text-sm font-medium leading-6 text-gray-900">
-                      <i v-if="!img"  class="fa-solid fa-plus"></i>
-                      <img class="previe" v-if="img" :src="img"/>
-                    </label>
-                    <input class="file" id="file" type="file" hidden="hidden"
-                           @change="appendFile($event.target.name, $event.target.files)"
-                           ref="file">
-                  </div>
-                </div>
-
-                <div class="mb-5 right">
-                  <label for="name" class="block text-sm font-medium leading-6 text-gray-900">Name</label>
-                  <div class="mt-2">
-                    <input v-model="form.name" required id="name" name="name" type="text" autocomplete="name"
-                           placeholder="Website Name"
-                           class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
-                    <InputError v-if="nameError" class="mt-2" :message="form.errors.name"/>
-                  </div>
-                </div>
-
-                <div class="mb-5 right color">
-                  <label for="color" class="block text-sm font-medium leading-6 text-gray-900">Color</label>
-                  <div class="mt-2">
-                    <div id="color" v-bind:style="{background: color}" @click="itemShow = !itemShow"
-                         class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6">
-                      <div class="for-caret"><i class="fa-solid fa-caret-down"></i></div>
+                <div class="site-name-wrap">
+                    <div class="mb-5 left">
+                        <label for="file-upload" class="block text-sm font-medium leading-6 text-gray-900">Icon</label>
+                        <div class="mt-2">
+                            <label  for="file" class="preview block text-sm font-medium leading-6 text-gray-900">
+                                <i v-if="!img"  class="fa-solid fa-plus"></i>
+                                <img class="previe" v-if="img" :src="img"/>
+                            </label>
+                            <input class="file" id="file" type="file" hidden="hidden"
+                                   @change="appendFile($event.target.name, $event.target.files)"
+                                   ref="file">
+                        </div>
                     </div>
-                    <div class="select-item" v-if="itemShow">
-                      <div style="background: #3D5F58" @click=setColor(dark_green)></div>
-                      <div style="background: #A7B57C" @click=setColor(light_green)></div>
-                      <div style="background: #FF920A" @click=setColor(orange)></div>
+
+                    <div class="right-group">
+                        <div class="mb-5 right">
+                            <label for="name" class="block text-sm font-medium leading-6 text-gray-900">Name</label>
+                            <div class="mt-2">
+                                <input v-model="form.name" required id="name" name="name" type="text" autocomplete="name"
+                                       placeholder="Website Name"
+                                       class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                                <InputError v-if="nameError" class="mt-2" :message="form.errors.name"/>
+                            </div>
+                        </div>
+
+                        <div class="mb-5 right color">
+                            <label for="color" class="block text-sm font-medium leading-6 text-gray-900">Color</label>
+                            <div class="mt-2 color-select-wrap">
+                                <div id="color" v-bind:style="{background: color}" @click="itemShow = !itemShow"
+                                     class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6">
+                                    <div class="for-caret"><i class="fa-solid fa-caret-down"></i></div>
+                                </div>
+                                <div class="select-item" v-if="itemShow">
+                                    <div style="background: #3D5F58" @click=setColor(dark_green)></div>
+                                    <div style="background: #A7B57C" @click=setColor(light_green)></div>
+                                    <div style="background: #FF920A" @click=setColor(orange)></div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                  </div>
-                </div>
+                </div> <!-- end .site-name-wrap -->
+
                 <div class="mb-5"><span v-if="fileErr" class="text-red-600 text-sm">{{form.errors.fileErr}}</span></div>
                 <div class="mb-5">
                   <label for="company" class="block text-sm font-medium leading-6 text-gray-900">Company</label>
@@ -147,7 +155,7 @@ import InputError from "@/Components/InputError.vue";
                   </div>
                 </div>
               </div>
-              <div class="service">
+              <div class="service mt-8 md:mt-0">
                 <div class="mb-5">
                   <label class="block text-sm font-medium leading-6 text-gray-900 show-form"
                          @click="serviceShow = !serviceShow"> <i class="fa-solid fa-plus"></i> <span class="service">Service Providers</span>
@@ -198,7 +206,7 @@ import InputError from "@/Components/InputError.vue";
                         <div class="form-group m-0">
                           <label>Renewal Date</label>
                           <div class="form-group form-group-icon">
-                            <input class="bg-grey" type="text" v-model="form.provider.renewal_date" placeholder="00 / 00 / 00">
+                            <VueDatePicker format="yyyy/MM/dd" v-model="form.provider.renewal_date"></VueDatePicker>
                             <i class="fa-solid fa-calendar"></i>
                           </div>
                         </div>
@@ -235,7 +243,7 @@ import InputError from "@/Components/InputError.vue";
                       <button v-if="serviceSave !== false" type="button" class="btn" @click="saveProvider(serviceSave)">Save Provider</button>
                     </div>
                   </div>
-                </div>
+                </div> <!-- end .service-form -->
 
                 <div class="provider-list" v-if="!serviceShow">
                   <div class="provider-item"v-for="(item, key, index) in form.providers" :key="key">
@@ -256,7 +264,7 @@ import InputError from "@/Components/InputError.vue";
                   <!-- end .provider-list -->
                 </div>
               </div>
-              <div class="software">
+              <div class="software mt-8 md:mt-0">
                 <div class="mb-5">
                   <label class="block text-sm font-medium leading-6 text-gray-900 show-form"
                          @click="showSoftware"> <i class="fa-solid fa-plus"></i> <span class="service">Software & Add-Ons</span>
@@ -308,7 +316,7 @@ import InputError from "@/Components/InputError.vue";
                         <div class="form-group m-0">
                           <label>Renewal Date</label>
                           <div class="form-group form-group-icon">
-                            <input class="bg-grey" type="text" placeholder="00 / 00 / 00" v-model="form.software.renewal_date">
+                            <VueDatePicker format="yyyy/MM/dd" v-model="form.software.renewal_date"></VueDatePicker>
                             <i class="fa-solid fa-calendar"></i>
                           </div>
                         </div>
@@ -363,6 +371,10 @@ import InputError from "@/Components/InputError.vue";
                     </div>
                   </div>
                 </div>
+              </div> <!-- end .software -->
+
+              <div class="form-footer flex justify-center mt-10 md:hidden">
+                  <button type="submit" class="btn" @click="submit" >Save Changes</button>
               </div>
             </div>
           </div>
@@ -374,6 +386,8 @@ import InputError from "@/Components/InputError.vue";
 <script>
 import {reactive} from "vue";
 import {useForm} from "@inertiajs/vue3";
+import VueDatePicker from '@vuepic/vue-datepicker';
+import '@vuepic/vue-datepicker/dist/main.css'
 
 export default {
   methods: {
@@ -438,6 +452,12 @@ export default {
         this.nameError = true;
         this.form.errors.name = "Field Name is required";
         return false;
+      }
+      if(this.form.providers.length === 0) {
+        this.form.providers.push(this.form.provider);
+      }
+      if(this.form.softwares.length === 0) {
+        this.form.softwares.push(this.form.software);
       }
       this.form.file = ['file', this.formFile.file, this.formFile.filename];
       if (this !== undefined && this.color) {

@@ -10,21 +10,21 @@ import InputError from "@/Components/InputError.vue";
   <Head title="Add Site"/>
   <div class="wrapper">
     <div class="container dashboard">
-      <header class="header">
+      <header class="header hidden md:flex">
         <div class="tabs">
-          <a href="#" class="tab-item is-active">
+          <Link :href="route('dashboard')" class="tab-item is-active">
             <span class="">Websites</span>
-          </a>
-          <a href="#" class="tab-item">
+          </Link>
+          <Link :href="route('billing')" href="#" class="tab-item">
             <span class="">Billings</span>
-          </a>
+          </Link>
         </div>
         <div class="links">
                     <span class="link-item link-item_add">
                        <Link :href="route('addSite')"><i class="fas fa-add"></i></Link>
                     </span>
           <span class="link-item link-item_user">
-                        <i class="fas fa-user"></i>
+                        <Link :href="route('profile')"> <i class="fas fa-user"></i></Link>
                     </span>
         </div>
       </header>
@@ -42,7 +42,7 @@ import InputError from "@/Components/InputError.vue";
           </button>
         </div>
       </div>
-      <main class="main-content">
+      <main class="main-content main-content_details">
         <div class="inner sited-detail">
           <div class="data card-list grid">
             <div class="card-content">
@@ -99,7 +99,7 @@ import InputError from "@/Components/InputError.vue";
                 <div class="circle"></div>
                 <em class="gray-text">Service Providers</em>
               </div>
-              <div v-for="(item, key, index) in site.provider" :key="key">
+              <div v-for="(item, key, index) in site.provider" :key="key" class="serv-item">
                 <div class="card-content detail" @click="showDetail(item, key)">
                   <div class="info">
                     <p class="card-title text-lg">{{ item.name }}</p>
@@ -156,8 +156,7 @@ import InputError from "@/Components/InputError.vue";
                         <div class="form-group m-0">
                           <label>Renewal Date</label>
                           <div class="form-group form-group-icon">
-                            <input class="bg-grey" type="text" v-model="element.renewal_date"
-                                   placeholder="00 / 00 / 00">
+                            <VueDatePicker format="yyyy/MM/dd" v-model="element.renewal_date"></VueDatePicker>
                             <i class="fa-solid fa-calendar"></i>
                           </div>
                         </div>
@@ -195,8 +194,11 @@ import InputError from "@/Components/InputError.vue";
                 </div>
                 <div class="service-form detail" :id="'id'+key">
                   <div class="form-container">
-                    <div class="form-header"><span class="serv-detail">{{ element.type }}</span><i
-                        class="fa-solid fa-pen" @click="editProvider(element, key)"></i></div>
+                    <div class="form-header">
+                        <span class="serv-close md:hidden" @click="showDetail(item, key)"><i class="fa-solid fa-xmark"></i></span>
+                        <span class="serv-detail hidden md:block">{{ element.type }}</span>
+                        <i class="fa-solid fa-pen" @click="editProvider(element, key)"></i>
+                    </div>
                     <div class="form-group-wrap bg-grey p-6 pt-4 globe-div">
                       <div class="globe">
                         <i class="fa-solid fa-globe"></i>
@@ -263,7 +265,7 @@ import InputError from "@/Components/InputError.vue";
                 <div class="circle"></div>
                 <em class="gray-text">Software & Add-ons</em>
               </div>
-              <div v-for="(item, key, index) in site.software" :key="key">
+              <div v-for="(item, key, index) in site.software" :key="key" class="serv-item">
                 <div class="card-content detail"  @click="showDetailSoft(item, key)">
                   <div class="info">
                     <p class="card-title">{{ item.name }}</p>
@@ -321,7 +323,7 @@ import InputError from "@/Components/InputError.vue";
                         <div class="form-group m-0">
                           <label>Renewal Date</label>
                           <div class="form-group form-group-icon">
-                            <input class="bg-grey" type="text" placeholder="00 / 00 / 00" v-model="elementSoft.renewal_date" >
+                            <VueDatePicker format="yyyy/MM/dd" v-model="elementSoft.renewal_date"></VueDatePicker>
                             <i class="fa-solid fa-calendar"></i>
                           </div>
                         </div>
@@ -359,8 +361,11 @@ import InputError from "@/Components/InputError.vue";
                 </div>
                 <div class="service-form detail" :id="'idSoft'+key">
                   <div class="form-container">
-                    <div class="form-header"><span class="serv-detail">{{ elementSoft.type }}</span><i
-                        class="fa-solid fa-pen" @click="editSoft(elementSoft, key)"></i></div>
+                    <div class="form-header">
+                        <span class="serv-close md:hidden" @click="showDetailSoft(item, key)"><i class="fa-solid fa-xmark"></i></span>
+                        <span class="serv-detail hidden md:block">{{ elementSoft.type }}</span>
+                        <i class="fa-solid fa-pen" @click="editSoft(elementSoft, key)"></i>
+                    </div>
                     <div class="form-group-wrap bg-grey p-6 pt-4 globe-div">
                       <div class="globe">
                         <i class="fa-solid fa-globe"></i>
@@ -433,10 +438,12 @@ import InputError from "@/Components/InputError.vue";
 <script>
 import {reactive} from "vue";
 import {useForm} from "@inertiajs/vue3";
+import VueDatePicker from '@vuepic/vue-datepicker';
+import '@vuepic/vue-datepicker/dist/main.css'
 
 export default {
   props: {
-    site: Array
+    site: Array,
   },
   data() {
     return {
@@ -583,7 +590,6 @@ export default {
     },
     showDetail(item, key) {
       var el = document.getElementById('id' + key);
-      console.log(el,item.show);
       el.style.display = "block";
       if (item.show) {
         el.style.display = "none";

@@ -3,9 +3,13 @@
 namespace App\Models;
 
 use App\Mail\ShareMail;
+use Carbon\Carbon;
+use DateTime;
 use Illuminate\Support\Facades\Auth;
 use MongoDB\Laravel\Eloquent\Model as Eloquent;
 use Illuminate\Support\Facades\Mail;
+use Spatie\GoogleCalendar\Event;
+
 class Websites extends Eloquent
 {
 
@@ -57,14 +61,24 @@ class Websites extends Eloquent
             $data->file('file')[1]->move(public_path() . '/icon/', $fileName);
             $uploadfile = "/icon/" . $fileName;
         }
-        if (!empty($site->provider)) {
-            foreach ($site->provider as $key => $host) {
-                $site->provider[$key]['show'] = false;
+        $providers = [];
+        $software = [];
+        if (!empty($data->providers)) {
+            $providers = $data->providers;
+            foreach ($data->providers as $key => $host) {
+                $providers[$key]['show'] = false;
+                if(!empty($host['renewal_date'])) {
+                    $providers[$key]['renewal_date'] = date("d/m/Y", strtotime($host['renewal_date']));
+                }
             }
         }
-        if (!empty($site->software)) {
-            foreach ($site->software as $key => $host) {
-                $site->software[$key]['showSoft'] = false;
+        if (!empty($data->softwares)) {
+            $software = $data->softwares;
+            foreach ($data->softwares as $key => $host) {
+                $software[$key]['showSoft'] = false;
+                if(!empty($host['renewal_date'])) {
+                    $software[$key]['renewal_date'] = date("d/m/Y", strtotime($host['renewal_date']));
+                }
             }
         }
         $site->url = $data->url;
@@ -76,8 +90,8 @@ class Websites extends Eloquent
         $site->tags = $data->tags;
         $site->shared_with = $data->shared_with;
         $site->notes = $data->notes;
-        $site->provider = $data->providers;
-        $site->software = $data->softwares;
+        $site->provider = $providers;
+        $site->software = $software;
         $site->save();
 
         return 'success';
@@ -97,14 +111,24 @@ class Websites extends Eloquent
             $site->file('file')[1]->move(public_path() . '/icon/', $fileName);
             $uploadfile = "/icon/" . $fileName;
         }
-        if (!empty($site->provider)) {
-            foreach ($site->provider as $key => $host) {
-                $site->provider[$key]['show'] = false;
+        $providers = [];
+        $software = [];
+        if (!empty($site->providers)) {
+            $providers = $site->providers;
+            foreach ($site->providers as $key => $host) {
+                $providers[$key]['show'] = false;
+                if(!empty($host['renewal_date'])) {
+                    $providers[$key]['renewal_date'] = date("d/m/Y", strtotime($host['renewal_date']));
+                }
             }
         }
-        if (!empty($site->software)) {
-            foreach ($site->software as $key => $host) {
-                $site->software[$key]['showSoft'] = false;
+        if (!empty($site->softwares)) {
+            $software = $site->softwares;
+            foreach ($site->softwares as $key => $host) {
+                $software[$key]['showSoft'] = false;
+                if(!empty($host['renewal_date'])) {
+                    $software[$key]['renewal_date'] = date("d/m/Y", strtotime($host['renewal_date']));
+                }
             }
         }
          Websites::create([
@@ -118,12 +142,36 @@ class Websites extends Eloquent
             'tags' => $site->tags,
             'shared_with' => $site->shared_with,
             'notes' => $site->notes,
-            'provider' => isset($site->providers) ? $site->providers : '',
-            'software' => isset($site->softwares) ? $site->softwares : '',
+            'provider' => $providers,
+            'software' =>$software,
         ]);
 
         if(!empty($site->shared_with)) {
            Websites::share($site->shared_with);
+        }
+        if (Auth::user()->google_calendar_id && !empty(Auth::user()->google_calendar_id)) {
+            config(['google-calendar.calendar_id' => Auth::user()->google_calendar_id]);
+            $event = new Event;
+            foreach ($providers as $host) {
+                if (!empty($host['renewal_date'])) {
+                    $event->name = $host['name'];
+                    $date = DateTime::createFromFormat("d/m/Y", $host['renewal_date']);
+                    $show_date = $date->format('Y-m-d');
+                    $event->startDate = Carbon::createFromFormat('Y-m-d', $show_date);
+                    $event->endDate = Carbon::createFromFormat('Y-m-d', $show_date);
+                    $event->save();
+                }
+            }
+            foreach ($software as $host) {
+                if (!empty($host['renewal_date'])) {
+                    $event->name = $host['name'];
+                    $date = DateTime::createFromFormat("d/m/Y", $host['renewal_date']);
+                    $show_date = $date->format('Y-m-d');
+                    $event->startDate = Carbon::createFromFormat('Y-m-d', $show_date);
+                    $event->endDate = Carbon::createFromFormat('Y-m-d', $show_date);
+                    $event->save();
+                }
+            }
         }
 
         return 'success';
