@@ -314,21 +314,55 @@ export default {
 
     computed: {
         dynamicCalendarAttributes() {
-            return this.arr.map((service) => {
-                const [day, month, year] = service.provider.renewal_date.split("/").map(Number);
-                return {
-                    dates: new Date(year, month - 1, day),
-                    dot: {
-                        style: {
-                            backgroundColor: service.color,
-                        }
-                    },
-                    popover: {
-                        label: `${service.provider.type} (${service.url}) expires ${service.provider.renewal_date}`,
-                    },
+            const groupedAttributes = {};
+            const maxDate = new Date();
+            maxDate.setFullYear(maxDate.getFullYear() + 1); // Не переносимо події далі, ніж на рік вперед
+
+            this.arr.forEach((service) => {
+                console.log(service.provider.renewal_date);
+                let [day, month, year] = service.provider.renewal_date.split("/").map(Number);
+                let eventDate = new Date(year, month - 1, day);
+
+                const renewalSteps = {
+                    "Weekly": 7,
+                    "Monthly": "month",
+                    "Annual": "year"
                 };
+
+                if (renewalSteps[service.provider.renewal_type]) {
+                    while (eventDate <= maxDate) {
+                        const dateKey = `${eventDate.getFullYear()}-${eventDate.getMonth() + 1}-${eventDate.getDate()}`;
+
+                        if (!groupedAttributes[dateKey]) {
+                            groupedAttributes[dateKey] = {
+                                dates: new Date(eventDate),
+                                dot: {
+                                    style: {
+                                        backgroundColor: service.color,
+                                    }
+                                },
+                                popover: {
+                                    label: `${service.provider.type} (${service.url}) expires ${service.provider.renewal_date}`,
+                                },
+                            };
+                        } else {
+                            groupedAttributes[dateKey].popover.label += `\n ${service.provider.type} (${service.url}) expires ${service.provider.renewal_date}`;
+                        }
+
+                        if (service.provider.renewal_type === "Weekly") {
+                            eventDate.setDate(eventDate.getDate() + 7);
+                        } else if (service.provider.renewal_type === "Monthly") {
+                            eventDate.setMonth(eventDate.getMonth() + 1);
+                        } else if (service.provider.renewal_type === "Annual") {
+                            eventDate.setFullYear(eventDate.getFullYear() + 1);
+                        }
+                    }
+                }
             });
+
+            return Object.values(groupedAttributes);
         },
+
         calendarAttributes() {
             return [...this.baseCalendarAttributes, ...this.dynamicCalendarAttributes];
         },
@@ -695,5 +729,8 @@ export default {
 .calendar-container .vc-day-popover-header,
 .calendar-container .vc-day-popover-row-label {
     font-size: 16px;
+}
+.calendar-container .vc-popover-content {
+    white-space: pre-line !important;
 }
 </style>
