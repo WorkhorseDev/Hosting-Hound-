@@ -70,6 +70,14 @@ const submit = () => {
             Resend email?
           </Link>
           </div>
+            <div class="flex items-center justify-center mt-10">
+                <Link
+                    :href="route('login')"
+                    class="link-item check-label"
+                >
+                    Return to Login
+                </Link>
+            </div>
         </form>
     </GuestLayout>
 </template>
