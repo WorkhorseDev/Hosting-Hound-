@@ -159,7 +159,7 @@ const route = inject("route");
 
       <main class="main-content">
         <div class="inner">
-          <div class="empty-state" v-show="!sites">
+          <div class="empty-state" v-show="arr.length === 0">
             <div class="icon">
               <i class="fa-solid fa-heart-crack"></i>
             </div>
@@ -579,7 +579,6 @@ export default {
     },
 
     getCheck(el) {
-      console.log(this.countAll);
       this.selectOnes = true;
       if (!el.target.checked && this.selectAll) {
         this.countAll--;
