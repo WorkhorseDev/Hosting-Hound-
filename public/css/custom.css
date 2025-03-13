@@ -1478,15 +1478,6 @@ billing-filter  {
     margin-top: -20px;
 }
 
-@media screen and (max-width: 1160px) {
-    .card-list {
-        margin: 0;
-    }
-    .card-item {
-        width: calc(50% - 20px);
-    }
-}
-
 .link-item.link-item_user.account {
     font-size: 55px;
     color: #3d5f58;
@@ -1673,6 +1664,28 @@ h4.notification {
     max-width: 930px;
 }
 
+@media screen and (max-width: 1160px) {
+    .card-list {
+        margin: 0;
+    }
+    .card-item {
+        width: calc(50% - 20px);
+    }
+    .container.dashboard {
+        max-width: 100%;
+    }
+    .main-content.add-site {
+        padding: 0px;
+    }
+    .fa-solid.fa-plus {
+        margin-left: 0px;
+    }
+    .service-form {
+        width: 315px;
+        margin-left: 18px;
+    }
+}
+
 @media screen and (max-width: 768px) {
     .auth-layout {
         flex-direction: column;
@@ -1725,9 +1738,7 @@ h4.notification {
     .card-list.filter_active .card-item {
         width: 100%;
     }
-}
 
-@media screen and (max-width: 768px) {
     .header {
         flex-direction: column-reverse;
         padding-top: 0;
@@ -2037,9 +2048,15 @@ h4.notification {
     }
     .main-content.add-site {
         padding: 0 0 50px;
+        width: 80%;
+        margin: auto;
+    }
+    .inner {
+        max-width: 450px;
+        margin: auto;
     }
     .main-content_edit.add-site {
-        padding: 40px 25px;
+       margin-top: 20px;
     }
     .main-content.add-site .grid {
         display: block;

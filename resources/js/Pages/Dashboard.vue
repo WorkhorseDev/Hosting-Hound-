@@ -60,7 +60,8 @@ const route = inject("route");
                   <button class="btn-md" type="button" @click="showUnshare">Unshare</button>
                   <button class="btn-md" type="button" @click="showDelete">Delete</button>
               </div>
-              <span class="select-items md:hidden"><em>{{ countAll }} selected item (s)</em></span>
+              <span v-if="selectAll" class="select-items md:hidden"><em>{{ countAll }} selected item (s)</em></span>
+              <span v-if="!selectAll" class="select-items md:hidden"><em>{{ siteLength }} selected item (s)</em></span>
               <div class="panel-controls panel-controls_m-buttons md:hidden flex flex-row gap-4">
                   <button class="btn-md" type="button" @click="showShare">Share</button>
                   <button class="btn-md" type="button" @click="showUnshare">Unshare</button>
@@ -580,6 +581,7 @@ export default {
 
     getCheck(el) {
       this.selectOnes = true;
+      this.selectAll = false;
       if (!el.target.checked && this.selectAll) {
         this.countAll--;
         this.siteLength--;
