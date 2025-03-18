@@ -32,7 +32,7 @@ const route = inject("route");
                     </span>
         </div>
       </header>
-      <div class="main-panel">
+      <div class="main-panel billing">
         <div class="search-section">
           <span class="calendar-btn" @click="showCalendar">
               <i class="fa-solid" :class="[ isCalendarOpen ? 'fa-list' : 'fa-calendar-days' ]"></i>
@@ -611,6 +611,11 @@ export default {
 
     showCalendar() {
       this.isCalendarOpen = !this.isCalendarOpen;
+      if( this.isCalendarOpen) {
+          document.getElementsByClassName("card-list")[0].style.top = '555px';
+      } else {
+          document.getElementsByClassName("card-list")[0].style.top = '0px';
+      }
     },
 
     showDropdownColor() {

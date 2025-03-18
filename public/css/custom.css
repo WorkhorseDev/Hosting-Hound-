@@ -1687,6 +1687,48 @@ h4.notification {
 }
 
 @media screen and (max-width: 768px) {
+    .host-detail .fa-solid.fa-x {
+        font-size: 25px;
+        position: absolute;
+        top: -106px;
+        z-index: 111;
+        left: 25px;
+    }
+    .service-form.detail.host .left-line, .detail .globe-div .globe {
+        display: none;
+    }
+    .detail .globe-div .right-side {
+        margin-top: 10px;
+    }
+    .billing-calendar .vc-day-content {
+        width: 32px !important;
+        height: 32px !important;
+    }
+    .billing-calendar .vc-day-content,.billing-calendar .vc-weekday,.billing-calendar .vc-header .vc-title {
+        font-size: 20px !important;
+    }
+    .billing-calendar .vc-day .vc-day-box-center-bottom {
+        top: -6px !important;
+    }
+    .billing-calendar .vc-dots .vc-dot {
+        width: 14px !important;
+        height: 14px !important;
+    }
+    .billing-calendar .vc-weekdays,   .billing-calendar .vc-header  {
+        margin-bottom: 0px !important;
+    }
+    .billing-calendar .vc-pane-header-wrapper {
+        width: 358px !important;
+    }
+    .billing .card-list {
+        position: relative !important;
+    }
+    .calendar-container {
+        max-width: 100%;
+        position: absolute !important;
+        left: 0px !important;
+        width: 100%;
+    }
     .auth-layout {
         flex-direction: column;
         padding: 15px 10px;
@@ -1765,6 +1807,9 @@ h4.notification {
         margin-left: -20px;
         margin-right: -20px;
         width: auto;
+    }
+    .main-panel.billing {
+        padding: 17px 25px 20px;
     }
     .search-section {
         width: 100%;
@@ -1980,6 +2025,9 @@ h4.notification {
         width: 90%;
         max-width: 380px;
         margin: 50px auto 0;
+    }
+    .host.detail .form-container {
+        background-color: #f3f3f3;
     }
     .edit-provider.detail .form-container {
         height: auto;
