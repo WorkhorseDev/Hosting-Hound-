@@ -31,7 +31,7 @@ import {reactive} from "vue";
           <i class="fa-solid fa-x" @click="goBack"></i>
           <div class="grid grid-cols-3 gap-4">
             <div class="mb-5">
-              <p class="provider-text">{{ provider.type }} Renewal Details</p>
+              <p class="provider-text"><span class="service-name">{{ provider.type }}</span> Renewal Details</p>
               <div class="form-group-wrap p-6 pt-4">
                 <i class="fa-solid fa-sack-dollar"></i> <span class="card-title"> $ {{ provider.cost }}</span>
                 <div class="dark-line host-detail"></div>
@@ -100,7 +100,7 @@ import {reactive} from "vue";
                 <!-- end .provider-list -->
               </div>
             </div>
-            <div class="mb-5">
+            <div class="mb-5 billing-source">
               <div class="text-block">
                 <em class="gray-text">Billing Source:</em>
               </div>
@@ -163,7 +163,7 @@ import {reactive} from "vue";
                 </div>
                 <span class="card-color" :style="{ backgroundColor: site.color }"></span>
               </div>
-              <div class="service-form detail host">
+              <div class="service-form detail host billing">
                 <div class="form-container">
                   <div class="left-line"></div>
                   <div class="form-group-wrap bg-grey p-6 pt-4 globe-div">

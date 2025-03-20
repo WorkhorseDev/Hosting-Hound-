@@ -1687,15 +1687,17 @@ h4.notification {
 }
 
 @media screen and (max-width: 768px) {
-    .host-detail .fa-solid.fa-x {
-        font-size: 25px;
-        position: absolute;
-        top: -106px;
-        z-index: 111;
-        left: 25px;
-    }
-    .service-form.detail.host .left-line, .detail .globe-div .globe {
+    .service-form.detail.host .left-line, .detail .globe-div .globe, .service-name, .text-block.host,.left-line.on-host, .host-site-detail,.service-form.detail.host {
         display: none;
+    }
+    .mb-5.billing-source,.mb-5.last-host {
+        margin-left: -20px;
+    }
+    .host-detail .inner.sited-detail .mb-5 {
+        width: 345px;
+    }
+    .host-detail .form-group-wrap.bg-grey {
+        margin-left: -40px;
     }
     .detail .globe-div .right-side {
         margin-top: 10px;
@@ -1767,7 +1769,6 @@ h4.notification {
     #terms {
         margin-left: 20px;
     }
-
 
     .card-list {
         flex-direction: column;
@@ -2008,7 +2009,6 @@ h4.notification {
         margin-left: -20px;
         margin-right: -20px;
     }
-
     .service-form.detail {
         margin: 0;
         position: fixed;
@@ -2020,6 +2020,9 @@ h4.notification {
         z-index: 10;
         overflow-y: auto;
         padding-bottom: 50px;
+    }
+    .service-form.detail.host.billing {
+        position: relative;
     }
     .detail .form-container {
         width: 90%;
