@@ -1687,6 +1687,10 @@ h4.notification {
 }
 
 @media screen and (max-width: 768px) {
+    .tags p.info {
+        font-size: 15px;
+        padding-top: 5px;
+    }
     .service-form.detail.host .left-line, .detail .globe-div .globe, .service-name, .text-block.host,.left-line.on-host, .host-site-detail,.service-form.detail.host {
         display: none;
     }
