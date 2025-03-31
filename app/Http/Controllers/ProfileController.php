@@ -123,7 +123,7 @@ class ProfileController extends Controller
               $event->save();
           }
       } catch (\Exception $e) {
-          dd($e->getMessage());
+          return $e->getMessage();
       }
         return redirect()->route('profile');
     }

@@ -181,11 +181,11 @@ export default {
   data() {
     return {
       google: false,
-      dayOfDeadline: this.user.frequency.dayOfDeadline,
-      twoWeek: this.user.frequency.twoWeek,
-      oneWeek: this.user.frequency.oneWeek,
+      dayOfDeadline: this.user?.frequency?.dayOfDeadline || null,
+      twoWeek: this.user?.frequency?.twoWeek || null,
+      oneWeek: this.user?.frequency?.oneWeek || null,
       notificationActive: this.user.notification,
-      dayBeforeDeadline: this.user.frequency.dayBeforeDeadline,
+      dayBeforeDeadline: this.user?.frequency?.dayBeforeDeadline,
       personal: true,
       notification: false,
       showPassword: false,
@@ -218,10 +218,10 @@ export default {
         notification: false,
         google_email: this.user.google_email,
         frequency: {
-          'dayOfDeadline': this.user.frequency.dayOfDeadline,
-          'dayBeforeDeadline': this.user.frequency.dayBeforeDeadline,
-          'oneWeek': this.user.frequency.oneWeek,
-          'twoWeek': this.user.frequency.twoWeek
+          'dayOfDeadline': this.user?.frequency?.dayOfDeadline || null,
+          'dayBeforeDeadline': this.user?.frequency?.dayBeforeDeadline || null,
+          'oneWeek': this.user?.frequency?.oneWeek || null,
+          'twoWeek': this.user?.frequency?.twoWeek || null
         }
       }),
     }
