@@ -150,7 +150,9 @@ class Websites extends Eloquent
            Websites::share($site->shared_with);
         }
         if (Auth::user()->google_calendar_id && !empty(Auth::user()->google_calendar_id)) {
-            config(['google-calendar.calendar_id' => Auth::user()->google_calendar_id]);
+            $id = Auth::user()->google_calendar_id;
+            config(['google-calendar.calendar_id' => $id]);
+            config(['google-calendar.token_json' =>  storage_path('app/google-calendar/'.Auth::user()->_id.'.json.')]);
             $event = new Event;
             foreach ($providers as $host) {
                 if (!empty($host['renewal_date'])) {
