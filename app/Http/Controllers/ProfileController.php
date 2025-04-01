@@ -128,7 +128,7 @@ class ProfileController extends Controller
               $showDate = $date->format('Y-m-d');
 
               $event = new \Google_Service_Calendar_Event([
-                  'summary' => $host['name'],
+                  'summary' => $host['type'] .'('.$host['name'].') renews ' .$host['renewal_type']. ' on the ' . $host['renewal_date'],
                   'start' => [
                       'date' => $showDate,
                       'timeZone' => 'America/New_York',
