@@ -70,7 +70,7 @@ class ProfileController extends Controller
     public function createGoogleCalendarEvent() {
 
         $authUser = Auth::user();
-        config(['google-calendar.token_json' =>  storage_path('app/google-calendar/'.$authUser->_id.'.json.')]);
+        config(['google-calendar.token_json' =>  storage_path('app/google-calendar/'.$authUser->_id.'.json')]);
         $googleClient = new Google_Client();
         $googleClient->setAccessToken( $authUser->google_token);
         if ($googleClient->isAccessTokenExpired()) {
@@ -78,12 +78,11 @@ class ProfileController extends Controller
             $authUser->google_token = $googleClient->getAccessToken();
             $authUser->save();
         }
-
+        $googleClient->setAuthConfig(storage_path('app/google-calendar/oauth-credentials.json'));
       try {
           if ($authUser->google_calendar_id && !empty($authUser->google_calendar_id)) {
               $id = $authUser->google_calendar_id;
           } else {
-              $googleClient->setAuthConfig(storage_path('app/google-calendar/oauth-credentials.json'));
               $googleClient->addScope(Google_Service_Calendar::CALENDAR);
               $service = new Google_Service_Calendar($googleClient);
               $calendar = new Google_Service_Calendar_Calendar();
@@ -94,36 +93,60 @@ class ProfileController extends Controller
               $authUser->google_calendar_id = $id;
               $authUser->save();
           }
-          config(['google-calendar.calendar_id' => $id]);
-          $event = new Event;
-          $sites = Websites::all()->where('user_id', '=', Auth::user()->_id);
+          $googleClient = new \Google_Client();
+          $googleClient->setAuthConfig(storage_path('app/google-calendar/oauth-credentials.json'));
+          $googleClient->setAccessToken(json_decode(file_get_contents(storage_path('app/google-calendar/'.$authUser->_id.'.json')), true));
+
+          $calendarService = new \Google_Service_Calendar($googleClient);
+          $calendarId = $id;
+
+          $sites = Websites::where('user_id', $authUser->_id)->get();
+
           $hosts = [];
           foreach ($sites as $site) {
               if (!empty($site->provider)) {
-                  foreach ($site->provider as $key => $host) {
+                  foreach ($site->provider as $host) {
                       if (!empty($host['renewal_date'])) {
                           $hosts[] = $host;
                       }
                   }
               }
               if (!empty($site->software)) {
-                  foreach ($site->software as $key => $soft) {
+                  foreach ($site->software as $soft) {
                       if (!empty($soft['renewal_date'])) {
                           $hosts[] = $soft;
                       }
                   }
               }
           }
+
           foreach ($hosts as $host) {
-              $event->name = $host['name'];
-              $date = DateTime::createFromFormat("d/m/Y" , $host['renewal_date']);
-              $show_date = $date->format('Y-m-d');
-              $event->startDate = Carbon::createFromFormat('Y-m-d', $show_date);
-              $event->endDate = Carbon::createFromFormat('Y-m-d', $show_date);
-              $event->save();
+              $date = DateTime::createFromFormat("d/m/Y", $host['renewal_date']);
+              if (!$date) {
+                  continue;
+              }
+              $showDate = $date->format('Y-m-d');
+
+              $event = new \Google_Service_Calendar_Event([
+                  'summary' => $host['name'],
+                  'start' => [
+                      'date' => $showDate,
+                      'timeZone' => 'America/New_York',
+                  ],
+                  'end' => [
+                      'date' => $showDate,
+                      'timeZone' => 'America/New_York',
+                  ],
+              ]);
+
+              try {
+                  $calendarService->events->insert($calendarId, $event);
+              } catch (\Exception $e) {
+                  return ( $e->getMessage());
+              }
           }
       } catch (\Exception $e) {
-          return $e->getMessage();
+          return ($e->getMessage());
       }
         return redirect()->route('profile');
     }

@@ -316,7 +316,7 @@ export default {
         dynamicCalendarAttributes() {
             const groupedAttributes = {};
             const maxDate = new Date();
-            maxDate.setFullYear(maxDate.getFullYear() + 1); // Не переносимо події далі, ніж на рік вперед
+            maxDate.setFullYear(maxDate.getFullYear() + 1);
 
             this.arr.forEach((service) => {
                 console.log(service.provider.renewal_date);
@@ -342,11 +342,11 @@ export default {
                                     }
                                 },
                                 popover: {
-                                    label: `${service.provider.type} (${service.url}) expires ${service.provider.renewal_date}`,
+                                    label: `${service.provider.type} (${service.url}) renews ${service.provider.renewal_type} on the ${service.provider.renewal_date}`,
                                 },
                             };
                         } else {
-                            groupedAttributes[dateKey].popover.label += `\n ${service.provider.type} (${service.url}) expires ${service.provider.renewal_date}`;
+                            groupedAttributes[dateKey].popover.label += `\n ${service.provider.type} (${service.url}) renews  ${service.provider.renewal_type} on the ${service.provider.renewal_date}`;
                         }
 
                         if (service.provider.renewal_type === "Weekly") {
