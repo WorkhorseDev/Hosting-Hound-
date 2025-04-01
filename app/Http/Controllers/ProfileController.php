@@ -125,7 +125,7 @@ class ProfileController extends Controller
       } catch (\Exception $e) {
           return $e->getMessage();
       }
-        return redirect()->route('profile');
+        return redirect()->route('profile',['connected' => 'yes']);
     }
 
     /**
