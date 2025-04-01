@@ -37,7 +37,7 @@ const route = inject("route");
               <span @click="goBack" class="btn-back"><i class="fas fa-arrow-left"></i></span>
             </div>
             <div class="panel-title">Account Settings</div>
-              <div v-if="connected === 'yes'">Google Calendar is connected!</div>
+              <div class="panel-title calendar" v-if="connected === 'yes'">Google Calendar is connected!</div>
           </div>
           <div class="panel-controls flex flex-row justify-end items-center" v-if="notification || google">
             <button type="submit" @click="submit" class="btn-md btn-inverted">Save Changes</button>
@@ -177,11 +177,11 @@ import {useForm} from "@inertiajs/vue3";
 
 export default {
   props: {
-    user: Array,
-    connected: String
+    user: Array
   },
   data() {
     return {
+      connected: null,
       google: false,
       dayOfDeadline: this.user?.frequency?.dayOfDeadline || null,
       twoWeek: this.user?.frequency?.twoWeek || null,
@@ -305,7 +305,11 @@ export default {
      //   onFinish: () => window.location.reload()
       });
     }
-  }
+  },
+    mounted() {
+        const urlParams = new URLSearchParams(window.location.search);
+        this.connected = urlParams.get('connected');
+    }
 }
 
 </script>

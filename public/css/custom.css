@@ -517,6 +517,12 @@ p.terms-text {
     margin-left: 15px;
     text-decoration: underline;
 }
+
+.panel-title.calendar {
+    margin-left: 230px;
+    font-size: 35px;
+}
+
 .main-panel .btn-back {
     font-size: 40px;
     cursor: pointer;
