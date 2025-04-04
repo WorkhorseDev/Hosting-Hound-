@@ -342,11 +342,11 @@ export default {
                                     }
                                 },
                                 popover: {
-                                    label: `${service.provider.type} (${service.url}) renews ${service.provider.renewal_type} on the ${service.provider.renewal_date}`,
+                                    label: `${service.provider.type} (${service.url}) renews ${service.provider.renewal_type} starting on  ${service.provider.renewal_date}`,
                                 },
                             };
                         } else {
-                            groupedAttributes[dateKey].popover.label += `\n ${service.provider.type} (${service.url}) renews  ${service.provider.renewal_type} on the ${service.provider.renewal_date}`;
+                            groupedAttributes[dateKey].popover.label += `\n ${service.provider.type} (${service.url}) renews  ${service.provider.renewal_type} starting on ${service.provider.renewal_date}`;
                         }
 
                         if (service.provider.renewal_type === "Weekly") {

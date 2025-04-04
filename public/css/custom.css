@@ -519,8 +519,15 @@ p.terms-text {
 }
 
 .panel-title.calendar {
-    margin-left: 230px;
-    font-size: 35px;
+    font-size: 30px;
+    width: 500px;
+    text-align: center;
+    margin-bottom: 55px;
+    text-decoration: none;
+}
+
+.panel-title.calendar a {
+    text-decoration: underline;
 }
 
 .main-panel .btn-back {

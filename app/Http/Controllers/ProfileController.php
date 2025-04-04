@@ -28,8 +28,12 @@ class ProfileController extends Controller
     public function edit()
     {
         $user = Auth::user();
+        $connected = 'no';
         $user->pass = base64_decode(Auth::user()->pass);
-        return Inertia::render('Profile/Edit',['user'=> $user]);
+        if ($user->google_calendar_id && !empty($user->google_calendar_id)) {
+            $connected = 'yes';
+        }
+        return Inertia::render('Profile/Edit',['user'=> $user, 'connected' => $connected]);
     }
 
     public function redirectToGoogle()
@@ -67,6 +71,26 @@ class ProfileController extends Controller
         return redirect()->route('profile', ['connected' => 'yes']);
 
     }
+
+    public function disconnectGoogle() {
+        $authUser = Auth::user();
+        $googleClient = new \Google_Client();
+        $googleClient->setAuthConfig(storage_path('app/google-calendar/oauth-credentials.json'));
+        $googleClient->setAccessToken(json_decode(file_get_contents(storage_path('app/google-calendar/'.$authUser->_id.'.json')), true));
+
+        $service = new \Google_Service_Calendar($googleClient);
+
+        try {
+            $service->calendars->delete( $authUser->google_calendar_id);
+            $authUser->google_calendar_id = '';
+            $authUser->save();
+            return redirect()->route('profile', ['connected' => 'no']);
+        } catch (Exception $e) {
+            dd($e->getMessage());
+        }
+
+    }
+
     public function createGoogleCalendarEvent() {
 
         $authUser = Auth::user();
@@ -126,9 +150,22 @@ class ProfileController extends Controller
                   continue;
               }
               $showDate = $date->format('Y-m-d');
+              $recurrence = [];
+
+              switch (strtolower($host['renewal_type'])) {
+                  case 'annual':
+                      $recurrence = ['RRULE:FREQ=YEARLY'];
+                  break;
+                  case 'monthly':
+                      $recurrence = ['RRULE:FREQ=MONTHLY'];
+                  break;
+                  case 'weekly':
+                      $recurrence = ['RRULE:FREQ=WEEKLY'];
+                  break;
+              }
 
               $event = new \Google_Service_Calendar_Event([
-                  'summary' => $host['type'] .'('.$host['name'].') renews ' .$host['renewal_type']. ' on the ' . $host['renewal_date'],
+                  'summary' => $host['type'] .'('.$host['name'].') renews ' .$host['renewal_type']. ' starting on ' . $host['renewal_date'],
                   'start' => [
                       'date' => $showDate,
                       'timeZone' => 'America/New_York',
@@ -137,6 +174,7 @@ class ProfileController extends Controller
                       'date' => $showDate,
                       'timeZone' => 'America/New_York',
                   ],
+                  'recurrence' => $recurrence,
               ]);
 
               try {

@@ -37,6 +37,7 @@ Route::middleware('auth', 'twofactor')->group(function () {
     Route::get('auth/google', [ProfileController::class, 'redirectToGoogle'])->name('auth/google');
     Route::get('auth/google/callback', [ProfileController::class, 'handleGoogleCallback'])->name('auth/google/callback');
     Route::get('createEvent', [ProfileController::class, 'createGoogleCalendarEvent'])->name('createEvent');
+    Route::get('disconnect/google', [ProfileController::class, 'disconnectGoogle'])->name('disconnect/google');
 });
 
 require __DIR__.'/auth.php';
