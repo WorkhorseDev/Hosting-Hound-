@@ -529,6 +529,24 @@ p.terms-text {
 .panel-title.calendar a {
     text-decoration: underline;
 }
+.fa-check {
+    margin: auto;
+    font-size: 46px;
+    color: #3D5F58;
+    text-align: center;
+    margin-bottom: 20px;
+}
+.empty-calendar {
+    font-size: 25px;
+    color: rgb(21, 32, 46, 0.6);
+    display: block;
+    text-align: center;
+    width: 100%;
+}
+
+.empty-calendar.black {
+    color: #000;
+}
 
 .main-panel .btn-back {
     font-size: 40px;
@@ -1741,6 +1759,15 @@ h4.notification {
     }
     .billing .card-list {
         position: relative !important;
+    }
+    .billing .card-list.empty {
+        margin-top: 550px;
+    }
+    .empty-calendar {
+        font-size: 18px;
+    }
+    .fa-check {
+        font-size: 33px;
     }
     .calendar-container {
         max-width: 100%;
