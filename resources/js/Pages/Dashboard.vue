@@ -129,7 +129,8 @@ const route = inject("route");
         <div class="options">
           <label for="select_all" class="option-item">
             <input type="checkbox" :checked="selectAll" @click="selectAll = !selectAll" id="select_all">
-            <span class="select-text">select all</span>
+            <span class="select-text" v-if="!selectAll">select all</span>
+            <span class="select-text" v-if="selectAll">deselect all</span>
           </label>
           <label for="sort_by_company" class="option-item">
             <input type="checkbox" :checked="sortCompany" @change="sortedArray" id="sort_by_company">

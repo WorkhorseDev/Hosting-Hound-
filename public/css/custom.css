@@ -1176,7 +1176,7 @@ select option {
 }
 
 .left-line.second {
-    height: 63px;
+    height: auto;
     padding-left: 20px;
     margin-top: 10px;
 }
@@ -1198,7 +1198,7 @@ select option {
 }
 
 .tags {
-    width: 65px;
+    width: 107px;
     height: 33px;
     display: inline-block;
     background: #15202E;
@@ -1722,8 +1722,11 @@ h4.notification {
         font-size: 15px;
         padding-top: 5px;
     }
-    .service-form.detail.host .left-line, .detail .globe-div .globe, .service-name, .text-block.host,.left-line.on-host, .host-site-detail,.service-form.detail.host {
+    .service-form.detail.host .left-line, .service-name, .text-block.host,.left-line.on-host, .host-site-detail,.service-form.detail.host {
         display: none;
+    }
+    .detail .globe-div .globe {
+        margin-left: -15px;
     }
     .mb-5.billing-source,.mb-5.last-host {
         margin-left: -20px;
