@@ -1325,7 +1325,7 @@ em.gray-text {
     margin-top: 34px;
 }
 
-.dp--tp-wrap {
+.dp--tp-wrap, .panel-title.mobile-personal {
     display: none;
 }
 
@@ -1695,6 +1695,8 @@ h4.notification {
     max-width: 930px;
 }
 
+
+
 @media screen and (max-width: 1160px) {
     .card-list {
         margin: 0;
@@ -1718,6 +1720,9 @@ h4.notification {
 }
 
 @media screen and (max-width: 768px) {
+    .panel-title.mobile-personal {
+        display: block;
+    }
     .tags p.info {
         font-size: 15px;
         padding-top: 5px;
@@ -1828,7 +1833,9 @@ h4.notification {
     .card-list.filter_active .card-item {
         width: 100%;
     }
-
+    .header.profile {
+        display: none;
+    }
     .header {
         flex-direction: column-reverse;
         padding-top: 0;
@@ -1979,6 +1986,27 @@ h4.notification {
         align-items: center;
         background: rgba(255, 255, 255, 0.8);
     }
+    .profile-edit .filter-form {
+        width: 334px;
+    }
+    .form-group-icon.account .filter-search input {
+        width: 300px;
+        margin: auto;
+        margin-bottom: 20px;
+    }
+    .form-group-icon.account i.fa-lock.profile {
+        left: 270px;
+    }
+    .profile-edit .filter-form .form-group {
+        margin-bottom: 0px;
+    }
+    .profile-edit .row.flex.justify-center.mb-5.buttons {
+        top: 60px;
+        left: -280px;
+    }
+    .row.flex.justify-center.mb-5.buttons#email-true {
+        top: 55px;
+    }
     .filter-form {
         position: relative;
         max-width: 95%;
@@ -2022,6 +2050,67 @@ h4.notification {
         border-radius: 0;
         margin-bottom: 0;
         padding-top: 25px;
+    }
+    #saveAccount .main-panel_edit {
+        background: #F7F7F7;
+        box-shadow: none;
+    }
+    #saveAccount .fas.fa-user {
+        font-size: 60px;
+    }
+    button.account {
+        width: 348px;
+    }
+    #saveAccount .panel-title,#saveAccount .fas.fa-arrow-left {
+        color: #3D5F58;
+        font-size: 40px;
+        text-decoration: none;
+        line-height: 40px;
+        text-align: center;
+        margin-left: 0px;
+    }
+    #saveAccount .items-center {
+        margin: auto;
+        width: 210px;
+    }
+    #saveAccount .w-16.h-10.flex.items-center.bg-gray-300.rounded-full.p-1 {
+        width: 70px;
+    }
+    .notification .select-text, h4.notification {
+        font-size: 21px;
+    }
+    #saveAccount .btn-md.btn-inverted.save {
+        display: none;
+    }
+    .mb-5.profile-edit.notification {
+        margin-left: auto;
+    }
+    h4.notification {
+        margin-top: -10px;
+    }
+    .notification .select-text {
+        width: 230px;
+    }
+    .notification .form-group-icon {
+        margin: auto;
+        width: 322px;
+    }
+    .mb-5.notification {
+        width: 300px;
+        margin: auto;
+    }
+    .notification .select-text {
+        font-size: 21px;
+    }
+    .form-group-icon.account i {
+        left: 50px;
+        top: 11px;
+    }
+    .account .fa-solid.fa-eye-slash, .fa-solid.fa-eye {
+        margin-left: 235px;
+    }
+    .form-group-icon.account i.fa-pencil {
+        left: 315px;
     }
     .panel-title {
         font-size: 25px;
@@ -2147,6 +2236,25 @@ h4.notification {
     .main-content.add-site {
         padding: 0 0 50px;
         width: 80%;
+        margin: auto;
+    }
+    .main-content.add-site.profile {
+        width: 100%;
+        padding: 0px;
+    }
+    .logout {
+        background: #3D5F58;
+    }
+    .form-group-icon.account input {
+        width: 313px;
+        margin: auto;
+        margin-bottom: 20px;
+    }
+    .account-data {
+        margin-left: 7px;
+    }
+    .buttons {
+        width: 348px;
         margin: auto;
     }
     .inner {

@@ -14,7 +14,7 @@ const route = inject("route");
 
     <div class="wrapper">
         <div class="container dashboard">
-            <header class="header">
+            <header class="header profile">
                 <div class="tabs">
                     <Link :href="route('dashboard')" class="tab-item is-active">
                         <span class="">Websites</span>
@@ -36,29 +36,38 @@ const route = inject("route");
             <vf-form @submit.prevent="submit(false,false,false,false, true)" id="saveAccount">
                 <div class="main-panel main-panel_edit">
                     <div class="flex flex-row items-center">
-                        <div class="pr-6">
+                        <div class="pr-6" v-if="!personal && !notification">
                             <span @click="goBack" class="btn-back"><i class="fas fa-arrow-left"></i></span>
                         </div>
-                        <div class="panel-title">Account Settings</div>
+                        <div class="panel-title" v-if="!personal && !notification">Account Settings</div>
+                        <div class="pr-6" v-if="personal">
+                            <span @click="goAccount" class="btn-back"><i class="fas fa-arrow-left"></i></span>
+                        </div>
+                        <div class="panel-title mobile-personal" v-if="personal">Personal Details</div>
+                        <div class="pr-6" v-if="notification">
+                            <span @click="goAccount" class="btn-back"><i class="fas fa-arrow-left"></i></span>
+                        </div>
+                        <div class="panel-title mobile-personal" v-if="notification">Notification Settings</div>
                     </div>
                     <div class="panel-controls flex flex-row justify-end items-center" v-if="notification || google">
-                        <button type="submit" @click="submit" class="btn-md btn-inverted">Save Changes</button>
+                        <button type="submit" @click="submit" class="btn-md btn-inverted save">Save Changes</button>
                     </div>
                 </div>
-                <main class="main-content add-site">
+                <main class="main-content add-site profile">
                     <div class="inner">
                         <div class="grid grid-cols-3 gap-4">
-                            <div class="mb-5">
+                            <div class="mb-5" v-if="!personal && !notification">
                                 <span class="link-item link-item_user account"><i class="fas fa-user"></i></span>
                                 <div class="account-data">
                                     <span class="account">{{ user.name }} {{ user.last_name }}</span>
                                     <span class="account-gray">Email: {{ user.email }}</span>
                                     <span class="account-gray">Phone: {{ user.phone_number }}</span>
                                 </div>
+                              <div class="buttons">
                                 <button type="button" @click="showPersonal" class="account btn-md btn-inverted">Personal
-                                    Details & Password <i class="fa-solid fa-caret-right"></i></button>
+                                  Details & Password <i class="fa-solid fa-caret-right"></i></button>
                                 <button type="button" @click="showNotification" class="account btn-md btn-inverted">
-                                    Notifications <i class="fa-solid fa-caret-right"></i></button>
+                                  Notifications <i class="fa-solid fa-caret-right"></i></button>
                                 <button type="button" v-if="connected !== 'yes'" @click="showGoogle"
                                         class="account btn-md btn-inverted">Google Integration <i
                                     class="fa-solid fa-caret-right"></i></button>
@@ -66,14 +75,11 @@ const route = inject("route");
                                         class="account btn-md btn-inverted">Disconnect Google Account <i
                                     class="fa-solid fa-caret-right"></i></button>
                                 <Link :href="route('logout')" href="#" class="logout">
-                                    <span class="">Log Out</span>
+                                  <span class="">Log Out</span>
                                 </Link>
+                              </div>
                             </div>
-                            <div class="mb-5" v-if="personal">
-                                <div class="panel-title calendar" v-if="connected === 'yes'">Google Calendar is
-                                    connected! <a href="https://calendar.google.com" target="_blank">https://calendar.google.com </a>
-                                    to view.
-                                </div>
+                            <div class="mb-5 personal" v-if="personal">
                                 <div class="form-group form-group-icon account">
                                     <input readonly type="text" placeholder="First Name" v-model="user.name">
                                     <i class="fa-regular fa-user"></i>
@@ -123,6 +129,10 @@ const route = inject("route");
                                 </div>
                             </div>
                             <div class="mb-5 google" v-if="google">
+                                <div class="panel-title calendar" v-if="connected === 'yes' && google">Google Calendar is
+                                    connected! <a href="https://calendar.google.com" target="_blank">https://calendar.google.com </a>
+                                    to view.
+                                </div>
                                 <div class="form-group form-group-icon account">
                                     <label for="select_all" class="option-item">
                                         <span class="select-text">In order to use these integration features, you will need to link your account with a Google Account</span>
@@ -252,7 +262,7 @@ export default {
             oneWeek: this.user?.frequency?.oneWeek || null,
             notificationActive: this.user?.notification || null,
             dayBeforeDeadline: this.user?.frequency?.dayBeforeDeadline,
-            personal: true,
+            personal: false,
             notification: false,
             showPassword: false,
             isEdit: false,
@@ -313,6 +323,12 @@ export default {
         },
         showPersonal() {
             this.personal = true;
+            this.notification = false;
+            this.google = false;
+            this.googleDisconnect = false;
+        },
+        goAccount() {
+            this.personal = false;
             this.notification = false;
             this.google = false;
             this.googleDisconnect = false;
