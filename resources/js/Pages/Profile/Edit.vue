@@ -49,7 +49,7 @@ const route = inject("route");
                         </div>
                         <div class="panel-title mobile-personal" v-if="notification">Notification Settings</div>
                     </div>
-                    <div class="panel-controls flex flex-row justify-end items-center" v-if="notification || google">
+                    <div class="panel-controls hidden md:flex flex-row justify-end items-center" v-if="notification || google">
                         <button type="submit" @click="submit" class="btn-md btn-inverted save">Save Changes</button>
                     </div>
                 </div>
@@ -57,11 +57,13 @@ const route = inject("route");
                     <div class="inner">
                         <div class="grid grid-cols-3 gap-4">
                             <div class="mb-5" v-if="!personal && !notification">
-                                <span class="link-item link-item_user account"><i class="fas fa-user"></i></span>
-                                <div class="account-data">
-                                    <span class="account">{{ user.name }} {{ user.last_name }}</span>
-                                    <span class="account-gray">Email: {{ user.email }}</span>
-                                    <span class="account-gray">Phone: {{ user.phone_number }}</span>
+                                <div class="account-data-wrap flex md:block">
+                                    <span class="link-item link-item_user account"><i class="fas fa-user"></i></span>
+                                    <div class="account-data">
+                                        <span class="account">{{ user.name }} {{ user.last_name }}</span>
+                                        <span class="account-gray">Email: {{ user.email }}</span>
+                                        <span class="account-gray">Phone: {{ user.phone_number }}</span>
+                                    </div>
                                 </div>
                               <div class="buttons">
                                 <button type="button" @click="showPersonal" class="account btn-md btn-inverted">Personal
