@@ -582,7 +582,6 @@ export default {
 
     getCheck(el) {
       this.selectOnes = true;
-      this.selectAll = false;
       if (!el.target.checked && this.selectAll) {
         this.countAll--;
         this.siteLength--;
