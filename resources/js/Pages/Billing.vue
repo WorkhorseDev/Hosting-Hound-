@@ -484,50 +484,89 @@ export default {
                 const dateStart = new Date(y, m - 1, d, 0, 0, 0);
                 const [y1, m1, d1] = dateFormatEnd.split(/-|\//);
                 const dateEnd = new Date(y1, m1 - 1, d1, 0, 0, 0);
+
+                function getRecurringDates(baseDate, type, rangeStart, rangeEnd) {
+                    let result = [];
+                    let current = new Date(baseDate);
+
+                    switch (type) {
+                        case 'Weekly':
+                            while (current <= rangeEnd) {
+                                if (current >= rangeStart) {
+                                    result.push(new Date(current));
+                                }
+                                current.setDate(current.getDate() + 7);
+                            }
+                            break;
+                        case 'Monthly':
+                            while (current <= rangeEnd) {
+                                if (current >= rangeStart) {
+                                    result.push(new Date(current));
+                                }
+                                const day = current.getDate();
+                                current.setMonth(current.getMonth() + 1);
+
+                                // Якщо місяць "переповнився", зберігаємо останній день
+                                if (current.getDate() < day) {
+                                    current.setDate(0); // останній день попереднього місяця
+                                }
+                            }
+                            break;
+                        case 'Annual':
+                            while (current <= rangeEnd) {
+                                if (current >= rangeStart) {
+                                    result.push(new Date(current));
+                                }
+                                current.setFullYear(current.getFullYear() + 1);
+                            }
+                            break;
+                        default:
+                            return [];
+                    }
+
+                    return result;
+                }
+
                 Object.values(this.sortArr).filter(item => {
-                    if (item.provider.renewal_date) {
-                        if (this.dateStart && this.dateEnd) {
-                            const [d, m, y] = item.provider.renewal_date.split(/-|\//); // splits "26-02-2012" or "26/02/2012"
-                            const date = new Date(y, m - 1, d, 0, 0, 0);
-                            if (date.getTime() >= dateStart.getTime() && date.getTime() <= dateEnd.getTime()) {
-                                this.arr.push(item);
-                            }
-                        } else if (this.dateStart && !this.dateEnd) {
-                            if (date.getTime() >= dateStart.getTime()) {
-                                this.arr.push(item);
-                            }
-                            this.deadline = dateFormatStart;
-                        } else if (!this.dateStart && this.dateEnd) {
-                            if (date.getTime() <= dateEnd.getTime()) {
-                                this.arr.push(item);
-                            }
-                            this.deadline = dateFormatEnd;
+                    const source = item.provider;
+                    if (source && source.renewal_date) {
+                        const [d, m, y] = source.renewal_date.split(/-|\//);
+                        const baseDate = new Date(y, m - 1, d, 0, 0, 0);
+                        const type = source.renewal_type || 'Annual'; // fallback
+
+                        const recurringDates = getRecurringDates(baseDate, type, dateStart, dateEnd);
+                        const isInRange = recurringDates.some(date => date >= dateStart && date <= dateEnd);
+
+                        if (isInRange) {
+                            this.arr.push(item);
                         }
                     }
                 });
+
                 Object.values(this.sortArr).filter(item => {
-                    if (item.software && item.software.renewal_date) {
-                        const [d, m, y] = item.software.renewal_date.split(/-|\//); // splits "26-02-2012" or "26/02/2012"
-                        const date = new Date(y, m - 1, d, 0, 0, 0);
-                        if (this.dateStart && this.dateEnd) {
-                            if (date.getTime() >= dateStart.getTime() && date.getTime() <= dateStart.getTime()) {
-                                this.arr.push(item);
-                            }
-                        } else if (this.dateStart && !this.dateEnd) {
-                            if (date.getTime() >= dateStart.getTime()) {
-                                this.arr.push(item);
-                            }
-                        } else if (!this.dateStart && this.dateEnd) {
-                            if (date.getTime() <= dateEnd.getTime()) {
-                                this.arr.push(item);
-                            }
+                    const source = item.software;
+                    if (source && source.renewal_date) {
+                        const [d, m, y] = source.renewal_date.split(/-|\//);
+                        const baseDate = new Date(y, m - 1, d, 0, 0, 0);
+                        const type = source.renewal_type || 'Annual';
+
+                        const recurringDates = getRecurringDates(baseDate, type, dateStart, dateEnd);
+                        const isInRange = recurringDates.some(date => date >= dateStart && date <= dateEnd);
+
+                        if (isInRange) {
+                            this.arr.push(item);
                         }
                     }
                 });
+
                 this.sortArr = this.arr;
-            } else {
-                this.deadline = '';
-                this.arr = this.sortArr;
+
+                if (this.dateStart && !this.dateEnd) {
+                    this.deadline = dateFormatStart;
+                }
+                if (!this.dateStart && this.dateEnd) {
+                    this.deadline = dateFormatEnd;
+                }
             }
             if (this.sortColor) {
                 this.nameField = this.nameField + ',Color';
