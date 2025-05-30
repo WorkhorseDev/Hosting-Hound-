@@ -88,12 +88,12 @@ const route = inject("route");
                                     <i class="fa-solid fa-pencil"
                                        @click="showEdit('Change First Name', user.name, 'New First Name', true, false, false, false)"></i>
                                 </div>
-                                <div class="form-group form-group-icon account">
-                                    <input readonly type="text" placeholder="Last Name" v-model="user.last_name">
-                                    <i class="fa-regular fa-user"></i>
-                                    <i class="fa-solid fa-pencil"
-                                       @click="showEdit('Change Last Name', user.last_name, 'New Last Name', false, false, false, false)"></i>
-                                </div>
+<!--                                <div class="form-group form-group-icon account">-->
+<!--                                    <input readonly type="text" placeholder="Last Name" v-model="user.last_name">-->
+<!--                                    <i class="fa-regular fa-user"></i>-->
+<!--                                    <i class="fa-solid fa-pencil"-->
+<!--                                       @click="showEdit('Change Last Name', user.last_name, 'New Last Name', false, false, false, false)"></i>-->
+<!--                                </div>-->
                                 <div class="form-group form-group-icon account">
                                     <input readonly type="text" placeholder="Phone" v-model="user.phone_number">
                                     <i class="fa fa-phone"></i>
@@ -103,17 +103,11 @@ const route = inject("route");
                                 <div class="form-group form-group-icon account">
                                     <input readonly type="text" placeholder="Email" v-model="user.email">
                                     <i class="fa-regular fa-envelope"></i>
-                                    <i class="fa-solid fa-pencil"
-                                       @click="showEdit('Change Email', user.email, 'New Email Address', false, false, true, false)"></i>
                                 </div>
                                 <div class="form-group form-group-icon account">
-                                    <input readonly v-bind:type="[showPassword ? 'text' : 'password']" id="password"
-                                           :value="user.pass">
+                                    <input readonly type="password" id="password"
+                                           v-model="user.pass">
                                     <i class="fa-solid fa-lock"></i>
-                                    <i class="fa-solid fa-eye-slash" @click="showTextPass"
-                                       v-if="!showPassword"></i>
-                                    <i class="fa-solid fa-eye" @click="showTextPass"
-                                       v-if="showPassword"></i>
                                     <i class="fa-solid fa-pencil"
                                        @click="showEdit('Change Password', user.pass, 'New Password', false, false, false, true)"></i>
                                 </div>
@@ -225,6 +219,9 @@ const route = inject("route");
                                                 <div class="mb-5"><span v-if="errorEmail || errorPass"
                                                                         class="text-red-600 text-sm">Please double check the fields match and resubmit</span>
                                                 </div>
+                                                <div class="mb-5"><span v-if="errorPassEmpty"
+                                                                        class="text-red-600 text-sm">Please fill all fields</span>
+                                                </div>
                                             </div>
                                             <div class="row flex justify-center mb-5 buttons"
                                                  :id="'email-'+marginBottom">
@@ -283,6 +280,7 @@ export default {
             placeholder: '',
             firstName: true,
             errorEmail: false,
+            errorPassEmpty: false,
             password: '',
             pass: false,
             confirmPass: '',
@@ -359,7 +357,7 @@ export default {
             this.isEdit = !this.isEdit;
         },
         submit(isNames, isPhone, isEmail, isPass, isNotification) {
-            this.errorEmail = this.errorPass = false;
+            this.errorEmail = this.errorPass =  this.errorPassEmpty = false;
             if (this.notificationActive) {
                 this.form.notification = true;
                 this.form.frequency = {
@@ -385,6 +383,10 @@ export default {
                 }
                 this.form.email = this.emailAdd;
             } else if (!isNames && !isPhone && !isEmail && isPass) {
+                if(this.password == '' || this.confirmPass== '') {
+                    this.errorPassEmpty = true;
+                    return false;
+                }
                 if (this.password !== this.confirmPass) {
                     this.errorPass = true;
                     return false;
@@ -393,7 +395,7 @@ export default {
                 this.form.pass = this.pass;
             }
             this.form.post(route('editProfile'), {
-                //   onFinish: () => window.location.reload()
+                   onFinish: () => this.isEdit = !this.isEdit
             });
         }
     },
