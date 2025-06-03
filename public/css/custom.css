@@ -518,15 +518,18 @@ p.terms-text {
     text-decoration: underline;
 }
 
-.panel-title.calendar {
+.calendar-msg {
+    font-family: 'Lato';
     font-size: 30px;
+    font-weight: bold;
     width: 500px;
     text-align: center;
-    margin-bottom: 55px;
+    margin-left: 15px;
+    margin-bottom: 0;
     text-decoration: none;
 }
 
-.panel-title.calendar a {
+.calendar-msg a {
     text-decoration: underline;
 }
 .fa-check {
@@ -2490,5 +2493,46 @@ h4.notification {
 
     .profile-edit .filter-form .heading {
         margin-bottom: 0;
+    }
+
+    .google {
+        position: fixed;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        background-color: #f7f7f7;
+        z-index: 10;
+    }
+    .google .gc-topbar {
+        padding: 25px;
+        min-width: 300px;
+        margin-bottom: 50px !important;
+    }
+    .google .gc-topbar .btn-back {
+        font-size: 40px;
+    }
+    .google .form-group {
+        margin: 0 auto;
+        max-width: 400px;
+    }
+    .google .select-text {
+        margin: 0 0 30px;
+        width: auto;
+        padding: 20px 60px;
+        font-size: 21px;
+        line-height: 1.25;
+    }
+    .google .logout.gray {
+        margin: 0 auto;
+        font-size: 21px;
+        max-width: 315px;
+    }
+
+    .calendar-msg {
+        margin-left: 0;
+        margin-bottom: 30px;
+        font-size: 21px;
+        width: auto;
     }
 }
