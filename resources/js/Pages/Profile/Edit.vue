@@ -126,10 +126,10 @@ const route = inject("route");
                             </div>
                             <div class="mb-5 google" v-if="google">
                                 <div class="gc-topbar flex items-center md:hidden">
-                                    <div class="pr-6 md:hidden">
+                                    <div class="pr-6">
                                         <span @click="goAccount" class="btn-back"><i class="fas fa-arrow-left"></i></span>
                                     </div>
-                                    <div class="panel-title md:hidden" >Google Integration</div>
+                                    <div class="panel-title" >Google Integration</div>
                                 </div>
                                 <div class="calendar-msg" v-if="connected === 'yes' && google">Google Calendar is
                                     connected! <a href="https://calendar.google.com" target="_blank">https://calendar.google.com </a>
