@@ -38,6 +38,10 @@ Route::middleware('auth', 'twofactor')->group(function () {
     Route::get('auth/google/callback', [ProfileController::class, 'handleGoogleCallback'])->name('auth/google/callback');
     Route::get('createEvent', [ProfileController::class, 'createGoogleCalendarEvent'])->name('createEvent');
     Route::get('disconnect/google', [ProfileController::class, 'disconnectGoogle'])->name('disconnect/google');
+    Route::get('/personasAI', [App\Http\Controllers\PersonaController::class, 'show']);
+    Route::post('persona', [App\Http\Controllers\PersonaController::class, 'handlePersona']);
+    Route::post('generate', [App\Http\Controllers\PersonaController::class, 'generateAction']);
+
 });
 
 require __DIR__.'/auth.php';
