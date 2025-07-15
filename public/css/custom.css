@@ -1700,13 +1700,21 @@ h4.notification {
 
 
 
-@media screen and (max-width: 1160px) {
+@media screen and (max-width: 1400px) {
     .card-list {
         margin: 0;
     }
     .card-item {
         width: calc(50% - 20px);
     }
+}
+@media screen and (max-width: 1260px) {
+   /* .card-list {
+        margin: 0;
+    }
+    .card-item {
+        width: calc(50% - 20px);
+    }*/
     .container.dashboard {
         max-width: 100%;
     }
@@ -1719,6 +1727,97 @@ h4.notification {
     .service-form {
         width: 315px;
         margin-left: 18px;
+    }
+
+    .site-name-wrap {
+        display: flex;
+    }
+    .site-name-wrap .left {
+        padding-right: 15px;
+    }
+
+    .filter-block {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        max-width: inherit;
+        z-index: 5;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: rgba(255, 255, 255, 0.8);
+    }
+    .profile-edit .filter-form {
+        width: 334px;
+    }
+    .form-group-icon.account .filter-search input {
+        width: 100%;
+        margin: auto;
+        margin-bottom: 20px;
+        font-style: normal;
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+    .form-group-icon.account i.fa-lock.profile {
+        left: auto;
+        right: 20px;
+    }
+    .profile-edit .filter-form .form-group {
+        margin-bottom: 0;
+        display: block;
+        padding-top: 30px;
+        padding-bottom: 25px;
+    }
+    .profile-edit .row.flex.justify-center.mb-5.buttons {
+        /*top: 60px;*/
+        /*left: -280px;*/
+        left: auto;
+        top: auto;
+        width: auto;
+        padding: 0;
+        margin: 0;
+    }
+    .row.flex.justify-center.mb-5.buttons#email-true {
+        top: auto;
+    }
+    .filter-form {
+        position: relative;
+        max-width: 95%;
+    }
+    .filter-form .heading {
+        padding: 15px 25px 55px 25px;
+        font-size: 22px;
+    }
+    .filter-inner {
+        padding: 15px 20px 30px;
+        border-top-left-radius: 33px;
+        border-top-right-radius: 33px;
+    }
+    .filter-search input {
+        font-size: 1.125rem;
+        padding-top: 10px;
+        padding-bottom: 10px;
+        padding-left: 50px;
+    }
+    .filter-search .search-btn {
+        font-size: 20px;
+    }
+    .filter-inner .form-group select {
+        padding-top: 10px;
+        padding-bottom: 10px;
+    }
+    .filter-inner .btn-md {
+        padding-top: 5px;
+        padding-bottom: 5px;
+    }
+    .dropdown-list .item {
+        padding: 10px 0;
+    }
+    .item-circle {
+        width: 32px;
+        height: 32px;
     }
 }
 

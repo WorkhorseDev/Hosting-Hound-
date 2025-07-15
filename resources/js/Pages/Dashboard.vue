@@ -181,7 +181,7 @@ const route = inject("route");
             <div class="filter-block" v-if="isFilterOpen">
               <div class="filter-form">
                 <div class="heading row flex justify-center text-2xl mb-5">
-                    <span class="filter-close md:hidden" @click="showFilter"><i class="fa-solid fa-xmark"></i></span>
+                    <span class="filter-close xl:hidden" @click="showFilter"><i class="fa-solid fa-xmark"></i></span>
                     Filter <span class="hidden md:inline-flex">&nbsp;items below</span>
                 </div>
                 <div class="filter-inner">
