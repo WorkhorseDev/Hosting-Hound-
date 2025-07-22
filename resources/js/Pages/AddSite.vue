@@ -37,7 +37,7 @@ import InputError from "@/Components/InputError.vue";
               <span @click="goBack" class="btn-back"><i class="fas fa-arrow-left"></i></span>
             </div>
             <div class="panel-title">
-                <span class="hidden md:inline">Add Website</span>
+                <span class="hidden xl:inline">Add Website</span>
                 <span class="md:hidden">New Site</span>
             </div>
           </div>
