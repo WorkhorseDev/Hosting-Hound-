@@ -1708,6 +1708,7 @@ h4.notification {
         width: calc(50% - 20px);
     }
 }
+
 @media screen and (max-width: 1260px) {
    /* .card-list {
         margin: 0;
@@ -1820,34 +1821,14 @@ h4.notification {
         height: 32px;
     }
 }
+@media screen and (max-width: 1200px) {
+    .calendar-container {
+        max-width: 100%;
+        position: absolute !important;
+        left: 0px !important;
+        width: 100%;
+    }
 
-/*@media screen and (max-width: 768px) {*/
-@media screen and (max-width: 1024px) {
-    .panel-title.mobile-personal {
-        display: block;
-    }
-    .tags p.info {
-        font-size: 15px;
-        padding-top: 5px;
-    }
-    .service-form.detail.host .left-line, .service-name, .text-block.host,.left-line.on-host, .host-site-detail,.service-form.detail.host {
-        display: none;
-    }
-    .detail .globe-div .globe {
-        margin-left: -15px;
-    }
-    .mb-5.billing-source,.mb-5.last-host {
-        margin-left: -20px;
-    }
-    .host-detail .inner.sited-detail .mb-5 {
-        width: 345px;
-    }
-    .host-detail .form-group-wrap.bg-grey {
-        margin-left: -40px;
-    }
-    .detail .globe-div .right-side {
-        margin-top: 10px;
-    }
     .billing-calendar .vc-day-content {
         width: 32px !important;
         height: 32px !important;
@@ -1874,17 +1855,40 @@ h4.notification {
     .billing .card-list.empty {
         margin-top: 550px;
     }
+}
+/*@media screen and (max-width: 768px) {*/
+@media screen and (max-width: 1024px) {
+    .panel-title.mobile-personal {
+        display: block;
+    }
+
+    .tags p.info {
+        font-size: 15px;
+        padding-top: 5px;
+    }
+    .service-form.detail.host .left-line, .service-name, .text-block.host,.left-line.on-host, .host-site-detail,.service-form.detail.host {
+        display: none;
+    }
+    .detail .globe-div .globe {
+        margin-left: -15px;
+    }
+    .mb-5.billing-source,.mb-5.last-host {
+        margin-left: -20px;
+    }
+    .host-detail .inner.sited-detail .mb-5 {
+        width: 345px;
+    }
+    .host-detail .form-group-wrap.bg-grey {
+        margin-left: -40px;
+    }
+    .detail .globe-div .right-side {
+        margin-top: 10px;
+    }
     .empty-calendar {
         font-size: 18px;
     }
     .fa-check {
         font-size: 33px;
-    }
-    .calendar-container {
-        max-width: 100%;
-        position: absolute !important;
-        left: 0px !important;
-        width: 100%;
     }
     .auth-layout {
         flex-direction: column;
