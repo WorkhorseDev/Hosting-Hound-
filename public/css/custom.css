@@ -1707,6 +1707,31 @@ h4.notification {
     .card-item {
         width: calc(50% - 20px);
     }
+    .host-detail .inner.sited-detail .mb-5 {
+        width: 345px;
+    }
+}
+
+@media screen and (max-width: 1300px) {
+    .inner {
+        max-width: 450px
+    }
+
+    .sited-detail .grid-cols-3 {
+        display: block;
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+    .mb-5.billing-source,.mb-5.last-host {
+        margin-left: -20px;
+    }
+
+    .host-detail .form-group-wrap.bg-grey {
+        margin-left: -40px;
+    }
+    .service-form.detail.host .left-line, .service-name, .text-block.host, .left-line.on-host, .host-site-detail, .service-form.detail.host {
+        display: none;
+    }
 }
 
 @media screen and (max-width: 1260px) {
@@ -1821,6 +1846,7 @@ h4.notification {
         height: 32px;
     }
 }
+
 @media screen and (max-width: 1200px) {
     .calendar-container {
         max-width: 100%;
@@ -1866,20 +1892,8 @@ h4.notification {
         font-size: 15px;
         padding-top: 5px;
     }
-    .service-form.detail.host .left-line, .service-name, .text-block.host,.left-line.on-host, .host-site-detail,.service-form.detail.host {
-        display: none;
-    }
     .detail .globe-div .globe {
         margin-left: -15px;
-    }
-    .mb-5.billing-source,.mb-5.last-host {
-        margin-left: -20px;
-    }
-    .host-detail .inner.sited-detail .mb-5 {
-        width: 345px;
-    }
-    .host-detail .form-group-wrap.bg-grey {
-        margin-left: -40px;
     }
     .detail .globe-div .right-side {
         margin-top: 10px;
@@ -2046,15 +2060,9 @@ h4.notification {
     .sited-detail .card-list {
         display: block;
     }
-    .sited-detail .grid-cols-3 {
-        display: block;
-        padding-left: 20px;
-        padding-right: 20px;
-    }
     .sited-detail .block-serv {
         margin: 0;
     }
-
     .sort-panel.sorting {
         margin-top: -70px;
         display: flex;
@@ -2394,10 +2402,6 @@ h4.notification {
     }
     .buttons {
         width: 348px;
-        margin: auto;
-    }
-    .inner {
-        max-width: 450px;
         margin: auto;
     }
     .main-content_edit.add-site {
