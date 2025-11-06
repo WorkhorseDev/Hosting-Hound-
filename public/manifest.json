@@ -3,7 +3,7 @@
     "short_name": "Hosting Hound",
     "start_url": "/",
     "display": "standalone",
-    "theme_color": "red",
+    "theme_color": "#A7B57C",
     "background_color": "#3D5F58",
     "icons": [
         {

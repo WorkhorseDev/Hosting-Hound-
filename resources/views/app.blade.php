@@ -8,7 +8,7 @@
 
         <!-- Manifest.json -->
         <link rel="manifest" href="{{ asset('manifest.json') }}">
-        <meta name="theme-color" content="#ff0000">
+        <meta name="theme-color" content="#A7B57C">
 
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
