@@ -188,7 +188,7 @@ class Websites extends Eloquent
                 $email = $user;
             } else {
                 $user = User::get()->where('name', Auth::user()->name);
-                if($user->email) {
+                if(!empty($user) && isset($user->email)) {
                     $email = $user->email;
                 }
             }
