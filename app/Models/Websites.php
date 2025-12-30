@@ -188,7 +188,9 @@ class Websites extends Eloquent
                 $email = $user;
             } else {
                 $user = User::get()->where('name', Auth::user()->name);
-                $email = $user->email;
+                if($user->email) {
+                    $email = $user->email;
+                }
             }
             if (!empty($email)) {
                 Mail::send('emails.share', ['name' => Auth::user()->name], function ($message) use ($user) {
