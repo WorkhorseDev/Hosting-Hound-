@@ -471,9 +471,7 @@ export default {
       this.form.shared_with = this.site.shared_with;
       this.form.business_unit = this.site.business_unit;
       this.form.notes = this.site.notes;
-      this.form.post(route('editSite'), {
-        onFinish: () => this.form.get(route('dashboard'))
-      });
+      this.form.post(route('editSite'));
     },
     setSoftware() {
       this.softwareShow = false;

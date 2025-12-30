@@ -130,6 +130,9 @@ class WebsiteController extends Controller
     public function editSite(Request $request)
     {
         $result = Websites::editSite($request);
+
+        return redirect()->route('dashboard')
+            ->with('success', 'Site has been updated successfully!');
     }
 
     /**
@@ -139,6 +142,8 @@ class WebsiteController extends Controller
     {
         Websites::addSite($request);
 
+        return redirect()->route('dashboard')
+            ->with('success', 'Site has been added successfully!');
     }
 
     /**
