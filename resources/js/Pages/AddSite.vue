@@ -463,7 +463,7 @@ export default {
       if (this !== undefined && this.color) {
         this.form.color = this.color;
       }
-      this.form.post(route('saveEdit'));
+      this.form.post(route('saveSite'));
     },
     setSoftware() {
       this.softwareShow = false;
