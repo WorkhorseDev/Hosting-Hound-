@@ -128,9 +128,11 @@ class ProfileController extends Controller
 
           $hosts = [];
           foreach ($sites as $site) {
+              $siteName = $site->url ? parse_url($site->url, PHP_URL_HOST) : $site->name;
               if (!empty($site->provider)) {
                   foreach ($site->provider as $host) {
                       if (!empty($host['renewal_date'])) {
+                          $host['site_name'] = $siteName;
                           $hosts[] = $host;
                       }
                   }
@@ -138,9 +140,20 @@ class ProfileController extends Controller
               if (!empty($site->software)) {
                   foreach ($site->software as $soft) {
                       if (!empty($soft['renewal_date'])) {
+                          $soft['site_name'] = $siteName;
                           $hosts[] = $soft;
                       }
                   }
+              }
+          }
+
+          // Clear existing events
+          $existingEvents = $calendarService->events->listEvents($calendarId);
+          foreach ($existingEvents->getItems() as $existingEvent) {
+              try {
+                  $calendarService->events->delete($calendarId, $existingEvent->getId());
+              } catch (\Exception $e) {
+                  continue;
               }
           }
 
@@ -165,7 +178,7 @@ class ProfileController extends Controller
               }
 
               $event = new \Google_Service_Calendar_Event([
-                  'summary' => $host['type'] .'('.$host['name'].') renews ' .$host['renewal_type']. ' starting on ' . $host['renewal_date'],
+                  'summary' => $host['type'] . ' (' . $host['site_name'] . ') renews ' . $host['renewal_type'] . ' starting on ' . $host['renewal_date'],
                   'start' => [
                       'date' => $showDate,
                       'timeZone' => 'America/New_York',
