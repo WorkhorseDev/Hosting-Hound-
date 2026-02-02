@@ -103,102 +103,109 @@ class ProfileController extends Controller
             $authUser->save();
         }
         $googleClient->setAuthConfig(storage_path('app/google-calendar/oauth-credentials.json'));
-      try {
-          if ($authUser->google_calendar_id && !empty($authUser->google_calendar_id)) {
-              $id = $authUser->google_calendar_id;
-          } else {
-              $googleClient->addScope(Google_Service_Calendar::CALENDAR);
-              $service = new Google_Service_Calendar($googleClient);
-              $calendar = new Google_Service_Calendar_Calendar();
-              $calendar->setSummary('Hosting Hound');
-              $calendar->setTimeZone('America/New_York');
-              $createdCalendar = $service->calendars->insert($calendar);
-              $id = $createdCalendar->getId();
-              $authUser->google_calendar_id = $id;
-              $authUser->save();
-          }
-          $googleClient = new \Google_Client();
-          $googleClient->setAuthConfig(storage_path('app/google-calendar/oauth-credentials.json'));
-          $googleClient->setAccessToken(json_decode(file_get_contents(storage_path('app/google-calendar/'.$authUser->_id.'.json')), true));
+        try {
+            if ($authUser->google_calendar_id && !empty($authUser->google_calendar_id)) {
+                $id = $authUser->google_calendar_id;
+            } else {
+                $googleClient->addScope(Google_Service_Calendar::CALENDAR);
+                $service = new Google_Service_Calendar($googleClient);
+                $calendar = new Google_Service_Calendar_Calendar();
+                $calendar->setSummary('Hosting Hound');
+                $calendar->setTimeZone('America/New_York');
+                $createdCalendar = $service->calendars->insert($calendar);
+                $id = $createdCalendar->getId();
+                $authUser->google_calendar_id = $id;
+                $authUser->save();
+            }
+            $googleClient = new \Google_Client();
+            $googleClient->setAuthConfig(storage_path('app/google-calendar/oauth-credentials.json'));
+            $googleClient->setAccessToken(json_decode(file_get_contents(storage_path('app/google-calendar/'.$authUser->_id.'.json')), true));
 
-          $calendarService = new \Google_Service_Calendar($googleClient);
-          $calendarId = $id;
+            $calendarService = new \Google_Service_Calendar($googleClient);
+            $calendarId = $id;
 
-          $sites = Websites::where('user_id', $authUser->_id)->get();
+            $sites = Websites::where('user_id', $authUser->_id)->get();
 
-          $hosts = [];
-          foreach ($sites as $site) {
-              $siteName = $site->url ? parse_url($site->url, PHP_URL_HOST) : $site->name;
-              if (!empty($site->provider)) {
-                  foreach ($site->provider as $host) {
-                      if (!empty($host['renewal_date'])) {
-                          $host['site_name'] = $siteName;
-                          $hosts[] = $host;
-                      }
-                  }
-              }
-              if (!empty($site->software)) {
-                  foreach ($site->software as $soft) {
-                      if (!empty($soft['renewal_date'])) {
-                          $soft['site_name'] = $siteName;
-                          $hosts[] = $soft;
-                      }
-                  }
-              }
-          }
+            $hosts = [];
+            foreach ($sites as $site) {
+                $siteUrl = $site->url;
+                if ($siteUrl && !preg_match('/^https?:\/\//', $siteUrl)) {
+                    $siteUrl = 'https://' . $siteUrl;
+                }
+                $siteName = $siteUrl ? (parse_url($siteUrl, PHP_URL_HOST) ?: $site->name) : $site->name;
 
-          // Clear existing events
-          $existingEvents = $calendarService->events->listEvents($calendarId);
-          foreach ($existingEvents->getItems() as $existingEvent) {
-              try {
-                  $calendarService->events->delete($calendarId, $existingEvent->getId());
-              } catch (\Exception $e) {
-                  continue;
-              }
-          }
+                if (!empty($site->provider)) {
+                    foreach ($site->provider as $host) {
+                        if (!empty($host['renewal_date'])) {
+                            $host['site_name'] = $siteName;
+                            $hosts[] = $host;
+                        }
+                    }
+                }
+                if (!empty($site->software)) {
+                    foreach ($site->software as $soft) {
+                        if (!empty($soft['renewal_date'])) {
+                            $soft['site_name'] = $siteName;
+                            $hosts[] = $soft;
+                        }
+                    }
+                }
+            }
 
-          foreach ($hosts as $host) {
-              $date = DateTime::createFromFormat("d/m/Y", $host['renewal_date']);
-              if (!$date) {
-                  continue;
-              }
-              $showDate = $date->format('Y-m-d');
-              $recurrence = [];
+            // Clear existing events
+            $existingEvents = $calendarService->events->listEvents($calendarId);
+            foreach ($existingEvents->getItems() as $existingEvent) {
+                try {
+                    $calendarService->events->delete($calendarId, $existingEvent->getId());
+                } catch (\Exception $e) {
+                    continue;
+                }
+            }
 
-              switch (strtolower($host['renewal_type'])) {
-                  case 'annual':
-                      $recurrence = ['RRULE:FREQ=YEARLY'];
-                  break;
-                  case 'monthly':
-                      $recurrence = ['RRULE:FREQ=MONTHLY'];
-                  break;
-                  case 'weekly':
-                      $recurrence = ['RRULE:FREQ=WEEKLY'];
-                  break;
-              }
+            foreach ($hosts as $host) {
+                $date = DateTime::createFromFormat("d/m/Y", $host['renewal_date']);
+                if (!$date) {
+                    continue;
+                }
+                $showDate = $date->format('Y-m-d');
+                $recurrence = [];
 
-              $event = new \Google_Service_Calendar_Event([
-                  'summary' => $host['type'] . ' (' . $host['site_name'] . ') renews ' . $host['renewal_type'] . ' starting on ' . $host['renewal_date'],
-                  'start' => [
-                      'date' => $showDate,
-                      'timeZone' => 'America/New_York',
-                  ],
-                  'end' => [
-                      'date' => $showDate,
-                      'timeZone' => 'America/New_York',
-                  ],
-                  'recurrence' => $recurrence,
-              ]);
+                switch (strtolower($host['renewal_type'])) {
+                    case 'annual':
+                        $recurrence = ['RRULE:FREQ=YEARLY'];
+                    break;
+                    case 'monthly':
+                        $recurrence = ['RRULE:FREQ=MONTHLY'];
+                    break;
+                    case 'weekly':
+                        $recurrence = ['RRULE:FREQ=WEEKLY'];
+                    break;
+                }
 
-              try {
-                  $calendarService->events->insert($calendarId, $event);
-              } catch (\Exception $e) {
-                  return ( $e->getMessage());
-              }
-          }
-      } catch (\Exception $e) {
-          return ($e->getMessage());
-      }
+                $cost = !empty($host['cost']) ? ' - $' . $host['cost'] : '';
+
+                $event = new \Google_Service_Calendar_Event([
+                    'summary' => $host['type'] . ' (' . $host['site_name'] . ') renews ' . $host['renewal_type'] . $cost . ' starting on ' . $host['renewal_date'],
+                    'start' => [
+                        'date' => $showDate,
+                        'timeZone' => 'America/New_York',
+                    ],
+                    'end' => [
+                        'date' => $showDate,
+                        'timeZone' => 'America/New_York',
+                    ],
+                    'recurrence' => $recurrence,
+                ]);
+
+                try {
+                    $calendarService->events->insert($calendarId, $event);
+                } catch (\Exception $e) {
+                    return ( $e->getMessage());
+                }
+            }
+        } catch (\Exception $e) {
+            return ($e->getMessage());
+        }
         return redirect()->route('profile');
     }
 
