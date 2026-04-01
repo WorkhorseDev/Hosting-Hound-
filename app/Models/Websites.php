@@ -150,30 +150,34 @@ class Websites extends Eloquent
            Websites::share($site->shared_with);
         }
         if (Auth::user()->google_calendar_id && !empty(Auth::user()->google_calendar_id)) {
-            $id = Auth::user()->google_calendar_id;
-            config(['google-calendar.calendar_id' => $id]);
-            config(['google-calendar.token_json' =>  storage_path('app/google-calendar/'.Auth::user()->_id.'.json')]);
-            foreach ($providers as $host) {
-                if (!empty($host['renewal_date'])) {
-                    $event = new Event;
-                    $event->name = $host['name'];
-                    $date = DateTime::createFromFormat("d/m/Y", $host['renewal_date']);
-                    $show_date = $date->format('Y-m-d');
-                    $event->startDate = Carbon::createFromFormat('Y-m-d', $show_date);
-                    $event->endDate = Carbon::createFromFormat('Y-m-d', $show_date);
-                    $event->save();
+            try {
+                $id = Auth::user()->google_calendar_id;
+                config(['google-calendar.calendar_id' => $id]);
+                config(['google-calendar.token_json' =>  storage_path('app/google-calendar/'.Auth::user()->_id.'.json')]);
+                foreach ($providers as $host) {
+                    if (!empty($host['renewal_date'])) {
+                        $event = new Event;
+                        $event->name = $host['name'];
+                        $date = DateTime::createFromFormat("d/m/Y", $host['renewal_date']);
+                        $show_date = $date->format('Y-m-d');
+                        $event->startDate = Carbon::createFromFormat('Y-m-d', $show_date);
+                        $event->endDate = Carbon::createFromFormat('Y-m-d', $show_date);
+                        $event->save();
+                    }
                 }
-            }
-            foreach ($software as $host) {
-                if (!empty($host['renewal_date'])) {
-                    $event = new Event;
-                    $event->name = $host['name'];
-                    $date = DateTime::createFromFormat("d/m/Y", $host['renewal_date']);
-                    $show_date = $date->format('Y-m-d');
-                    $event->startDate = Carbon::createFromFormat('Y-m-d', $show_date);
-                    $event->endDate = Carbon::createFromFormat('Y-m-d', $show_date);
-                    $event->save();
+                foreach ($software as $host) {
+                    if (!empty($host['renewal_date'])) {
+                        $event = new Event;
+                        $event->name = $host['name'];
+                        $date = DateTime::createFromFormat("d/m/Y", $host['renewal_date']);
+                        $show_date = $date->format('Y-m-d');
+                        $event->startDate = Carbon::createFromFormat('Y-m-d', $show_date);
+                        $event->endDate = Carbon::createFromFormat('Y-m-d', $show_date);
+                        $event->save();
+                    }
                 }
+            } catch (\Exception $e) {
+                \Log::error('Google Calendar sync failed: ' . $e->getMessage());
             }
         }
 
