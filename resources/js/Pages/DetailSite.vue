@@ -65,7 +65,7 @@ import InputError from "@/Components/InputError.vue";
                 <em class="gray-text">Company Information</em>
               </div>
               <div class="left-line second">
-                <p class="info">{{ site.name }}</p>
+                <p class="info">{{ site.company }}</p>
                 <p class="info">{{ site.business_unit }}</p>
               </div>
               <div class="text-block">
@@ -234,7 +234,7 @@ import InputError from "@/Components/InputError.vue";
                     </div>
                     <div class="form-group-wrap p-6 pt-4 user-detail">
                       <div class="form-group form-group-icon">
-                        <input readonly type="text" id="userName" :value="userName" :placeholder="element.user_mame">
+                        <input readonly type="text" id="userName" :value="element.user_mame" :placeholder="element.user_mame">
                         <i class="fa-regular fa-user"></i>
                         <i class="fa-regular fa-copy" @click="copy('#userName')"></i>
                       </div>
@@ -401,7 +401,7 @@ import InputError from "@/Components/InputError.vue";
                     </div>
                     <div class="form-group-wrap p-6 pt-4 user-detail">
                       <div class="form-group form-group-icon">
-                        <input readonly type="text" id="userName" :value="userName"
+                        <input readonly type="text" id="userName" :value="elementSoft.user_mame"
                                :placeholder="elementSoft.user_mame">
                         <i class="fa-regular fa-user"></i>
                         <i class="fa-regular fa-copy" @click="copy('#userName')"></i>
