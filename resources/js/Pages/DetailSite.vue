@@ -196,22 +196,22 @@ import InputError from "@/Components/InputError.vue";
                   <div class="form-container">
                     <div class="form-header">
                         <span class="serv-close md:hidden" @click="showDetail(item, key)"><i class="fa-solid fa-xmark"></i></span>
-                        <span class="serv-detail hidden md:block">{{ element.type }}</span>
-                        <i class="fa-solid fa-pen" @click="editProvider(element, key)"></i>
+                        <span class="serv-detail hidden md:block">{{ item.type }}</span>
+                        <i class="fa-solid fa-pen" @click="editProvider(item, key)"></i>
                     </div>
                     <div class="form-group-wrap bg-grey p-6 pt-4 globe-div">
                       <div class="globe">
                         <i class="fa-solid fa-globe"></i>
                       </div>
                       <div class="form-group right-side">
-                        <b>{{ element.name }}</b>
+                        <b>{{ item.name }}</b>
                       </div>
                       <div class="form-group right-side">
-                        <em>{{ element.url }}</em>
+                        <em>{{ item.url }}</em>
                       </div>
                     </div>
                     <div class="form-group-wrap p-6 pt-4">
-                      <i class="fa-solid fa-sack-dollar"></i> <span class="card-title"> $ {{ element.cost }}</span>
+                      <i class="fa-solid fa-sack-dollar"></i> <span class="card-title"> $ {{ item.cost }}</span>
                       <div class="dark-line"></div>
                     </div>
                     <div class="form-group-wrap bg-grey p-6 pt-4 subscribe">
@@ -219,13 +219,13 @@ import InputError from "@/Components/InputError.vue";
                         <i class="fas fa-hourglass-half"></i>
                       </div>
                       <div class="form-group right-side">
-                        <em>Next Deadline:</em> <span>{{ element.renewal_date }}</span>
+                        <em>Next Deadline:</em> <span>{{ item.renewal_date }}</span>
                       </div>
                       <div class="form-group right-side">
-                        <em>Renewal Type:</em> <span>{{ element.renewal_type }}</span>
+                        <em>Renewal Type:</em> <span>{{ item.renewal_type }}</span>
                       </div>
                       <div class="form-group right-side">
-                        <em>Last 4 digits of CC:</em> <span>{{ element.cc }}</span>
+                        <em>Last 4 digits of CC:</em> <span>{{ item.cc }}</span>
                       </div>
                     </div>
                     <div class="form-group-wrap p-6 pt-4">
@@ -234,25 +234,25 @@ import InputError from "@/Components/InputError.vue";
                     </div>
                     <div class="form-group-wrap p-6 pt-4 user-detail">
                       <div class="form-group form-group-icon">
-                        <input readonly type="text" id="userName" :value="element.user_mame" :placeholder="element.user_mame">
+                        <input readonly type="text" :id="'userName'+key" :value="item.user_mame" :placeholder="item.user_mame">
                         <i class="fa-regular fa-user"></i>
-                        <i class="fa-regular fa-copy" @click="copy('#userName')"></i>
+                        <i class="fa-regular fa-copy" @click="copy('#userName'+key)"></i>
                       </div>
                       <div class="form-group form-group-icon">
-                        <input readonly v-bind:type="[showPassword ? 'text' : 'password']" id="password"
-                               :value="password" :placeholder="element.password">
+                        <input readonly v-bind:type="[showPassword ? 'text' : 'password']" :id="'password'+key"
+                               :value="item.password" :placeholder="item.password">
                         <i class="fa-solid fa-lock"></i>
                         <i class="fa-solid fa-eye-slash" @click="showTextPass('showPassword')" v-if="!showPassword"></i>
                         <i class="fa-solid fa-eye" @click="showTextPass('showPassword')" v-if="showPassword"></i>
-                        <i class="fa-regular fa-copy" @click="copy('#password')"></i>
+                        <i class="fa-regular fa-copy" @click="copy('#password'+key)"></i>
                       </div>
                       <div class="form-group form-group-icon m-0">
-                        <input readonly v-bind:type="[showPin ? 'text' : 'password']" id="pin" :value="pin"
-                               :placeholder="element.pin">
+                        <input readonly v-bind:type="[showPin ? 'text' : 'password']" :id="'pin'+key" :value="item.pin"
+                               :placeholder="item.pin">
                         <i class="fa-solid fa-fingerprint"></i>
                         <i class="fa-solid fa-eye-slash" @click="showTextPin('showPin')" v-if="!showPin"></i>
                         <i class="fa-solid fa-eye" @click="showTextPin('showPin')" v-if="showPin"></i>
-                        <i class="fa-regular fa-copy" @click="copy('#pin')"></i>
+                        <i class="fa-regular fa-copy" @click="copy('#pin'+key)"></i>
                       </div>
                     </div>
                   </div>
@@ -363,22 +363,22 @@ import InputError from "@/Components/InputError.vue";
                   <div class="form-container">
                     <div class="form-header">
                         <span class="serv-close md:hidden" @click="showDetailSoft(item, key)"><i class="fa-solid fa-xmark"></i></span>
-                        <span class="serv-detail hidden md:block">{{ elementSoft.type }}</span>
-                        <i class="fa-solid fa-pen" @click="editSoft(elementSoft, key)"></i>
+                        <span class="serv-detail hidden md:block">{{ item.type }}</span>
+                        <i class="fa-solid fa-pen" @click="editSoft(item, key)"></i>
                     </div>
                     <div class="form-group-wrap bg-grey p-6 pt-4 globe-div">
                       <div class="globe">
                         <i class="fa-solid fa-globe"></i>
                       </div>
                       <div class="form-group right-side">
-                        <b>{{ elementSoft.name }}</b>
+                        <b>{{ item.name }}</b>
                       </div>
                       <div class="form-group right-side">
-                        <em>{{ elementSoft.url }}</em>
+                        <em>{{ item.url }}</em>
                       </div>
                     </div>
                     <div class="form-group-wrap p-6 pt-4">
-                      <i class="fa-solid fa-sack-dollar"></i> <span class="card-title"> $ {{ elementSoft.cost }}</span>
+                      <i class="fa-solid fa-sack-dollar"></i> <span class="card-title"> $ {{ item.cost }}</span>
                       <div class="dark-line"></div>
                     </div>
                     <div class="form-group-wrap bg-grey p-6 pt-4 subscribe">
@@ -386,13 +386,13 @@ import InputError from "@/Components/InputError.vue";
                         <i class="fas fa-hourglass-half"></i>
                       </div>
                       <div class="form-group right-side">
-                        <em>Next Deadline:</em> <span>{{ elementSoft.renewal_date }}</span>
+                        <em>Next Deadline:</em> <span>{{ item.renewal_date }}</span>
                       </div>
                       <div class="form-group right-side">
-                        <em>Renewal Type:</em> <span>{{ elementSoft.renewal_type }}</span>
+                        <em>Renewal Type:</em> <span>{{ item.renewal_type }}</span>
                       </div>
                       <div class="form-group right-side">
-                        <em>Last 4 digits of CC:</em> <span>{{ elementSoft.cc }}</span>
+                        <em>Last 4 digits of CC:</em> <span>{{ item.cc }}</span>
                       </div>
                     </div>
                     <div class="form-group-wrap p-6 pt-4">
@@ -401,28 +401,28 @@ import InputError from "@/Components/InputError.vue";
                     </div>
                     <div class="form-group-wrap p-6 pt-4 user-detail">
                       <div class="form-group form-group-icon">
-                        <input readonly type="text" id="userName" :value="elementSoft.user_mame"
-                               :placeholder="elementSoft.user_mame">
+                        <input readonly type="text" :id="'userNameSoft'+key" :value="item.user_mame"
+                               :placeholder="item.user_mame">
                         <i class="fa-regular fa-user"></i>
-                        <i class="fa-regular fa-copy" @click="copy('#userName')"></i>
+                        <i class="fa-regular fa-copy" @click="copy('#userNameSoft'+key)"></i>
                       </div>
                       <div class="form-group form-group-icon">
-                        <input readonly v-bind:type="[showPasswordSoft ? 'text' : 'password']" id="password"
-                               :value="password" :placeholder="elementSoft.password">
+                        <input readonly v-bind:type="[showPasswordSoft ? 'text' : 'password']" :id="'passwordSoft'+key"
+                               :value="item.password" :placeholder="item.password">
                         <i class="fa-solid fa-lock"></i>
                         <i class="fa-solid fa-eye-slash" @click="showTextPass('showPasswordSoft')"
                            v-if="!showPasswordSoft"></i>
                         <i class="fa-solid fa-eye" @click="showTextPass('showPasswordSoft')"
                            v-if="showPasswordSoft"></i>
-                        <i class="fa-regular fa-copy" @click="copy('#password')"></i>
+                        <i class="fa-regular fa-copy" @click="copy('#passwordSoft'+key)"></i>
                       </div>
                       <div class="form-group form-group-icon m-0">
-                        <input readonly v-bind:type="[showPinSoft ? 'text' : 'password']" id="pin" :value="pin"
-                               :placeholder="elementSoft.pin">
+                        <input readonly v-bind:type="[showPinSoft ? 'text' : 'password']" :id="'pinSoft'+key" :value="item.pin"
+                               :placeholder="item.pin">
                         <i class="fa-solid fa-fingerprint"></i>
                         <i class="fa-solid fa-eye-slash" @click="showTextPin('showPinSoft')" v-if="!showPinSoft"></i>
                         <i class="fa-solid fa-eye" @click="showTextPin('showPinSoft')" v-if="showPinSoft"></i>
-                        <i class="fa-regular fa-copy" @click="copy('#pin')"></i>
+                        <i class="fa-regular fa-copy" @click="copy('#pinSoft'+key)"></i>
                       </div>
                     </div>
                   </div>
@@ -564,7 +564,8 @@ export default {
     goEdit () {
       window.location.href = window.location.protocol + '//' + window.location.host+'/editSiteView/'+this.site._id;
     },
-    editProvider(el, key) {
+    editProvider(item, key) {
+      this.element = Object.assign({}, item);
       var block = document.getElementById('id' + key);
       block.style.display = "none";
       var editBlock = document.getElementById('idEditProvider' + key);
@@ -576,7 +577,8 @@ export default {
       var editBlock = document.getElementById('idEditProvider' + key);
       editBlock.style.display = "none";
     },
-    editSoft(el, key) {
+    editSoft(item, key) {
+      this.elementSoft = Object.assign({}, item);
       var block = document.getElementById('idSoft' + key);
       block.style.display = "none";
       var editBlock = document.getElementById('idEditSoft' + key);
@@ -595,16 +597,6 @@ export default {
         el.style.display = "none";
       }
       item.show = !item.show;
-      this.element.type = item.type;
-      this.userName = this.element.name = item.name;
-      this.element.url = item.url;
-      this.element.renewal_type = item.renewal_type;
-      this.element.cost = item.cost;
-      this.element.renewal_date = item.renewal_date;
-      this.element.user_mame = item.user_mame;
-      this.password = this.element.password = item.password;
-      this.pin = this.element.pin = item.pin;
-      this.cc = this.element.cc = item.cc;
     },
 
     showDetailSoft(item, key) {
@@ -614,16 +606,6 @@ export default {
         el.style.display = "none";
       }
       item.showSoft = !item.showSoft;
-      this.elementSoft.type = item.type;
-      this.userName = this.elementSoft.name = item.name;
-      this.elementSoft.url = item.url;
-      this.elementSoft.renewal_type = item.renewal_type;
-      this.elementSoft.cost = item.cost;
-      this.elementSoft.renewal_date = item.renewal_date;
-      this.elementSoft.user_mame = item.user_mame;
-      this.password = this.elementSoft.password = item.password;
-      this.pin = this.elementSoft.pin = item.pin;
-      this.elementSoft.cc = item.cc;
     }
   }
 }
