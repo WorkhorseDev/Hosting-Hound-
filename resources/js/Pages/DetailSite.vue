@@ -156,7 +156,7 @@ import InputError from "@/Components/InputError.vue";
                         <div class="form-group m-0">
                           <label>Renewal Date</label>
                           <div class="form-group form-group-icon">
-                            <VueDatePicker format="yyyy/MM/dd" v-model="element.renewal_date"></VueDatePicker>
+                            <VueDatePicker format="dd/MM/yyyy" model-type="format" v-model="element.renewal_date"></VueDatePicker>
                             <i class="fa-solid fa-calendar"></i>
                           </div>
                         </div>
@@ -323,7 +323,7 @@ import InputError from "@/Components/InputError.vue";
                         <div class="form-group m-0">
                           <label>Renewal Date</label>
                           <div class="form-group form-group-icon">
-                            <VueDatePicker format="yyyy/MM/dd" v-model="elementSoft.renewal_date"></VueDatePicker>
+                            <VueDatePicker format="dd/MM/yyyy" model-type="format" v-model="elementSoft.renewal_date"></VueDatePicker>
                             <i class="fa-solid fa-calendar"></i>
                           </div>
                         </div>
