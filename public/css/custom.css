@@ -905,7 +905,8 @@ select option {
 }
 
 .edit-provider.detail .form-container {
-    height: 810px;
+    /*height: 810px;*/
+    height: auto;
 }
 
 .fa-regular.fa-copy {
