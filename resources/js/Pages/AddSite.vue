@@ -340,7 +340,7 @@ import InputError from "@/Components/InputError.vue";
                           </select>
                         </div>
                         <span class="renewal-summary" v-if="form.software.renewal_custom_period && form.software.renewal_custom_unit">
-                          → Renews every {{ form.software.renewal_custom_period }} {{ form.software.renewal_custom_unit.toLowerCase() }}
+                            Renews every {{ form.software.renewal_custom_period }} {{ form.software.renewal_custom_unit.toLowerCase() }}
                         </span>
                       </div>
 
