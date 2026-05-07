@@ -353,13 +353,15 @@ export default {
                 let [day, month, year] = service.provider.renewal_date.split("/").map(Number);
                 let eventDate = new Date(year, month - 1, day);
 
-                const renewalSteps = {
-                    "Weekly": 7,
-                    "Monthly": "month",
-                    "Annual": "year"
-                };
+                // Custom added to the list so it passes the type check below
+                const knownTypes = ['Weekly', 'Monthly', 'Annual', 'Custom'];
+                const p = service.provider;
+                // Build a human-readable label for the popover; Custom shows "every N units"
+                const renewalLabel = p.renewal_type === 'Custom'
+                    ? `every ${p.renewal_custom_period} ${p.renewal_custom_unit ? p.renewal_custom_unit.toLowerCase() : 'years'}`
+                    : p.renewal_type;
 
-                if (renewalSteps[service.provider.renewal_type]) {
+                if (knownTypes.includes(p.renewal_type)) {
                     while (eventDate <= maxDate) {
                         const dateKey = `${eventDate.getFullYear()}-${eventDate.getMonth() + 1}-${eventDate.getDate()}`;
 
@@ -372,19 +374,28 @@ export default {
                                     }
                                 },
                                 popover: {
-                                    label: `${service.provider.type} (${service.url}) renews ${service.provider.renewal_type} starting on  ${service.provider.renewal_date}`,
+                                    label: `${p.type} (${service.url}) renews ${renewalLabel} starting on ${p.renewal_date}`,
                                 },
                             };
                         } else {
-                            groupedAttributes[dateKey].popover.label += `\n ${service.provider.type} (${service.url}) renews  ${service.provider.renewal_type} starting on ${service.provider.renewal_date}`;
+                            groupedAttributes[dateKey].popover.label += `\n ${p.type} (${service.url}) renews ${renewalLabel} starting on ${p.renewal_date}`;
                         }
 
-                        if (service.provider.renewal_type === "Weekly") {
+                        if (p.renewal_type === "Weekly") {
                             eventDate.setDate(eventDate.getDate() + 7);
-                        } else if (service.provider.renewal_type === "Monthly") {
+                        } else if (p.renewal_type === "Monthly") {
                             eventDate.setMonth(eventDate.getMonth() + 1);
-                        } else if (service.provider.renewal_type === "Annual") {
+                        } else if (p.renewal_type === "Annual") {
                             eventDate.setFullYear(eventDate.getFullYear() + 1);
+                        } else if (p.renewal_type === "Custom") {
+                            // Advance by user-defined period and unit (years/months/weeks/days)
+                            const period = parseInt(p.renewal_custom_period) || 1;
+                            const unit = (p.renewal_custom_unit || 'Years').toLowerCase();
+                            if (unit === 'years')       eventDate.setFullYear(eventDate.getFullYear() + period);
+                            else if (unit === 'months') eventDate.setMonth(eventDate.getMonth() + period);
+                            else if (unit === 'weeks')  eventDate.setDate(eventDate.getDate() + period * 7);
+                            else if (unit === 'days')   eventDate.setDate(eventDate.getDate() + period);
+                            else break;
                         }
                     }
                 }
@@ -485,7 +496,8 @@ export default {
                 const [y1, m1, d1] = dateFormatEnd.split(/-|\//);
                 const dateEnd = new Date(y1, m1 - 1, d1, 0, 0, 0);
 
-                function getRecurringDates(baseDate, type, rangeStart, rangeEnd) {
+                // customPeriod/customUnit are used when type === 'Custom'
+                function getRecurringDates(baseDate, type, rangeStart, rangeEnd, customPeriod = 1, customUnit = 'years') {
                     let result = [];
                     let current = new Date(baseDate);
 
@@ -520,6 +532,22 @@ export default {
                                 current.setFullYear(current.getFullYear() + 1);
                             }
                             break;
+                        // Handles odd renewal periods like "every 5 years" or "every 90 days"
+                        case 'Custom': {
+                            const period = parseInt(customPeriod) || 1;
+                            const unit = (customUnit || 'years').toLowerCase();
+                            while (current <= rangeEnd) {
+                                if (current >= rangeStart) {
+                                    result.push(new Date(current));
+                                }
+                                if (unit === 'years')       current.setFullYear(current.getFullYear() + period);
+                                else if (unit === 'months') current.setMonth(current.getMonth() + period);
+                                else if (unit === 'weeks')  current.setDate(current.getDate() + period * 7);
+                                else if (unit === 'days')   current.setDate(current.getDate() + period);
+                                else break;
+                            }
+                            break;
+                        }
                         default:
                             return [];
                     }
@@ -527,6 +555,7 @@ export default {
                     return result;
                 }
 
+                // Pass custom period/unit so 'Custom' type is correctly expanded into recurring dates
                 Object.values(this.sortArr).filter(item => {
                     const source = item.provider;
                     if (source && source.renewal_date) {
@@ -534,7 +563,11 @@ export default {
                         const baseDate = new Date(y, m - 1, d, 0, 0, 0);
                         const type = source.renewal_type || 'Annual'; // fallback
 
-                        const recurringDates = getRecurringDates(baseDate, type, dateStart, dateEnd);
+                        const recurringDates = getRecurringDates(
+                            baseDate, type, dateStart, dateEnd,
+                            source.renewal_custom_period,
+                            source.renewal_custom_unit
+                        );
                         const isInRange = recurringDates.some(date => date >= dateStart && date <= dateEnd);
 
                         if (isInRange) {
@@ -543,6 +576,7 @@ export default {
                     }
                 });
 
+                // Same as above for software entries
                 Object.values(this.sortArr).filter(item => {
                     const source = item.software;
                     if (source && source.renewal_date) {
@@ -550,7 +584,11 @@ export default {
                         const baseDate = new Date(y, m - 1, d, 0, 0, 0);
                         const type = source.renewal_type || 'Annual';
 
-                        const recurringDates = getRecurringDates(baseDate, type, dateStart, dateEnd);
+                        const recurringDates = getRecurringDates(
+                            baseDate, type, dateStart, dateEnd,
+                            source.renewal_custom_period,
+                            source.renewal_custom_unit
+                        );
                         const isInRange = recurringDates.some(date => date >= dateStart && date <= dateEnd);
 
                         if (isInRange) {
