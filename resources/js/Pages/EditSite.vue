@@ -191,7 +191,25 @@ import InputError from "@/Components/InputError.vue";
                           <option>Annual</option>
                           <option>Monthly</option>
                           <option>Weekly</option>
+                          <option>Custom</option>
                         </select>
+                      </div>
+
+                      <div class="form-group custom-renewal-wrap" v-if="form.provider.renewal_type === 'Custom'">
+                        <label>Custom Renewal Period</label>
+                        <div class="custom-period-row">
+                          <span class="every-label">Every</span>
+                          <input class="bg-grey custom-period-num" type="number" min="1" v-model="form.provider.renewal_custom_period" placeholder="1">
+                          <select class="bg-grey custom-period-unit" v-model="form.provider.renewal_custom_unit">
+                            <option>Years</option>
+                            <option>Months</option>
+                            <option>Weeks</option>
+                            <option>Days</option>
+                          </select>
+                        </div>
+                        <span class="renewal-summary" v-if="form.provider.renewal_custom_period && form.provider.renewal_custom_unit">
+                            Renews every {{ form.provider.renewal_custom_period }} {{ form.provider.renewal_custom_unit.toLowerCase() }}
+                        </span>
                       </div>
 
                       <div class="form-row">
@@ -301,7 +319,25 @@ import InputError from "@/Components/InputError.vue";
                           <option>Annual</option>
                           <option>Monthly</option>
                           <option>Weekly</option>
+                          <option>Custom</option>
                         </select>
+                      </div>
+
+                      <div class="form-group custom-renewal-wrap" v-if="form.software.renewal_type === 'Custom'">
+                        <label>Custom Renewal Period</label>
+                        <div class="custom-period-row">
+                          <span class="every-label">Every</span>
+                          <input class="bg-grey custom-period-num" type="number" min="1" v-model="form.software.renewal_custom_period" placeholder="1">
+                          <select class="bg-grey custom-period-unit" v-model="form.software.renewal_custom_unit">
+                            <option>Years</option>
+                            <option>Months</option>
+                            <option>Weeks</option>
+                            <option>Days</option>
+                          </select>
+                        </div>
+                        <span class="renewal-summary" v-if="form.software.renewal_custom_period && form.software.renewal_custom_unit">
+                            Renews every {{ form.software.renewal_custom_period }} {{ form.software.renewal_custom_unit.toLowerCase() }}
+                        </span>
                       </div>
 
                       <div class="form-row">
@@ -396,6 +432,8 @@ export default {
         name: item.name,
         url: item.url,
         renewal_type: item.renewal_type,
+        renewal_custom_period: item.renewal_custom_period || '',
+        renewal_custom_unit: item.renewal_custom_unit || 'Years',
         cost: item.cost,
         renewal_date: item.renewal_date,
         user_mame: item.user_mame,
@@ -412,6 +450,8 @@ export default {
         name: item.name,
         url: item.url,
         renewal_type: item.renewal_type,
+        renewal_custom_period: item.renewal_custom_period || '',
+        renewal_custom_unit: item.renewal_custom_unit || 'Years',
         cost: item.cost,
         renewal_date: item.renewal_date,
         user_mame: item.user_mame,
@@ -481,6 +521,8 @@ export default {
         name:'',
         url: '',
         renewal_type: '',
+        renewal_custom_period: '',
+        renewal_custom_unit: 'Years',
         cost: '',
         renewal_date: '',
         user_mame: '',
@@ -496,6 +538,8 @@ export default {
       this.form.softwares[key].name =  this.form.software.name;
       this.form.softwares[key].url =  this.form.software.url;
       this.form.softwares[key].renewal_type =  this.form.software.renewal_type;
+      this.form.softwares[key].renewal_custom_period =  this.form.software.renewal_custom_period;
+      this.form.softwares[key].renewal_custom_unit =  this.form.software.renewal_custom_unit;
       this.form.softwares[key].cost =  this.form.software.cost;
       this.form.softwares[key].renewal_date =  this.form.software.renewal_date;
       this.form.softwares[key].user_mame =  this.form.software.user_mame;
@@ -507,6 +551,8 @@ export default {
         name:'',
         url: '',
         renewal_type: '',
+        renewal_custom_period: '',
+        renewal_custom_unit: 'Years',
         cost: '',
         renewal_date: '',
         user_mame: '',
@@ -522,6 +568,8 @@ export default {
       this.form.providers[key].name =  this.form.provider.name;
       this.form.providers[key].url =  this.form.provider.url;
       this.form.providers[key].renewal_type =  this.form.provider.renewal_type;
+      this.form.providers[key].renewal_custom_period =  this.form.provider.renewal_custom_period;
+      this.form.providers[key].renewal_custom_unit =  this.form.provider.renewal_custom_unit;
       this.form.providers[key].cost =  this.form.provider.cost;
       this.form.providers[key].renewal_date =  this.form.provider.renewal_date;
       this.form.providers[key].user_mame =  this.form.provider.user_mame;
@@ -533,6 +581,8 @@ export default {
         name:'',
         url: '',
         renewal_type: '',
+        renewal_custom_period: '',
+        renewal_custom_unit: 'Years',
         cost: '',
         renewal_date: '',
         user_mame: '',
@@ -549,6 +599,8 @@ export default {
             name:'',
             url: '',
             renewal_type: '',
+            renewal_custom_period: '',
+            renewal_custom_unit: 'Years',
             cost: '',
             renewal_date: '',
             user_mame: '',
@@ -610,6 +662,8 @@ export default {
             name:'',
             url: '',
             renewal_type: '',
+            renewal_custom_period: '',
+            renewal_custom_unit: 'Years',
             cost: '',
             renewal_date: '',
             user_mame: '',
@@ -624,6 +678,8 @@ export default {
           name:'',
           url: '',
           renewal_type: '',
+          renewal_custom_period: '',
+          renewal_custom_unit: 'Years',
           cost: '',
           renewal_date: '',
           user_mame: '',

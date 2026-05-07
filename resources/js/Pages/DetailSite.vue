@@ -141,11 +141,29 @@ import InputError from "@/Components/InputError.vue";
                     <div class="form-group-wrap p-6 pt-4">
                       <div class="form-group">
                         <label>Renewal Type</label>
-                        <select class="bg-grey" v-model="element.renewal_type" >
+                        <select class="bg-grey" v-model="element.renewal_type">
                           <option>Annual</option>
                           <option>Monthly</option>
                           <option>Weekly</option>
+                          <option>Custom</option>
                         </select>
+                      </div>
+
+                      <div class="form-group custom-renewal-wrap" v-if="element.renewal_type === 'Custom'">
+                        <label>Custom Renewal Period</label>
+                        <div class="custom-period-row">
+                          <span class="every-label">Every</span>
+                          <input class="bg-grey custom-period-num" type="number" min="1" v-model="element.renewal_custom_period" placeholder="1">
+                          <select class="bg-grey custom-period-unit" v-model="element.renewal_custom_unit">
+                            <option>Years</option>
+                            <option>Months</option>
+                            <option>Weeks</option>
+                            <option>Days</option>
+                          </select>
+                        </div>
+                        <span class="renewal-summary" v-if="element.renewal_custom_period && element.renewal_custom_unit">
+                            Renews every {{ element.renewal_custom_period }} {{ element.renewal_custom_unit.toLowerCase() }}
+                        </span>
                       </div>
 
                       <div class="form-row">
@@ -222,7 +240,9 @@ import InputError from "@/Components/InputError.vue";
                         <em>Next Deadline:</em> <span>{{ item.renewal_date }}</span>
                       </div>
                       <div class="form-group right-side">
-                        <em>Renewal Type:</em> <span>{{ item.renewal_type }}</span>
+                        <em>Renewal Type:</em>
+                        <span v-if="item.renewal_type !== 'Custom'">{{ item.renewal_type }}</span>
+                        <span v-else>Every {{ item.renewal_custom_period }} {{ item.renewal_custom_unit ? item.renewal_custom_unit.toLowerCase() : '' }}</span>
                       </div>
                       <div class="form-group right-side">
                         <em>Last 4 digits of CC:</em> <span>{{ item.cc }}</span>
@@ -312,7 +332,25 @@ import InputError from "@/Components/InputError.vue";
                           <option>Annual</option>
                           <option>Monthly</option>
                           <option>Weekly</option>
+                          <option>Custom</option>
                         </select>
+                      </div>
+
+                      <div class="form-group custom-renewal-wrap" v-if="elementSoft.renewal_type === 'Custom'">
+                        <label>Custom Renewal Period</label>
+                        <div class="custom-period-row">
+                          <span class="every-label">Every</span>
+                          <input class="bg-grey custom-period-num" type="number" min="1" v-model="elementSoft.renewal_custom_period" placeholder="1">
+                          <select class="bg-grey custom-period-unit" v-model="elementSoft.renewal_custom_unit">
+                            <option>Years</option>
+                            <option>Months</option>
+                            <option>Weeks</option>
+                            <option>Days</option>
+                          </select>
+                        </div>
+                        <span class="renewal-summary" v-if="elementSoft.renewal_custom_period && elementSoft.renewal_custom_unit">
+                            Renews every {{ elementSoft.renewal_custom_period }} {{ elementSoft.renewal_custom_unit.toLowerCase() }}
+                        </span>
                       </div>
 
                       <div class="form-row">
@@ -389,7 +427,9 @@ import InputError from "@/Components/InputError.vue";
                         <em>Next Deadline:</em> <span>{{ item.renewal_date }}</span>
                       </div>
                       <div class="form-group right-side">
-                        <em>Renewal Type:</em> <span>{{ item.renewal_type }}</span>
+                        <em>Renewal Type:</em>
+                        <span v-if="item.renewal_type !== 'Custom'">{{ item.renewal_type }}</span>
+                        <span v-else>Every {{ item.renewal_custom_period }} {{ item.renewal_custom_unit ? item.renewal_custom_unit.toLowerCase() : '' }}</span>
                       </div>
                       <div class="form-group right-side">
                         <em>Last 4 digits of CC:</em> <span>{{ item.cc }}</span>
@@ -524,6 +564,8 @@ export default {
       this.site.software[key].url = data.url;
       this.site.software[key].type = data.type;
       this.site.software[key].renewal_type = data.renewal_type;
+      this.site.software[key].renewal_custom_period = data.renewal_custom_period;
+      this.site.software[key].renewal_custom_unit = data.renewal_custom_unit;
       this.site.software[key].cost = data.cost;
       this.site.software[key].renewal_date = data.renewal_date;
       this.site.software[key].user_mame = data.user_mame;
@@ -538,6 +580,8 @@ export default {
       this.site.provider[key].url = data.url;
       this.site.provider[key].type = data.type;
       this.site.provider[key].renewal_type = data.renewal_type;
+      this.site.provider[key].renewal_custom_period = data.renewal_custom_period;
+      this.site.provider[key].renewal_custom_unit = data.renewal_custom_unit;
       this.site.provider[key].cost = data.cost;
       this.site.provider[key].renewal_date = data.renewal_date;
       this.site.provider[key].user_mame = data.user_mame;
