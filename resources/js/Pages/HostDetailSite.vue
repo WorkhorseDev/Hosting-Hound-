@@ -47,7 +47,9 @@ import {reactive} from "vue";
                   <em>Suggested Deadline:</em> <span></span>
                 </div>
                 <div class="form-group right-side host">
-                  <em>Renewal Type:</em> <span>{{ provider.renewal_type }}</span>
+                    <em>Renewal Type:</em>
+                    <span v-if="provider.renewal_type !== 'Custom'">{{ provider.renewal_type }}</span>
+                    <span v-else>Every {{ provider.renewal_custom_period }} {{ provider.renewal_custom_unit ? provider.renewal_custom_unit.toLowerCase() : '' }}</span>
                 </div>
               </div>
               <div class="text-block host"  @click="showProvider()">
@@ -189,7 +191,9 @@ import {reactive} from "vue";
                       <em>Next Deadline:</em> <span>{{ provider.renewal_date }}</span>
                     </div>
                     <div class="form-group right-side">
-                      <em>Renewal Type:</em> <span>{{ provider.renewal_type }}</span>
+                        <em>Renewal Type:</em>
+                        <span v-if="provider.renewal_type !== 'Custom'">{{ provider.renewal_type }}</span>
+                        <span v-else>Every {{ provider.renewal_custom_period }} {{ provider.renewal_custom_unit ? provider.renewal_custom_unit.toLowerCase() : '' }}</span>
                     </div>
                     <div class="form-group right-side">
                       <em>Last 4 digits of CC:</em> <span>{{ provider.cc }}</span>
