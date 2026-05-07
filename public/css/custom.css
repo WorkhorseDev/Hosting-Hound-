@@ -1627,6 +1627,38 @@ button.account {
     margin-right: 10px;
 }
 
+.custom-renewal-wrap {
+    margin-top: 5px;
+}
+
+.custom-period-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.every-label {
+    font-size: 16px;
+    color: #7a8088;
+    white-space: nowrap;
+}
+
+.custom-period-num {
+    width: 80px !important;
+    flex-shrink: 0;
+}
+
+.custom-period-unit {
+    flex: 1;
+}
+
+.renewal-summary {
+    display: block;
+    margin-top: 6px;
+    font-size: 14px;
+    color: #7a8088;
+}
+
 .row.flex.justify-center.mb-5.buttons#email-true {
     top: 145px;
 }

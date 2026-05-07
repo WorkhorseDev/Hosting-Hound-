@@ -180,12 +180,28 @@ class ProfileController extends Controller
                     case 'weekly':
                         $recurrence = ['RRULE:FREQ=WEEKLY'];
                     break;
+                    case 'custom':
+                        $unitMap = [
+                            'years'  => 'YEARLY',
+                            'months' => 'MONTHLY',
+                            'weeks'  => 'WEEKLY',
+                            'days'   => 'DAILY',
+                        ];
+                        $period = (int) ($host['renewal_custom_period'] ?? 1);
+                        $unit   = strtolower($host['renewal_custom_unit'] ?? 'years');
+                        $freq   = $unitMap[$unit] ?? 'YEARLY';
+                        $recurrence = ["RRULE:FREQ={$freq};INTERVAL={$period}"];
+                    break;
                 }
+
+                $renewalLabel = strtolower($host['renewal_type']) === 'custom'
+                    ? 'every ' . ($host['renewal_custom_period'] ?? '?') . ' ' . strtolower($host['renewal_custom_unit'] ?? 'years')
+                    : $host['renewal_type'];
 
                 $cost = !empty($host['cost']) ? ' - $' . $host['cost'] : '';
 
                 $event = new \Google_Service_Calendar_Event([
-                    'summary' => $host['type'] . ' (' . $host['site_name'] . ') renews ' . $host['renewal_type'] . $cost . ' starting on ' . $host['renewal_date'],
+                    'summary' => $host['type'] . ' (' . $host['site_name'] . ') renews ' . $renewalLabel . $cost . ' starting on ' . $host['renewal_date'],
                     'start' => [
                         'date' => $showDate,
                         'timeZone' => 'America/New_York',
