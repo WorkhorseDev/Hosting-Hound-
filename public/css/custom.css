@@ -1749,6 +1749,9 @@ h4.notification {
     .inner {
         max-width: 450px
     }
+    .main-content > .inner {
+        max-width: 100%;
+    }
 
     .sited-detail .grid-cols-3 {
         display: block;
