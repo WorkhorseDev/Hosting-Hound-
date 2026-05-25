@@ -40,8 +40,8 @@ const route = inject("route");
               <i class="fa-solid" :class="[ isCalendarOpen ? 'fa-list' : 'fa-calendar-days' ]"></i>
           </span>
                     <div class="search-bar">
-                        <form action="" class="search-form" id="search_form">
-                            <input type="text" v-model="searchData" @change="search" class="search-input" id="search"
+                        <form action="" class="search-form" id="search_form" @submit.prevent>
+                            <input type="text" v-model="searchData" @input="search" class="search-input" id="search"
                                    placeholder="search...">
                             <button type="button" class="search-btn">
                                 <i class="fa-solid fa-magnifying-glass"></i>
@@ -105,7 +105,7 @@ const route = inject("route");
                                 </div>
                                 <div class="filter-inner">
                                     <div class="filter-search mb-5">
-                                        <input type="text" @change="search" v-model="searchData"
+                                        <input type="text" @input="search" v-model="searchData"
                                                class="filter-search-input"
                                                id="filter-search" placeholder="Search term...">
                                         <button type="button" class="search-btn">
@@ -243,7 +243,14 @@ const route = inject("route");
                                 </div> <!-- end .card-item -->
                             </div> <!-- end .card-list -->
                             <div class="data card-list empty"
-                                 v-if="arr && arr.length === 0">
+                                 v-if="arr && arr.length === 0 && searchData.trim()">
+                                <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
+                                <p class="empty-calendar black">No results found for "{{ searchData }}".</p>
+                                <p class="empty-calendar black">Try a different search term.</p>
+                            </div>
+
+                            <div class="data card-list empty"
+                                 v-if="arr && arr.length === 0 && !searchData.trim()">
                                 <p class="empty-calendar">{{ monthName(currentPageDate) }} Renewals<br>as of today, {{ formatDate(today) }} </p>
                                 <i class="fa fa-check" aria-hidden="true"></i>
                                 <p class="empty-calendar black">You have no {{ monthName(currentPageDate) }} Renewals<br>with this  {{nameField}} .</p>
@@ -700,27 +707,19 @@ export default {
         },
 
         search() {
-            this.arr = Object.values(JSON.parse(JSON.stringify(this.arr)));
-            this.arr = this.arr.filter(item => {
+            if (!this.searchData.trim()) {
+                this.arr = this.sites;
+                return;
+            }
+            const query = this.searchData.toLowerCase();
+            this.arr = Object.values(this.sites).filter(item => {
                 return (
-                    item.name
-                        .toLowerCase()
-                        .indexOf(this.searchData.toLowerCase()) != -1 ||
-                    item.url
-                        .toLowerCase()
-                        .indexOf(this.searchData.toLowerCase()) != -1 ||
-                    item.provider.renewal_type
-                        .toLowerCase()
-                        .indexOf(this.searchData.toLowerCase()) != -1 ||
-                    item.company
-                        .toLowerCase()
-                        .indexOf(this.searchData.toLowerCase()) != -1 ||
-                    item.business_unit
-                        .toLowerCase()
-                        .indexOf(this.searchData.toLowerCase()) != -1 ||
-                    item.tags
-                        .toLowerCase()
-                        .indexOf(this.searchData.toLowerCase()) != -1
+                    (item.name || '').toLowerCase().indexOf(query) !== -1 ||
+                    (item.url || '').toLowerCase().indexOf(query) !== -1 ||
+                    (item.provider?.renewal_type || '').toLowerCase().indexOf(query) !== -1 ||
+                    (item.company || '').toLowerCase().indexOf(query) !== -1 ||
+                    (item.business_unit || '').toLowerCase().indexOf(query) !== -1 ||
+                    (item.tags || '').toLowerCase().indexOf(query) !== -1
                 );
             });
         },

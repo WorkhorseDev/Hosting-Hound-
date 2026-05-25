@@ -34,8 +34,8 @@ const route = inject("route");
       <div class="main-panel">
         <div class="search-section">
           <div class="search-bar">
-            <form action="" class="search-form" id="search_form">
-              <input type="text" v-model="searchData" @change="search" class="search-input" id="search"
+            <form action="" class="search-form" id="search_form" @submit.prevent>
+              <input type="text" v-model="searchData" @input="search" class="search-input" id="search"
                      placeholder="search...">
               <button type="button" class="search-btn">
                 <i class="fa-solid fa-magnifying-glass"></i>
@@ -186,7 +186,7 @@ const route = inject("route");
                 </div>
                 <div class="filter-inner">
                   <div class="filter-search mb-5">
-                    <input type="text" @change="search" v-model="searchData" class="filter-search-input"
+                    <input type="text" @input="search" v-model="searchData" class="filter-search-input"
                            id="filter-search" placeholder="Search term...">
                     <button type="button" class="search-btn">
                       <i class="fa-solid fa-magnifying-glass"></i>
@@ -558,15 +558,14 @@ export default {
       return this.data;
     },
     search() {
-      this.arr = Object.values(JSON.parse(JSON.stringify(this.arr)));
-      this.arr = this.arr.filter(item => {
+      if (!this.searchData.trim()) {
+        this.arr = this.sites;
+        return;
+      }
+      this.arr = Object.values(this.sites).filter(item => {
         return (
-            item.name
-                .toLowerCase()
-                .indexOf(this.searchData.toLowerCase()) != -1 ||
-            item.url
-                .toLowerCase()
-                .indexOf(this.searchData.toLowerCase()) != -1
+          item.name.toLowerCase().indexOf(this.searchData.toLowerCase()) !== -1 ||
+          item.url.toLowerCase().indexOf(this.searchData.toLowerCase()) !== -1
         );
       });
     },
